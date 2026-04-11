@@ -123,8 +123,9 @@ function FloatingWhatsApp() {
 }
 
 // NAP Logo SVG recreation (color wheel + text)
-function NAPLogo({ size = 40 }) {
+function NAPLogo({ size = 40, light = false }) {
   const s = size;
+  const textColor = light ? "#fff" : COLORS.darkBlue;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
       <div style={{
@@ -134,7 +135,7 @@ function NAPLogo({ size = 40 }) {
           ${COLORS.green} 160deg, ${COLORS.blue} 220deg, #7B1FA2 280deg,
           ${COLORS.pink} 330deg, ${COLORS.red} 360deg
         )`,
-        boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
+        boxShadow: light ? "0 2px 20px rgba(255,255,255,0.3)" : "0 2px 12px rgba(0,0,0,0.2)",
       }}>
         <div style={{
           position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
@@ -144,11 +145,11 @@ function NAPLogo({ size = 40 }) {
       <div>
         <div style={{
           fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: s * 0.55,
-          color: COLORS.darkBlue, letterSpacing: "0.08em", lineHeight: 1,
+          color: textColor, letterSpacing: "0.08em", lineHeight: 1,
         }}>NAP</div>
         <div style={{
           fontFamily: "'Montserrat', sans-serif", fontWeight: 400, fontSize: s * 0.22,
-          color: COLORS.darkBlue, letterSpacing: "0.35em", lineHeight: 1, marginTop: 1,
+          color: textColor, letterSpacing: "0.35em", lineHeight: 1, marginTop: 1,
         }}>TINTAS</div>
       </div>
     </div>
@@ -170,26 +171,28 @@ function NavBar() {
     { label: "Pintores", href: "#pintores" },
     { label: "Contato", href: "#contato" },
   ];
+  const navTextColor = scrolled ? COLORS.darkBlue : "#fff";
+  const navHoverColor = scrolled ? COLORS.blue : "#fff";
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 900,
       padding: scrolled ? "10px 0" : "16px 0",
-      background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.92)",
+      background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(10,14,26,0.6)",
       backdropFilter: "blur(20px)",
       transition: "all 0.4s ease",
       boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none",
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={38} /></a>
+        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={38} light={!scrolled} /></a>
         <div style={{ display: "flex", alignItems: "center", gap: 28 }} className="nav-desk">
           {links.map((l) => (
             <a key={l.href} href={l.href} style={{
-              color: COLORS.darkBlue, textDecoration: "none", fontSize: 14, fontWeight: 700,
+              color: navTextColor, textDecoration: "none", fontSize: 14, fontWeight: 700,
               fontFamily: "'Nunito', sans-serif", letterSpacing: "0.02em",
-              transition: "color 0.3s", opacity: 0.7,
+              transition: "all 0.4s ease", opacity: 0.7,
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.color = COLORS.blue; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.color = COLORS.darkBlue; }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.color = navHoverColor; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.color = navTextColor; }}
             >{l.label}</a>
           ))}
           <WhatsAppBtn text="WhatsApp" small />
@@ -236,27 +239,40 @@ function Hero() {
   return (
     <section id="hero" style={{
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      position: "relative", overflow: "hidden", background: "#fff",
+      position: "relative", overflow: "hidden", background: COLORS.darkBg,
     }}>
-      <PaintSplash color={COLORS.orange} style={{ top: "-20px", left: "-40px", transform: "rotate(-15deg)" }} />
-      <PaintSplash color={COLORS.green} style={{ top: "30px", right: "-60px", transform: "rotate(20deg)" }} />
-      <PaintSplash color={COLORS.pink} style={{ bottom: "60px", left: "-30px", transform: "rotate(10deg)" }} />
-      <PaintSplash color={COLORS.blue} style={{ bottom: "20px", right: "-40px", transform: "rotate(-25deg)" }} />
-      <PaintSplash color={COLORS.yellow} style={{ top: "45%", left: "5%", transform: "rotate(5deg) scale(0.7)" }} />
-      <PaintSplash color={COLORS.red} style={{ top: "35%", right: "3%", transform: "rotate(-10deg) scale(0.6)" }} />
+      {/* GIF Background */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 0,
+        backgroundImage: "url(/hero-bg.gif)",
+        backgroundSize: "contain", backgroundPosition: "center 60%",
+        backgroundRepeat: "no-repeat",
+      }} />
+      {/* Overlay gradient for readability */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: `linear-gradient(
+          180deg,
+          rgba(10,14,26,0.85) 0%,
+          rgba(10,14,26,0.45) 45%,
+          rgba(10,14,26,0.30) 65%,
+          rgba(10,14,26,0.75) 100%
+        )`,
+      }} />
 
       <div style={{
         position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 800,
         animation: "fadeUp 0.8s ease-out",
       }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
-          <NAPLogo size={70} />
+          <NAPLogo size={70} light />
         </div>
 
         <h1 style={{
           fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(32px, 6vw, 56px)",
-          fontWeight: 900, color: COLORS.darkBlue, lineHeight: 1.1,
+          fontWeight: 900, color: "rgba(255,255,255,0.95)", lineHeight: 1.1,
           letterSpacing: "-0.02em", marginBottom: 8,
+          textShadow: "0 2px 20px rgba(0,0,0,0.3)",
         }}>
           Venha colorir com a
         </h1>
@@ -265,20 +281,21 @@ function Hero() {
           fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 24,
           background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.green}, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.red}, ${COLORS.pink})`,
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          filter: "brightness(1.3)",
         }}>
           NAP Tintas!
         </h1>
 
         <p style={{
           fontFamily: "'Nunito', sans-serif", fontSize: "clamp(16px, 2.5vw, 20px)",
-          color: "#555", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 20px",
+          color: "rgba(255,255,255,0.8)", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 20px",
         }}>
           Mais de 20 anos de experiência no mercado de Tintas. Consultoria para identificar as necessidades dos nossos clientes e capacitação dos profissionais da Pintura.
         </p>
 
         <p style={{
           fontFamily: "'Nunito', sans-serif", fontSize: 17, fontWeight: 700,
-          color: COLORS.darkBlue, marginBottom: 36, fontStyle: "italic",
+          color: "rgba(255,255,255,0.9)", marginBottom: 36, fontStyle: "italic",
         }}>
           &quot;Os que Transformam Sonhos em Realidades.&quot;
         </p>
@@ -288,12 +305,13 @@ function Hero() {
           <a href="#catalogo" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             padding: "16px 32px", borderRadius: 60,
-            border: `2px solid ${COLORS.blue}`, color: COLORS.blue,
+            border: "2px solid rgba(255,255,255,0.5)", color: "#fff",
             fontSize: 17, fontWeight: 700, textDecoration: "none",
             fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease",
+            backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)",
           }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = COLORS.blue; e.currentTarget.style.color = "#fff"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = COLORS.blue; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; }}
           >Ver Produtos ↓</a>
         </div>
 
@@ -302,9 +320,10 @@ function Hero() {
             <div key={v.name} style={{
               display: "flex", alignItems: "center", gap: 6,
               padding: "10px 20px", borderRadius: 40,
-              background: `${v.color}12`, border: `1.5px solid ${v.color}30`,
+              background: "rgba(255,255,255,0.1)", border: "1.5px solid rgba(255,255,255,0.2)",
+              backdropFilter: "blur(8px)",
               fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 700,
-              color: v.color,
+              color: v.color, filter: "brightness(1.4)",
             }}>
               {v.emoji} {v.name}
             </div>
