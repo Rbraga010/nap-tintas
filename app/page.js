@@ -752,7 +752,6 @@ export default function Home() {
       <NavBar />
       <Hero />
       <Marquee />
-      <HistoriaVideo />
       <Sobre />
       <DiferenciaisSection />
       <ValoresSection />
