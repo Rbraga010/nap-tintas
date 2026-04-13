@@ -69,19 +69,15 @@ img, svg {
 
 @media (max-width: 900px) {
   .hero-inner {
-    flex-direction: column !important;
-    text-align: center !important;
+    justify-content: center !important;
     padding: 100px 24px 60px !important;
   }
   .hero-copy {
     max-width: 100% !important;
-    align-items: center;
+    text-align: center !important;
   }
   .hero-ctas {
     justify-content: center !important;
-  }
-  .hero-visual {
-    display: none !important;
   }
 }
 
@@ -93,7 +89,7 @@ img, svg {
     padding: 90px 20px 40px !important;
   }
   .hero-h1 {
-    font-size: clamp(24px, 7vw, 36px) !important;
+    font-size: clamp(26px, 7.5vw, 38px) !important;
   }
   .hero-sub {
     font-size: 15px !important;

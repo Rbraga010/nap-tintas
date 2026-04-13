@@ -188,36 +188,30 @@ function Hero() {
     <section id="hero" className="hero-section" style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
       position: "relative", overflow: "hidden",
-      background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.blue} 50%, #1a4fad 100%)`,
     }}>
-      {/* Paint decorative elements */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, overflow: "hidden", opacity: 0.12 }}>
-        <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: COLORS.yellow, filter: "blur(100px)" }} />
-        <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 450, height: 450, borderRadius: "50%", background: COLORS.pink, filter: "blur(100px)" }} />
-        <div style={{ position: "absolute", top: "30%", left: "15%", width: 300, height: 300, borderRadius: "50%", background: COLORS.green, filter: "blur(80px)" }} />
-        <div style={{ position: "absolute", top: "10%", right: "20%", width: 200, height: 200, borderRadius: "50%", background: COLORS.orange, filter: "blur(70px)" }} />
-      </div>
-      {/* Paint drip stripes */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, zIndex: 1, background: `linear-gradient(90deg, ${COLORS.red}, ${COLORS.orange}, ${COLORS.yellow}, ${COLORS.green}, ${COLORS.blue}, #7B1FA2, ${COLORS.pink})` }} />
+      {/* Background image */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 0,
+        backgroundImage: "url(/hero-cans.jpg)",
+        backgroundSize: "cover", backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+      }} />
+      {/* Subtle right-side gradient for text readability */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: "linear-gradient(90deg, rgba(13,27,62,0.15) 0%, rgba(13,27,62,0.5) 40%, rgba(13,27,62,0.85) 65%, rgba(13,27,62,0.92) 100%)",
+      }} />
 
       <div className="hero-inner" style={{
         position: "relative", zIndex: 2,
         maxWidth: 1200, margin: "0 auto", width: "100%",
         padding: "120px 48px 80px",
-        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 48,
+        display: "flex", alignItems: "center", justifyContent: "flex-end",
       }}>
-        {/* Left: Copy */}
-        <div className="hero-copy" style={{ flex: 1, maxWidth: 640, animation: "fadeUp 0.8s ease-out" }}>
-          <div style={{
-            display: "inline-block", padding: "8px 20px", borderRadius: 40,
-            background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
-            backdropFilter: "blur(8px)", marginBottom: 28,
-          }}>
-            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, letterSpacing: "0.06em" }}>
-              Inauguramos em Sorocaba
-            </span>
-          </div>
-
+        <div className="hero-copy" style={{
+          maxWidth: 520, animation: "fadeUp 0.8s ease-out",
+          textAlign: "right",
+        }}>
           <h1 className="hero-h1" style={{
             fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(30px, 4.5vw, 52px)",
             fontWeight: 900, color: "#fff", lineHeight: 1.12,
@@ -228,12 +222,12 @@ function Hero() {
 
           <p className="hero-sub" style={{
             fontFamily: "'Nunito', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)",
-            color: "rgba(255,255,255,0.7)", lineHeight: 1.75, maxWidth: 520, marginBottom: 40,
+            color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: 40,
           }}>
             Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
           </p>
 
-          <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-end" }}>
             <WhatsAppBtn text="Peça seu Orçamento" />
             <a href="#sobre" className="btn-secondary" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
@@ -243,31 +237,6 @@ function Hero() {
               fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease",
               backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)",
             }}>Conheça a NAP</a>
-          </div>
-        </div>
-
-        {/* Right: Logo + tagline */}
-        <div className="hero-visual" style={{
-          display: "flex", flexDirection: "column", alignItems: "center", gap: 24,
-          animation: "fadeUp 1s ease-out 0.2s both",
-        }}>
-          <img
-            src="/nap-logo.jpg"
-            alt="NAP Tintas"
-            style={{
-              width: 240, height: 240, borderRadius: "50%", objectFit: "cover",
-              boxShadow: "0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(27,58,140,0.4)",
-            }}
-          />
-          <div style={{ textAlign: "center" }}>
-            <div style={{
-              fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 28,
-              color: "#fff", letterSpacing: "0.12em",
-            }}>+2.000</div>
-            <div style={{
-              fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.5)",
-              textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700,
-            }}>Opções de Cores<br />Misturadas na Hora</div>
           </div>
         </div>
       </div>
