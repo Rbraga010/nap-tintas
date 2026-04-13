@@ -561,7 +561,7 @@ function DepoimentosSection() {
       {/* Dark overlay 45% */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
-        background: "rgba(10, 14, 26, 0.55)",
+        background: "rgba(10, 14, 26, 0.72)",
       }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
@@ -578,71 +578,45 @@ function DepoimentosSection() {
         </RevealWrap>
 
         <div className="depo-grid" style={{
-          display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20,
+          display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14,
         }}>
           {DEPOIMENTOS.map((d, i) => (
-            <RevealWrap key={i} delay={i * 0.06}>
+            <RevealWrap key={i} delay={i * 0.05}>
               <div className="glow-border-wrap" style={{
-                borderRadius: 20, padding: 2, position: "relative",
+                borderRadius: 16, padding: 2, position: "relative",
                 overflow: "hidden", height: "100%",
               }}>
-                {/* Animated glow border */}
                 <div className="glow-spinner" />
                 <div className="depo-card" style={{
-                  background: "rgba(13,27,62,0.85)",
-                  borderRadius: 18, padding: "28px 24px",
+                  background: "rgba(13,27,62,0.88)",
+                  borderRadius: 14, padding: "20px 18px",
                   backdropFilter: "blur(16px)",
                   transition: "all 0.3s ease",
                   display: "flex", flexDirection: "column", height: "100%",
                   position: "relative", zIndex: 2,
                 }}>
-                {/* Header: avatar + name + handle */}
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-                  <div style={{
-                    width: 48, height: 48, borderRadius: "50%", flexShrink: 0,
-                    background: `linear-gradient(135deg, ${d.color}, ${d.color}aa)`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "'Montserrat', sans-serif", fontWeight: 900,
-                    fontSize: 20, color: "#fff",
-                    boxShadow: `0 4px 16px ${d.color}30`,
+                  {/* Text first — emphasis */}
+                  <p style={{
+                    fontFamily: "'Nunito', sans-serif", fontSize: 14,
+                    color: "rgba(255,255,255,0.8)", lineHeight: 1.6,
+                    fontStyle: "italic", flex: 1, marginBottom: 14,
                   }}>
-                    {d.name.charAt(0).toUpperCase()}
+                    &ldquo;{d.text}&rdquo;
+                  </p>
+
+                  {/* Stars + Name */}
+                  <div style={{ display: "flex", gap: 2, marginBottom: 6 }}>
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} width={13} height={13} viewBox="0 0 24 24" fill="#FFD700">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    ))}
                   </div>
-                  <div>
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: 15, color: "#fff" }}>{d.name}</div>
-                    <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{d.handle}</div>
-                  </div>
+                  <div style={{
+                    fontFamily: "'Montserrat', sans-serif", fontWeight: 800,
+                    fontSize: 13, color: "rgba(255,255,255,0.9)",
+                  }}>— {d.name}</div>
                 </div>
-
-                {/* Stars */}
-                <div style={{ marginBottom: 14, display: "flex", gap: 3 }}>
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} width={16} height={16} viewBox="0 0 24 24" fill="#FFD700">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-
-                {/* Text */}
-                <p style={{
-                  fontFamily: "'Nunito', sans-serif", fontSize: 15,
-                  color: "rgba(255,255,255,0.7)", lineHeight: 1.65,
-                  fontStyle: "italic", flex: 1,
-                }}>
-                  &ldquo;{d.text}&rdquo;
-                </p>
-
-                {/* Badge */}
-                <div style={{
-                  marginTop: 16, display: "inline-flex", alignItems: "center", gap: 6,
-                  padding: "5px 12px", borderRadius: 20, alignSelf: "flex-start",
-                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)",
-                  fontFamily: "'Nunito', sans-serif", fontSize: 11, fontWeight: 700,
-                  color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.04em",
-                }}>
-                  <span style={{ fontSize: 13 }}>📸</span> Via Instagram
-                </div>
-              </div>
               </div>
             </RevealWrap>
           ))}
