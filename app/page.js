@@ -782,8 +782,8 @@ export default function Home() {
       <DiferenciaisSection />
       <ValoresSection />
       <Pintores />
-      <DepoimentosSection />
       <CTASection />
+      <DepoimentosSection />
       <OndeEstamos />
       <Footer />
       <FloatingWhatsApp />
