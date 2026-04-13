@@ -261,7 +261,7 @@ function Marquee() {
     }}>
       <div className="marquee-track" style={{
         display: "flex", gap: 48, whiteSpace: "nowrap",
-        animation: "marqueeScroll 15s linear infinite",
+        animation: "marqueeScroll 8s linear infinite",
       }}>
         {repeated.map((item, i) => (
           <div key={i} style={{
