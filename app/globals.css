@@ -1,15 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Nunito:wght@400;600;700;800&display=swap');
 
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -17,17 +10,10 @@ body {
   overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
+img, svg { max-width: 100%; height: auto; }
 
-img, svg {
-  max-width: 100%;
-  height: auto;
-}
-
-/* ---- ANIMATIONS ---- */
+/* ========== ANIMATIONS ========== */
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -39,7 +25,50 @@ img, svg {
   100% { transform: translateX(-33.333%); }
 }
 
-/* ---- HOVER (desktop only) ---- */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 24px rgba(37,211,102,0.5); }
+  50% { box-shadow: 0 4px 36px rgba(37,211,102,0.8), 0 0 0 12px rgba(37,211,102,0.1); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.15); }
+}
+
+/* ========== MICRO INTERACTIONS ========== */
+
+/* WhatsApp floating pulse */
+.floating-wpp { animation: pulse 2.5s ease infinite; }
+
+/* Heart beat in footer */
+.heart-beat { animation: heartBeat 1.8s ease infinite; }
+
+/* Nav link underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: currentColor;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Social icons */
+.social-icon:hover {
+  background: rgba(255,255,255,0.15) !important;
+  transform: translateY(-2px);
+}
+
+/* Marquee */
+.marquee-track { will-change: transform; }
+
+/* Video GIF */
+.video-gif { image-rendering: auto; }
+
+/* ========== HOVER (desktop only) ========== */
 
 @media (hover: hover) {
   .wpp-btn:hover {
@@ -47,15 +76,22 @@ img, svg {
     box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important;
   }
   .btn-secondary:hover {
-    background: rgba(255,255,255,0.2) !important;
-    border-color: rgba(255,255,255,0.8) !important;
+    background: rgba(255,255,255,0.15) !important;
+    border-color: rgba(255,255,255,0.6) !important;
   }
-  .diff-card:hover {
-    transform: translateY(-4px);
+  .glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1) !important;
   }
+  .glass-card-dark:hover {
+    background: rgba(255,255,255,0.1) !important;
+    transform: translateY(-3px);
+  }
+  .nav-link:hover { opacity: 1 !important; }
+  .nav-link:hover::after { width: 100%; }
 }
 
-/* ---- NAV ---- */
+/* ========== NAV RESPONSIVE ========== */
 
 @media (max-width: 768px) {
   .nav-desk { display: none !important; }
@@ -65,21 +101,7 @@ img, svg {
   .nav-mob-menu { display: none !important; }
 }
 
-/* ---- MARQUEE ---- */
-
-.marquee-track {
-  will-change: transform;
-}
-
-/* ---- VIDEO GIF ---- */
-
-.video-gif {
-  image-rendering: auto;
-}
-
-/* =========================================
-   TABLET (max 900px)
-   ========================================= */
+/* ========== TABLET (900px) ========== */
 
 @media (max-width: 900px) {
   .hero-inner {
@@ -90,43 +112,30 @@ img, svg {
     max-width: 100% !important;
     text-align: center !important;
   }
-  .hero-ctas {
-    justify-content: center !important;
-  }
-  .diff-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  .hero-ctas { justify-content: center !important; }
+  .diff-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .pintores-grid { grid-template-columns: 1fr !important; }
 }
 
-/* =========================================
-   MOBILE (max 600px)
-   ========================================= */
+/* ========== MOBILE (600px) ========== */
 
 @media (max-width: 600px) {
-
-  /* Hero */
   .hero-section {
     min-height: 100svh !important;
     min-height: 100vh !important;
   }
-  .hero-inner {
-    padding: 80px 20px 36px !important;
-  }
+  .hero-inner { padding: 80px 20px 36px !important; }
   .hero-h1 {
     font-size: clamp(26px, 8vw, 40px) !important;
-    line-height: 1.15 !important;
+    line-height: 1.18 !important;
   }
-  .hero-sub {
-    font-size: 15px !important;
-    line-height: 1.7 !important;
-  }
+  .hero-sub { font-size: 15px !important; }
   .hero-ctas {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 12px !important;
   }
-  .hero-ctas a,
-  .hero-ctas .wpp-btn {
+  .hero-ctas a, .hero-ctas .wpp-btn {
     width: 100% !important;
     justify-content: center !important;
     text-align: center !important;
@@ -134,7 +143,6 @@ img, svg {
     font-size: 16px !important;
   }
 
-  /* Grids → single column */
   .diff-grid,
   .valores-grid,
   .pintores-grid,
@@ -143,20 +151,20 @@ img, svg {
     gap: 14px !important;
   }
 
-  /* Sections */
-  .section-pad {
-    padding: 56px 18px !important;
-  }
+  .section-pad { padding: 56px 18px !important; }
   .section-title {
     font-size: clamp(22px, 6.5vw, 32px) !important;
     line-height: 1.25 !important;
   }
-  .tag {
-    font-size: 11px !important;
-  }
+  .tag { font-size: 11px !important; }
+
+  /* Timeline mobile */
+  .timeline { padding-left: 32px !important; }
+  .timeline-line { left: 11px !important; }
+  .timeline-item { padding-left: 20px !important; }
 }
 
-/* Viewport height fix for mobile Safari */
+/* Viewport fix */
 @supports (min-height: 100svh) {
   .hero-section { min-height: 100svh; }
 }
