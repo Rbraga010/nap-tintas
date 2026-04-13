@@ -523,6 +523,110 @@ function Pintores() {
   );
 }
 
+// ---- DEPOIMENTOS ----
+
+const DEPOIMENTOS = [
+  { name: "Osnir Z.", handle: "@osnir_zanardo", text: "Recomendo! Já fiz algumas melhorias com as ideias e tintas que trouxeram. Vai com tudo!", color: COLORS.blue },
+  { name: "Vitincarvalhoo", handle: "@vitincarvalhoo", text: "Melhor loja de Sorocaba e região!", color: COLORS.green },
+  { name: "Frangravalos", handle: "@frangravalos_", text: "Eu amo essa cor — escolhi pra minha casa nesse tom e ficou lindíssima!", color: COLORS.pink },
+  { name: "Ana Claudia G.", handle: "@anaclaudia.garrido3", text: "Vocês se superam a cada vídeo! A loja é incrível.", color: COLORS.orange },
+  { name: "Giselegaloni", handle: "@giselegaloni", text: "Sucesso! Estamos construindo — chegando nessa parte já vamos chamar vocês!", color: COLORS.yellow },
+  { name: "Solange D.", handle: "@solangedutravieira", text: "Deus abençoe essa família tão querida!", color: COLORS.red },
+  { name: "Veronica D.", handle: "@veronica.l.dourado", text: "Nossa, que tinta mágica! Ficou perfeito!", color: COLORS.blue },
+  { name: "Privilela", handle: "@privilela__", text: "Perfeita essa tinta! Aprovadíssima!", color: COLORS.green },
+  { name: "Danieliar", handle: "@danieliar", text: "Que Deus abençoe! Logo logo estaremos aí!", color: COLORS.orange },
+  { name: "Lucia Carvalho", handle: "@luciacarvalho494", text: "Muito bom! Deus abençoe vocês!", color: COLORS.pink },
+  { name: "Leandro M.", handle: "@leandro.martines.16", text: "Que top! Muito bom mesmo!", color: COLORS.yellow },
+  { name: "Aline Amaral", handle: "@alineamaral.psicologia", text: "Estou apaixonada pela NAP Tintas. Parabéns a todos!", color: COLORS.red },
+];
+
+function DepoimentosSection() {
+  return (
+    <section id="depoimentos" className="section-pad" style={{
+      background: `linear-gradient(180deg, ${COLORS.darkBlue} 0%, #132d54 100%)`,
+      padding: "100px 24px",
+    }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <RevealWrap>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Depoimentos</p>
+            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
+              O que nossos clientes dizem
+            </h2>
+            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.55)", maxWidth: 520, margin: "0 auto", lineHeight: 1.7 }}>
+              Quem já nos conhece, recomenda. Veja o que estão falando sobre a NAP Tintas.
+            </p>
+          </div>
+        </RevealWrap>
+
+        <div className="depo-grid" style={{
+          display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20,
+        }}>
+          {DEPOIMENTOS.map((d, i) => (
+            <RevealWrap key={i} delay={i * 0.06}>
+              <div className="glass-card-dark depo-card" style={{
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 20, padding: "28px 24px",
+                backdropFilter: "blur(8px)",
+                transition: "all 0.3s ease",
+                display: "flex", flexDirection: "column", height: "100%",
+              }}>
+                {/* Header: avatar + name + handle */}
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: "50%", flexShrink: 0,
+                    background: `linear-gradient(135deg, ${d.color}, ${d.color}aa)`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontFamily: "'Montserrat', sans-serif", fontWeight: 900,
+                    fontSize: 20, color: "#fff",
+                    boxShadow: `0 4px 16px ${d.color}30`,
+                  }}>
+                    {d.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: 15, color: "#fff" }}>{d.name}</div>
+                    <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{d.handle}</div>
+                  </div>
+                </div>
+
+                {/* Stars */}
+                <div style={{ marginBottom: 14, display: "flex", gap: 3 }}>
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} width={16} height={16} viewBox="0 0 24 24" fill="#FFD700">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Text */}
+                <p style={{
+                  fontFamily: "'Nunito', sans-serif", fontSize: 15,
+                  color: "rgba(255,255,255,0.7)", lineHeight: 1.65,
+                  fontStyle: "italic", flex: 1,
+                }}>
+                  &ldquo;{d.text}&rdquo;
+                </p>
+
+                {/* Badge */}
+                <div style={{
+                  marginTop: 16, display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "5px 12px", borderRadius: 20, alignSelf: "flex-start",
+                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)",
+                  fontFamily: "'Nunito', sans-serif", fontSize: 11, fontWeight: 700,
+                  color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.04em",
+                }}>
+                  <span style={{ fontSize: 13 }}>📸</span> Via Instagram
+                </div>
+              </div>
+            </RevealWrap>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ---- CTA ----
 
 function CTASection() {
@@ -653,6 +757,7 @@ export default function Home() {
       <DiferenciaisSection />
       <ValoresSection />
       <Pintores />
+      <DepoimentosSection />
       <CTASection />
       <OndeEstamos />
       <Footer />
