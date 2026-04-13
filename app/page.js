@@ -321,8 +321,13 @@ function Marquee() {
 
 function HistoriaVideo() {
   return (
-    <section style={{ width: "100%", lineHeight: 0, background: "#fff", display: "flex", justifyContent: "center" }}>
-      <img src="/hero-bg.gif" alt="NAP Tintas — Pigmentos" style={{ width: "100%", display: "block" }} />
+    <section style={{ width: "100%", lineHeight: 0, background: "#fff" }}>
+      <video
+        autoPlay loop muted playsInline
+        style={{ width: "100%", display: "block" }}
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
     </section>
   );
 }
