@@ -548,10 +548,23 @@ const DEPOIMENTOS = [
 function DepoimentosSection() {
   return (
     <section id="depoimentos" className="section-pad" style={{
-      background: `linear-gradient(180deg, ${COLORS.darkBlue} 0%, #132d54 100%)`,
+      position: "relative", overflow: "hidden",
       padding: "100px 24px",
     }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      {/* Video background */}
+      <video autoPlay loop muted playsInline style={{
+        position: "absolute", inset: 0, width: "100%", height: "100%",
+        objectFit: "cover", zIndex: 0,
+      }}>
+        <source src="/depo-bg.mp4" type="video/mp4" />
+      </video>
+      {/* Dark overlay 45% */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: "rgba(10, 14, 26, 0.55)",
+      }} />
+
+      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Depoimentos</p>
@@ -569,14 +582,20 @@ function DepoimentosSection() {
         }}>
           {DEPOIMENTOS.map((d, i) => (
             <RevealWrap key={i} delay={i * 0.06}>
-              <div className="glass-card-dark depo-card" style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 20, padding: "28px 24px",
-                backdropFilter: "blur(8px)",
-                transition: "all 0.3s ease",
-                display: "flex", flexDirection: "column", height: "100%",
+              <div className="glow-border-wrap" style={{
+                borderRadius: 20, padding: 2, position: "relative",
+                overflow: "hidden", height: "100%",
               }}>
+                {/* Animated glow border */}
+                <div className="glow-spinner" />
+                <div className="depo-card" style={{
+                  background: "rgba(13,27,62,0.85)",
+                  borderRadius: 18, padding: "28px 24px",
+                  backdropFilter: "blur(16px)",
+                  transition: "all 0.3s ease",
+                  display: "flex", flexDirection: "column", height: "100%",
+                  position: "relative", zIndex: 2,
+                }}>
                 {/* Header: avatar + name + handle */}
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
                   <div style={{
@@ -623,6 +642,7 @@ function DepoimentosSection() {
                 }}>
                   <span style={{ fontSize: 13 }}>📸</span> Via Instagram
                 </div>
+              </div>
               </div>
             </RevealWrap>
           ))}
