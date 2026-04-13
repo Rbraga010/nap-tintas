@@ -332,7 +332,7 @@ function HistoriaVideo() {
 function Sobre() {
   return (
     <section id="sobre" className="section-pad" style={{ background: "#fff", padding: "100px 24px", position: "relative" }}>
-      <WaveDivider flip color={COLORS.darkBg} />
+
       <div style={{ maxWidth: 800, margin: "0 auto", paddingTop: 20 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
@@ -476,7 +476,7 @@ function Pintores() {
       background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #0d2f5e 100%)`,
       padding: "100px 24px", position: "relative", overflow: "hidden",
     }}>
-      <WaveDivider flip color="#fff" />
+
       <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2, paddingTop: 20 }}>
         <RevealWrap>
           <div style={{
@@ -528,7 +528,7 @@ function Pintores() {
 function CTASection() {
   return (
     <section className="section-pad" style={{ background: "#fff", padding: "100px 24px", position: "relative" }}>
-      <WaveDivider flip color={COLORS.darkBlue} />
+
       <RevealWrap>
         <div style={{
           maxWidth: 800, margin: "0 auto", textAlign: "center",
@@ -608,7 +608,7 @@ function OndeEstamos() {
 function Footer() {
   return (
     <footer style={{ background: COLORS.darkBlue, padding: "48px 24px 32px", textAlign: "center", position: "relative" }}>
-      <WaveDivider flip color={COLORS.offWhite} />
+
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 20, paddingTop: 12 }}>
         <NAPLogo size={32} light />
       </div>
