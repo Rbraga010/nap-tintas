@@ -246,32 +246,19 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right: Color wheel + tagline */}
+        {/* Right: Logo + tagline */}
         <div className="hero-visual" style={{
           display: "flex", flexDirection: "column", alignItems: "center", gap: 24,
           animation: "fadeUp 1s ease-out 0.2s both",
         }}>
-          <div style={{
-            width: 220, height: 220, borderRadius: "50%", position: "relative",
-            background: `conic-gradient(
-              ${COLORS.red} 0deg, ${COLORS.orange} 50deg, ${COLORS.yellow} 100deg,
-              ${COLORS.green} 160deg, ${COLORS.blue} 220deg, #7B1FA2 280deg,
-              ${COLORS.pink} 330deg, ${COLORS.red} 360deg
-            )`,
-            boxShadow: "0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(27,58,140,0.4)",
-          }}>
-            <div style={{
-              position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
-              width: 80, height: 80, borderRadius: "50%", background: COLORS.darkBlue,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "inset 0 2px 20px rgba(0,0,0,0.3)",
-            }}>
-              <div style={{
-                fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 20,
-                color: "#fff", letterSpacing: "0.06em", textAlign: "center", lineHeight: 1.1,
-              }}>NAP</div>
-            </div>
-          </div>
+          <img
+            src="/nap-logo.jpg"
+            alt="NAP Tintas"
+            style={{
+              width: 240, height: 240, borderRadius: "50%", objectFit: "cover",
+              boxShadow: "0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(27,58,140,0.4)",
+            }}
+          />
           <div style={{ textAlign: "center" }}>
             <div style={{
               fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 28,
@@ -305,7 +292,7 @@ function Marquee() {
     }}>
       <div className="marquee-track" style={{
         display: "flex", gap: 48, whiteSpace: "nowrap",
-        animation: "marqueeScroll 30s linear infinite",
+        animation: "marqueeScroll 15s linear infinite",
       }}>
         {repeated.map((item, i) => (
           <div key={i} style={{
@@ -341,9 +328,7 @@ function HistoriaVideo() {
         </p>
         <div className="video-wrapper" style={{
           borderRadius: 24, overflow: "hidden",
-          boxShadow: "0 12px 60px rgba(13,27,62,0.2)",
           maxWidth: 750, margin: "0 auto",
-          border: `3px solid ${COLORS.blue}18`,
         }}>
           <img
             src="/hero-bg.gif"
