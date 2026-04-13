@@ -39,23 +39,23 @@ img, svg {
   100% { transform: translateX(-33.333%); }
 }
 
-/* ---- HOVER EFFECTS ---- */
+/* ---- HOVER (desktop only) ---- */
 
-.wpp-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important;
+@media (hover: hover) {
+  .wpp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.2) !important;
+    border-color: rgba(255,255,255,0.8) !important;
+  }
+  .diff-card:hover {
+    transform: translateY(-4px);
+  }
 }
 
-.btn-secondary:hover {
-  background: rgba(255,255,255,0.2) !important;
-  border-color: rgba(255,255,255,0.8) !important;
-}
-
-.diff-card:hover {
-  transform: translateY(-4px);
-}
-
-/* ---- NAV RESPONSIVE ---- */
+/* ---- NAV ---- */
 
 @media (max-width: 768px) {
   .nav-desk { display: none !important; }
@@ -65,12 +65,26 @@ img, svg {
   .nav-mob-menu { display: none !important; }
 }
 
-/* ---- HERO MOBILE ---- */
+/* ---- MARQUEE ---- */
+
+.marquee-track {
+  will-change: transform;
+}
+
+/* ---- VIDEO GIF ---- */
+
+.video-gif {
+  image-rendering: auto;
+}
+
+/* =========================================
+   TABLET (max 900px)
+   ========================================= */
 
 @media (max-width: 900px) {
   .hero-inner {
     justify-content: center !important;
-    padding: 100px 24px 60px !important;
+    padding: 100px 28px 60px !important;
   }
   .hero-copy {
     max-width: 100% !important;
@@ -79,76 +93,70 @@ img, svg {
   .hero-ctas {
     justify-content: center !important;
   }
+  .diff-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
+/* =========================================
+   MOBILE (max 600px)
+   ========================================= */
+
 @media (max-width: 600px) {
+
+  /* Hero */
   .hero-section {
     min-height: 100svh !important;
+    min-height: 100vh !important;
   }
   .hero-inner {
-    padding: 90px 20px 40px !important;
+    padding: 80px 20px 36px !important;
   }
   .hero-h1 {
-    font-size: clamp(26px, 7.5vw, 38px) !important;
+    font-size: clamp(26px, 8vw, 40px) !important;
+    line-height: 1.15 !important;
   }
   .hero-sub {
     font-size: 15px !important;
+    line-height: 1.7 !important;
   }
   .hero-ctas {
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: stretch !important;
+    gap: 12px !important;
   }
-  .hero-ctas a {
-    width: 100%;
-    max-width: 300px;
-    justify-content: center;
+  .hero-ctas a,
+  .hero-ctas .wpp-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 16px 24px !important;
+    font-size: 16px !important;
   }
-}
 
-/* ---- MARQUEE ---- */
-
-.marquee-track {
-  will-change: transform;
-}
-
-/* ---- VIDEO WRAPPER MOBILE ---- */
-
-@media (max-width: 600px) {
-  .video-wrapper {
-    border-radius: 16px !important;
-    margin: 0 !important;
-  }
-}
-
-/* ---- GRIDS MOBILE ---- */
-
-@media (max-width: 900px) {
-  .diff-grid { grid-template-columns: repeat(2, 1fr) !important; }
-}
-@media (max-width: 600px) {
-  .diff-grid { grid-template-columns: 1fr !important; }
-  .valores-grid { grid-template-columns: 1fr !important; }
-  .pintores-grid { grid-template-columns: 1fr !important; }
-}
-@media (max-width: 700px) {
+  /* Grids → single column */
+  .diff-grid,
+  .valores-grid,
+  .pintores-grid,
   .contato-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 14px !important;
   }
-}
 
-/* ---- SECTIONS MOBILE ---- */
-
-@media (max-width: 600px) {
+  /* Sections */
   .section-pad {
-    padding: 64px 16px !important;
+    padding: 56px 18px !important;
   }
   .section-title {
-    font-size: clamp(22px, 6vw, 32px) !important;
+    font-size: clamp(22px, 6.5vw, 32px) !important;
+    line-height: 1.25 !important;
+  }
+  .tag {
+    font-size: 11px !important;
   }
 }
 
-/* Viewport height fix for mobile browsers */
+/* Viewport height fix for mobile Safari */
 @supports (min-height: 100svh) {
   .hero-section { min-height: 100svh; }
 }
