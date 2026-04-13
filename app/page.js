@@ -186,87 +186,171 @@ function NavBar() {
 function Hero() {
   return (
     <section id="hero" className="hero-section" style={{
-      minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      position: "relative", overflow: "hidden", background: COLORS.darkBg,
+      minHeight: "100vh", display: "flex", alignItems: "center",
+      position: "relative", overflow: "hidden",
+      background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.blue} 50%, #1a4fad 100%)`,
     }}>
-      <div className="hero-bg" style={{
-        position: "absolute", inset: 0, zIndex: 0,
-        backgroundImage: "url(/hero-bg.gif)",
-        backgroundSize: "contain", backgroundPosition: "center 60%",
-        backgroundRepeat: "no-repeat",
-      }} />
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 1,
-        background: `linear-gradient(180deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.45) 45%, rgba(10,14,26,0.30) 65%, rgba(10,14,26,0.75) 100%)`,
-      }} />
+      {/* Paint decorative elements */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, overflow: "hidden", opacity: 0.12 }}>
+        <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: COLORS.yellow, filter: "blur(100px)" }} />
+        <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 450, height: 450, borderRadius: "50%", background: COLORS.pink, filter: "blur(100px)" }} />
+        <div style={{ position: "absolute", top: "30%", left: "15%", width: 300, height: 300, borderRadius: "50%", background: COLORS.green, filter: "blur(80px)" }} />
+        <div style={{ position: "absolute", top: "10%", right: "20%", width: 200, height: 200, borderRadius: "50%", background: COLORS.orange, filter: "blur(70px)" }} />
+      </div>
+      {/* Paint drip stripes */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, zIndex: 1, background: `linear-gradient(90deg, ${COLORS.red}, ${COLORS.orange}, ${COLORS.yellow}, ${COLORS.green}, ${COLORS.blue}, #7B1FA2, ${COLORS.pink})` }} />
 
-      <div className="hero-content" style={{
-        position: "relative", zIndex: 2, textAlign: "center",
-        padding: "100px 24px 60px", maxWidth: 800, width: "100%",
-        animation: "fadeUp 0.8s ease-out",
+      <div className="hero-inner" style={{
+        position: "relative", zIndex: 2,
+        maxWidth: 1200, margin: "0 auto", width: "100%",
+        padding: "120px 48px 80px",
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 48,
       }}>
-        <div style={{
-          display: "inline-block", padding: "8px 20px", borderRadius: 40,
-          background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
-          backdropFilter: "blur(8px)", marginBottom: 28,
-        }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, letterSpacing: "0.06em" }}>
-            Inauguramos em Sorocaba
-          </span>
+        {/* Left: Copy */}
+        <div className="hero-copy" style={{ flex: 1, maxWidth: 640, animation: "fadeUp 0.8s ease-out" }}>
+          <div style={{
+            display: "inline-block", padding: "8px 20px", borderRadius: 40,
+            background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
+            backdropFilter: "blur(8px)", marginBottom: 28,
+          }}>
+            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, letterSpacing: "0.06em" }}>
+              Inauguramos em Sorocaba
+            </span>
+          </div>
+
+          <h1 className="hero-h1" style={{
+            fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(30px, 4.5vw, 52px)",
+            fontWeight: 900, color: "#fff", lineHeight: 1.12,
+            letterSpacing: "-0.02em", marginBottom: 24,
+          }}>
+            A cor que <em style={{ fontStyle: "italic", color: COLORS.yellow }}>transforma</em> o seu espaço começa com uma <em style={{ fontStyle: "italic", color: COLORS.green }}>boa conversa</em>.
+          </h1>
+
+          <p className="hero-sub" style={{
+            fontFamily: "'Nunito', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)",
+            color: "rgba(255,255,255,0.7)", lineHeight: 1.75, maxWidth: 520, marginBottom: 40,
+          }}>
+            Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
+          </p>
+
+          <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <WhatsAppBtn text="Peça seu Orçamento" />
+            <a href="#sobre" className="btn-secondary" style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "16px 32px", borderRadius: 60,
+              border: "2px solid rgba(255,255,255,0.35)", color: "#fff",
+              fontSize: 17, fontWeight: 700, textDecoration: "none",
+              fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease",
+              backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)",
+            }}>Conheça a NAP</a>
+          </div>
         </div>
 
-        <h1 className="hero-h1" style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(28px, 5.5vw, 52px)",
-          fontWeight: 900, color: "rgba(255,255,255,0.95)", lineHeight: 1.15,
-          letterSpacing: "-0.02em", marginBottom: 24,
-          textShadow: "0 2px 20px rgba(0,0,0,0.3)",
+        {/* Right: Color wheel + tagline */}
+        <div className="hero-visual" style={{
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 24,
+          animation: "fadeUp 1s ease-out 0.2s both",
         }}>
-          A cor que <em style={{ fontStyle: "italic", color: COLORS.yellow }}>transforma</em> o seu espaço começa com uma <em style={{ fontStyle: "italic", color: COLORS.green }}>boa conversa</em>.
-        </h1>
-
-        <p className="hero-sub" style={{
-          fontFamily: "'Nunito', sans-serif", fontSize: "clamp(15px, 2.2vw, 18px)",
-          color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 560, margin: "0 auto 36px",
-        }}>
-          Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
-        </p>
-
-        <div className="hero-ctas" style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <WhatsAppBtn text="Peça seu Orçamento" />
-          <a href="#sobre" className="btn-secondary" style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "16px 32px", borderRadius: 60,
-            border: "2px solid rgba(255,255,255,0.4)", color: "#fff",
-            fontSize: 17, fontWeight: 700, textDecoration: "none",
-            fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease",
-            backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)",
-          }}>Conheça a NAP</a>
+          <div style={{
+            width: 220, height: 220, borderRadius: "50%", position: "relative",
+            background: `conic-gradient(
+              ${COLORS.red} 0deg, ${COLORS.orange} 50deg, ${COLORS.yellow} 100deg,
+              ${COLORS.green} 160deg, ${COLORS.blue} 220deg, #7B1FA2 280deg,
+              ${COLORS.pink} 330deg, ${COLORS.red} 360deg
+            )`,
+            boxShadow: "0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(27,58,140,0.4)",
+          }}>
+            <div style={{
+              position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
+              width: 80, height: 80, borderRadius: "50%", background: COLORS.darkBlue,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "inset 0 2px 20px rgba(0,0,0,0.3)",
+            }}>
+              <div style={{
+                fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 20,
+                color: "#fff", letterSpacing: "0.06em", textAlign: "center", lineHeight: 1.1,
+              }}>NAP</div>
+            </div>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <div style={{
+              fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 28,
+              color: "#fff", letterSpacing: "0.12em",
+            }}>+2.000</div>
+            <div style={{
+              fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.5)",
+              textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700,
+            }}>Opções de Cores<br />Misturadas na Hora</div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function TrustBar() {
+function Marquee() {
   const items = [
-    { icon: "⭐", label: "+20 anos de experiência" },
-    { icon: "🎨", label: "+2.000 cores na hora" },
-    { icon: "🚚", label: "Entrega disponível" },
-    { icon: "👨‍👩‍👧‍👦", label: "Atendimento familiar" },
+    { icon: "⭐", text: "+20 anos de experiência" },
+    { icon: "🎨", text: "+2.000 cores na hora" },
+    { icon: "🚚", text: "Entrega disponível" },
+    { icon: "👨‍👩‍👧‍👦", text: "Atendimento familiar" },
+    { icon: "🎯", text: "Consultoria gratuita" },
+    { icon: "🏆", text: "Marcas líderes do mercado" },
   ];
+  const repeated = [...items, ...items, ...items];
   return (
-    <section style={{ background: COLORS.darkBlue, padding: "48px 24px" }}>
-      <div className="trust-grid" style={{
-        maxWidth: 1100, margin: "0 auto",
-        display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24,
-        textAlign: "center",
+    <section style={{
+      background: COLORS.darkBlue, padding: "20px 0", overflow: "hidden",
+      borderTop: `3px solid ${COLORS.blue}`, borderBottom: `3px solid ${COLORS.blue}`,
+    }}>
+      <div className="marquee-track" style={{
+        display: "flex", gap: 48, whiteSpace: "nowrap",
+        animation: "marqueeScroll 30s linear infinite",
       }}>
-        {items.map((s, i) => (
-          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <div style={{ fontSize: 28 }}>{s.icon}</div>
-            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</div>
+        {repeated.map((item, i) => (
+          <div key={i} style={{
+            display: "flex", alignItems: "center", gap: 10, flexShrink: 0,
+          }}>
+            <span style={{ fontSize: 22 }}>{item.icon}</span>
+            <span style={{
+              fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 700,
+              color: "rgba(255,255,255,0.7)", textTransform: "uppercase",
+              letterSpacing: "0.05em",
+            }}>{item.text}</span>
+            <span style={{ color: "rgba(255,255,255,0.15)", fontSize: 20, marginLeft: 8 }}>|</span>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function HistoriaVideo() {
+  return (
+    <section style={{
+      background: `linear-gradient(180deg, #fff 0%, ${COLORS.offWhite} 100%)`,
+      padding: "80px 24px", textAlign: "center",
+    }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Nossa Essência</p>
+        <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 3.5vw, 36px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 12, lineHeight: 1.2 }}>
+          Nascemos de pigmentos essenciais.
+        </h2>
+        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, color: "#999", marginBottom: 40, maxWidth: 500, margin: "0 auto 40px" }}>
+          Colorir, Solucionar, Capacitar — cada cor carrega um propósito.
+        </p>
+        <div className="video-wrapper" style={{
+          borderRadius: 24, overflow: "hidden",
+          boxShadow: "0 12px 60px rgba(13,27,62,0.2)",
+          maxWidth: 750, margin: "0 auto",
+          border: `3px solid ${COLORS.blue}18`,
+        }}>
+          <img
+            src="/hero-bg.gif"
+            alt="NAP Tintas — Pigmentos que nos movem: Colorir, Solucionar, Capacitar, Sonho, Amor, Família"
+            style={{ width: "100%", display: "block" }}
+          />
+        </div>
       </div>
     </section>
   );
@@ -516,7 +600,8 @@ export default function Home() {
     <div style={{ background: "#fff", minHeight: "100vh" }}>
       <NavBar />
       <Hero />
-      <TrustBar />
+      <Marquee />
+      <HistoriaVideo />
       <Sobre />
       <DiferenciaisSection />
       <ValoresSection />

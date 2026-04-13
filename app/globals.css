@@ -27,18 +27,20 @@ img, svg {
   height: auto;
 }
 
+/* ---- ANIMATIONS ---- */
+
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hover effects for desktop */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ---- HOVER EFFECTS ---- */
+
 .wpp-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important;
@@ -53,34 +55,41 @@ img, svg {
   transform: translateY(-4px);
 }
 
-/* ---- DESKTOP NAV ---- */
+/* ---- NAV RESPONSIVE ---- */
+
 @media (max-width: 768px) {
-  .nav-desk {
-    display: none !important;
-  }
-  .nav-mob-btn {
-    display: block !important;
-  }
+  .nav-desk { display: none !important; }
+  .nav-mob-btn { display: block !important; }
 }
-
 @media (min-width: 769px) {
-  .nav-mob-menu {
+  .nav-mob-menu { display: none !important; }
+}
+
+/* ---- HERO MOBILE ---- */
+
+@media (max-width: 900px) {
+  .hero-inner {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 100px 24px 60px !important;
+  }
+  .hero-copy {
+    max-width: 100% !important;
+    align-items: center;
+  }
+  .hero-ctas {
+    justify-content: center !important;
+  }
+  .hero-visual {
     display: none !important;
   }
 }
 
-/* ---- MOBILE RESPONSIVENESS ---- */
-
-/* Hero mobile */
 @media (max-width: 600px) {
   .hero-section {
     min-height: 100svh !important;
   }
-  .hero-bg {
-    background-size: cover !important;
-    background-position: center center !important;
-  }
-  .hero-content {
+  .hero-inner {
     padding: 90px 20px 40px !important;
   }
   .hero-h1 {
@@ -100,41 +109,31 @@ img, svg {
   }
 }
 
-/* Trust bar mobile */
+/* ---- MARQUEE ---- */
+
+.marquee-track {
+  will-change: transform;
+}
+
+/* ---- VIDEO WRAPPER MOBILE ---- */
+
 @media (max-width: 600px) {
-  .trust-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px !important;
+  .video-wrapper {
+    border-radius: 16px !important;
+    margin: 0 !important;
   }
 }
 
-/* Diferenciais grid mobile */
+/* ---- GRIDS MOBILE ---- */
+
 @media (max-width: 900px) {
-  .diff-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  .diff-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (max-width: 600px) {
-  .diff-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .diff-grid { grid-template-columns: 1fr !important; }
+  .valores-grid { grid-template-columns: 1fr !important; }
+  .pintores-grid { grid-template-columns: 1fr !important; }
 }
-
-/* Valores grid mobile */
-@media (max-width: 600px) {
-  .valores-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Pintores grid mobile */
-@media (max-width: 600px) {
-  .pintores-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Contact grid mobile */
 @media (max-width: 700px) {
   .contato-grid {
     grid-template-columns: 1fr !important;
@@ -142,7 +141,8 @@ img, svg {
   }
 }
 
-/* Section padding mobile */
+/* ---- SECTIONS MOBILE ---- */
+
 @media (max-width: 600px) {
   .section-pad {
     padding: 64px 16px !important;
@@ -154,7 +154,5 @@ img, svg {
 
 /* Viewport height fix for mobile browsers */
 @supports (min-height: 100svh) {
-  .hero-section {
-    min-height: 100svh;
-  }
+  .hero-section { min-height: 100svh; }
 }
