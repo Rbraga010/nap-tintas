@@ -322,7 +322,7 @@ function Marquee() {
 function HistoriaVideo() {
   return (
     <section style={{ width: "100%", lineHeight: 0, background: "#fff", display: "flex", justifyContent: "center" }}>
-      <img src="/hero-bg.gif" alt="NAP Tintas — Pigmentos" style={{ width: "100%", maxWidth: 1400, display: "block", objectFit: "contain" }} />
+      <img src="/hero-bg.gif" alt="NAP Tintas — Pigmentos" style={{ width: "100%", display: "block" }} />
     </section>
   );
 }
@@ -752,6 +752,7 @@ export default function Home() {
       <NavBar />
       <Hero />
       <Marquee />
+      <HistoriaVideo />
       <Sobre />
       <DiferenciaisSection />
       <ValoresSection />
