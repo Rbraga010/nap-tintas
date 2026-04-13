@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Nunito:wght@400;600;700;800&display=swap');
 
 *, *::before, *::after {
   margin: 0;
@@ -8,16 +8,23 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
 }
 
 @keyframes fadeUp {
@@ -31,6 +38,22 @@ a {
   }
 }
 
+/* Hover effects for desktop */
+.wpp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2) !important;
+  border-color: rgba(255,255,255,0.8) !important;
+}
+
+.diff-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ---- DESKTOP NAV ---- */
 @media (max-width: 768px) {
   .nav-desk {
     display: none !important;
@@ -43,5 +66,95 @@ a {
 @media (min-width: 769px) {
   .nav-mob-menu {
     display: none !important;
+  }
+}
+
+/* ---- MOBILE RESPONSIVENESS ---- */
+
+/* Hero mobile */
+@media (max-width: 600px) {
+  .hero-section {
+    min-height: 100svh !important;
+  }
+  .hero-bg {
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+  .hero-content {
+    padding: 90px 20px 40px !important;
+  }
+  .hero-h1 {
+    font-size: clamp(24px, 7vw, 36px) !important;
+  }
+  .hero-sub {
+    font-size: 15px !important;
+  }
+  .hero-ctas {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .hero-ctas a {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+/* Trust bar mobile */
+@media (max-width: 600px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+}
+
+/* Diferenciais grid mobile */
+@media (max-width: 900px) {
+  .diff-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 600px) {
+  .diff-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Valores grid mobile */
+@media (max-width: 600px) {
+  .valores-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Pintores grid mobile */
+@media (max-width: 600px) {
+  .pintores-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Contact grid mobile */
+@media (max-width: 700px) {
+  .contato-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* Section padding mobile */
+@media (max-width: 600px) {
+  .section-pad {
+    padding: 64px 16px !important;
+  }
+  .section-title {
+    font-size: clamp(22px, 6vw, 32px) !important;
+  }
+}
+
+/* Viewport height fix for mobile browsers */
+@supports (min-height: 100svh) {
+  .hero-section {
+    min-height: 100svh;
   }
 }

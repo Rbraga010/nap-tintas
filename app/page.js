@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-const WHATSAPP_NUMBER = "5511999999999";
+const WHATSAPP_NUMBER = "5515999999999";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!`;
 
-// NAP brand colors extracted from their visual identity
 const COLORS = {
   blue: "#1B3A8C",
   green: "#4CAF50",
@@ -19,55 +18,22 @@ const COLORS = {
   darkBg: "#0A0E1A",
 };
 
-// NAP "pigmentos" — brand values
-const PIGMENTOS = [
-  { name: "Colorir", color: "#1B3A8C", icon: "🎨", desc: "Dar vida e cor a cada projeto, transformando ambientes com personalidade." },
-  { name: "Solucionar", color: "#4CAF50", icon: "🔧", desc: "Encontrar a solução certa pra cada necessidade — do pintor ao cliente final." },
-  { name: "Capacitar", color: "#F9A825", icon: "📚", desc: "Capacitar os profissionais da pintura, os que transformam sonhos em realidade." },
-];
-
 const VALORES = [
-  { name: "Sonho", color: "#FF6D00", emoji: "✨" },
-  { name: "Amor", color: "#D32F2F", emoji: "❤️" },
-  { name: "Família", color: "#E91E93", emoji: "👨‍👩‍👧‍👦" },
+  { name: "Amor", emoji: "❤️", color: COLORS.red, desc: "Paixão pelo que fazemos e por quem servimos." },
+  { name: "Confiança", emoji: "🤝", color: COLORS.blue, desc: "Relação construída com transparência e verdade." },
+  { name: "Integridade", emoji: "🛡️", color: COLORS.green, desc: "Fazer o certo, mesmo quando ninguém está olhando." },
+  { name: "Respeito", emoji: "🙏", color: COLORS.orange, desc: "Cada pessoa importa, cada necessidade é única." },
+  { name: "Desenvolvimento", emoji: "🌱", color: COLORS.yellow, desc: "Crescer é cuidar de gente e capacitar profissionais." },
 ];
 
-const CATALOG = [
-  {
-    id: "tintas",
-    title: "Tintas",
-    subtitle: "Látex, acrílica, esmalte e mais",
-    emoji: "🎨",
-    color: "#1B3A8C",
-    items: ["Tinta Látex Premium", "Acrílica Semi-Brilho", "Esmalte Sintético", "Tinta Epóxi", "Tinta para Piso", "Tinta Econômica"],
-  },
-  {
-    id: "texturas",
-    title: "Texturas & Efeitos",
-    subtitle: "Grafiato, rústico, cimento queimado",
-    emoji: "✨",
-    color: "#F9A825",
-    items: ["Grafiato Riscado", "Textura Rústica", "Textura Projetada", "Marmorato", "Cimento Queimado", "Efeito Camurça"],
-  },
-  {
-    id: "massas",
-    title: "Massas & Preparação",
-    subtitle: "Massa corrida, selador, fundo",
-    emoji: "🪣",
-    color: "#4CAF50",
-    items: ["Massa Corrida PVA", "Massa Acrílica", "Selador Acrílico", "Fundo Preparador", "Aguarrás", "Thinner"],
-  },
-  {
-    id: "ferramentas",
-    title: "Ferramentas",
-    subtitle: "Rolos, pincéis, lixas, acessórios",
-    emoji: "🖌️",
-    color: "#FF6D00",
-    items: ["Rolo de Lã 23cm", "Trincha Profissional", "Bandeja para Pintura", "Lixa d'Água", "Fita Crepe", "Desempenadeira"],
-  },
+const DIFERENCIAIS = [
+  { emoji: "🎨", title: "Sistema Tintométrico", desc: "Mais de 2.000 opções de cores misturadas na hora. O tom exato que você quer, sem erro, sem desperdício.", color: COLORS.blue },
+  { emoji: "💬", title: "Consultoria Personalizada", desc: "Nossa equipe orienta de verdade. Desde tons neutros até cores vibrantes e efeitos decorativos.", color: COLORS.green },
+  { emoji: "🪣", title: "Portfólio Completo", desc: "Tintas internas e externas, primers, texturas, efeitos decorativos e todos os acessórios. Tudo em um só lugar.", color: COLORS.orange },
+  { emoji: "🚚", title: "Entrega em Sorocaba", desc: "Comprou, a gente leva. Entrega disponível para Sorocaba e região. Sem complicação.", color: COLORS.pink },
+  { emoji: "⭐", title: "+20 Anos de Experiência", desc: "Duas décadas de mercado formaram nosso olhar técnico e nossa capacidade de orientação.", color: COLORS.yellow },
+  { emoji: "👨‍👩‍👧‍👦", title: "Atendimento Familiar", desc: "Aqui você é recebido como gente, não como número. Somos uma loja de família.", color: COLORS.red },
 ];
-
-const BRANDS = ["Suvinil", "Coral", "Sherwin-Williams", "Lukscolor", "Eucatex", "Renner", "Iquine", "Anjo"];
 
 // ---- COMPONENTS ----
 
@@ -77,6 +43,7 @@ function WhatsAppBtn({ text = "Fale Conosco", small = false }) {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
+      className="wpp-btn"
       style={{
         display: "inline-flex", alignItems: "center", gap: small ? 8 : 10,
         background: "#25D366", color: "#fff",
@@ -87,8 +54,6 @@ function WhatsAppBtn({ text = "Fale Conosco", small = false }) {
         transition: "all 0.3s ease", fontFamily: "'Nunito', sans-serif",
         border: "none", cursor: "pointer",
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(37,211,102,0.4)"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,0.3)"; }}
     >
       <svg width={small ? 18 : 22} height={small ? 18 : 22} viewBox="0 0 24 24" fill="white">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -122,7 +87,6 @@ function FloatingWhatsApp() {
   );
 }
 
-// NAP Logo SVG recreation (color wheel + text)
 function NAPLogo({ size = 40, light = false }) {
   const s = size;
   const textColor = light ? "#fff" : COLORS.darkBlue;
@@ -136,6 +100,7 @@ function NAPLogo({ size = 40, light = false }) {
           ${COLORS.pink} 330deg, ${COLORS.red} 360deg
         )`,
         boxShadow: light ? "0 2px 20px rgba(255,255,255,0.3)" : "0 2px 12px rgba(0,0,0,0.2)",
+        flexShrink: 0,
       }}>
         <div style={{
           position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
@@ -165,40 +130,37 @@ function NavBar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
   const links = [
-    { label: "Início", href: "#hero" },
-    { label: "Quem Somos", href: "#sobre" },
-    { label: "Produtos", href: "#catalogo" },
+    { label: "Sobre", href: "#sobre" },
+    { label: "Diferenciais", href: "#diferenciais" },
+    { label: "Valores", href: "#valores" },
     { label: "Pintores", href: "#pintores" },
     { label: "Contato", href: "#contato" },
   ];
   const navTextColor = scrolled ? COLORS.darkBlue : "#fff";
-  const navHoverColor = scrolled ? COLORS.blue : "#fff";
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 900,
       padding: scrolled ? "10px 0" : "16px 0",
       background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(10,14,26,0.6)",
-      backdropFilter: "blur(20px)",
+      backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
       transition: "all 0.4s ease",
       boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none",
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={38} light={!scrolled} /></a>
+        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={36} light={!scrolled} /></a>
         <div style={{ display: "flex", alignItems: "center", gap: 28 }} className="nav-desk">
           {links.map((l) => (
             <a key={l.href} href={l.href} style={{
               color: navTextColor, textDecoration: "none", fontSize: 14, fontWeight: 700,
               fontFamily: "'Nunito', sans-serif", letterSpacing: "0.02em",
-              transition: "all 0.4s ease", opacity: 0.7,
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.color = navHoverColor; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.7"; e.currentTarget.style.color = navTextColor; }}
-            >{l.label}</a>
+              transition: "all 0.4s ease", opacity: 0.8,
+            }}>{l.label}</a>
           ))}
-          <WhatsAppBtn text="WhatsApp" small />
+          <WhatsAppBtn text="Fale Conosco" small />
         </div>
         <button className="nav-mob-btn" onClick={() => setMenuOpen(!menuOpen)} style={{
-          display: "none", background: "none", border: "none", fontSize: 28, cursor: "pointer", color: COLORS.darkBlue, padding: 4,
+          display: "none", background: "none", border: "none", fontSize: 28,
+          cursor: "pointer", color: scrolled ? COLORS.darkBlue : "#fff", padding: 4,
         }}>{menuOpen ? "✕" : "☰"}</button>
       </div>
       {menuOpen && (
@@ -221,136 +183,88 @@ function NavBar() {
   );
 }
 
-// Paint splash SVG decorative element
-function PaintSplash({ color, style: s }) {
-  return (
-    <div style={{ position: "absolute", ...s, opacity: 0.6 }}>
-      <svg width="180" height="80" viewBox="0 0 180 80" fill="none">
-        <ellipse cx="90" cy="40" rx="88" ry="32" fill={color} opacity="0.8" />
-        <ellipse cx="70" cy="35" rx="60" ry="25" fill={color} />
-        <circle cx="150" cy="30" r="18" fill={color} opacity="0.6" />
-        <circle cx="30" cy="50" r="12" fill={color} opacity="0.5" />
-      </svg>
-    </div>
-  );
-}
-
 function Hero() {
   return (
-    <section id="hero" style={{
+    <section id="hero" className="hero-section" style={{
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
       position: "relative", overflow: "hidden", background: COLORS.darkBg,
     }}>
-      {/* GIF Background */}
-      <div style={{
+      <div className="hero-bg" style={{
         position: "absolute", inset: 0, zIndex: 0,
         backgroundImage: "url(/hero-bg.gif)",
         backgroundSize: "contain", backgroundPosition: "center 60%",
         backgroundRepeat: "no-repeat",
       }} />
-      {/* Overlay gradient for readability */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
-        background: `linear-gradient(
-          180deg,
-          rgba(10,14,26,0.85) 0%,
-          rgba(10,14,26,0.45) 45%,
-          rgba(10,14,26,0.30) 65%,
-          rgba(10,14,26,0.75) 100%
-        )`,
+        background: `linear-gradient(180deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.45) 45%, rgba(10,14,26,0.30) 65%, rgba(10,14,26,0.75) 100%)`,
       }} />
 
-      <div style={{
-        position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 800,
+      <div className="hero-content" style={{
+        position: "relative", zIndex: 2, textAlign: "center",
+        padding: "100px 24px 60px", maxWidth: 800, width: "100%",
         animation: "fadeUp 0.8s ease-out",
       }}>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
-          <NAPLogo size={70} light />
+        <div style={{
+          display: "inline-block", padding: "8px 20px", borderRadius: 40,
+          background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
+          backdropFilter: "blur(8px)", marginBottom: 28,
+        }}>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, letterSpacing: "0.06em" }}>
+            Inauguramos em Sorocaba
+          </span>
         </div>
 
-        <h1 style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(32px, 6vw, 56px)",
-          fontWeight: 900, color: "rgba(255,255,255,0.95)", lineHeight: 1.1,
-          letterSpacing: "-0.02em", marginBottom: 8,
+        <h1 className="hero-h1" style={{
+          fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(28px, 5.5vw, 52px)",
+          fontWeight: 900, color: "rgba(255,255,255,0.95)", lineHeight: 1.15,
+          letterSpacing: "-0.02em", marginBottom: 24,
           textShadow: "0 2px 20px rgba(0,0,0,0.3)",
         }}>
-          Venha colorir com a
-        </h1>
-        <h1 style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(36px, 7vw, 64px)",
-          fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 24,
-          background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.green}, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.red}, ${COLORS.pink})`,
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-          filter: "brightness(1.3)",
-        }}>
-          NAP Tintas!
+          A cor que <em style={{ fontStyle: "italic", color: COLORS.yellow }}>transforma</em> o seu espaço começa com uma <em style={{ fontStyle: "italic", color: COLORS.green }}>boa conversa</em>.
         </h1>
 
-        <p style={{
-          fontFamily: "'Nunito', sans-serif", fontSize: "clamp(16px, 2.5vw, 20px)",
-          color: "rgba(255,255,255,0.8)", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 20px",
+        <p className="hero-sub" style={{
+          fontFamily: "'Nunito', sans-serif", fontSize: "clamp(15px, 2.2vw, 18px)",
+          color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 560, margin: "0 auto 36px",
         }}>
-          Mais de 20 anos de experiência no mercado de Tintas. Consultoria para identificar as necessidades dos nossos clientes e capacitação dos profissionais da Pintura.
+          Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
         </p>
 
-        <p style={{
-          fontFamily: "'Nunito', sans-serif", fontSize: 17, fontWeight: 700,
-          color: "rgba(255,255,255,0.9)", marginBottom: 36, fontStyle: "italic",
-        }}>
-          &quot;Os que Transformam Sonhos em Realidades.&quot;
-        </p>
-
-        <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-          <WhatsAppBtn text="Pedir Orçamento" />
-          <a href="#catalogo" style={{
+        <div className="hero-ctas" style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <WhatsAppBtn text="Peça seu Orçamento" />
+          <a href="#sobre" className="btn-secondary" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             padding: "16px 32px", borderRadius: 60,
-            border: "2px solid rgba(255,255,255,0.5)", color: "#fff",
+            border: "2px solid rgba(255,255,255,0.4)", color: "#fff",
             fontSize: 17, fontWeight: 700, textDecoration: "none",
             fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease",
             backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.08)",
-          }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; }}
-          >Ver Produtos ↓</a>
-        </div>
-
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 48, flexWrap: "wrap" }}>
-          {VALORES.map((v) => (
-            <div key={v.name} style={{
-              display: "flex", alignItems: "center", gap: 6,
-              padding: "10px 20px", borderRadius: 40,
-              background: "rgba(255,255,255,0.1)", border: "1.5px solid rgba(255,255,255,0.2)",
-              backdropFilter: "blur(8px)",
-              fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 700,
-              color: v.color, filter: "brightness(1.4)",
-            }}>
-              {v.emoji} {v.name}
-            </div>
-          ))}
+          }}>Conheça a NAP</a>
         </div>
       </div>
     </section>
   );
 }
 
-function Stats() {
-  const stats = [
-    { number: "20+", label: "Anos de experiência", color: COLORS.blue },
-    { number: "3.000+", label: "Clientes satisfeitos", color: COLORS.green },
-    { number: "500+", label: "Pintores parceiros", color: COLORS.orange },
-    { number: "2.000+", label: "Tons disponíveis", color: COLORS.pink },
+function TrustBar() {
+  const items = [
+    { icon: "⭐", label: "+20 anos de experiência" },
+    { icon: "🎨", label: "+2.000 cores na hora" },
+    { icon: "🚚", label: "Entrega disponível" },
+    { icon: "👨‍👩‍👧‍👦", label: "Atendimento familiar" },
   ];
   return (
-    <section style={{
-      background: COLORS.darkBlue, padding: "56px 24px",
-      position: "relative", overflow: "hidden",
-    }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 32, textAlign: "center", position: "relative", zIndex: 2 }}>
-        {stats.map((s, i) => (
-          <div key={i}>
-            <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 44, fontWeight: 900, color: s.color }}>{s.number}</div>
-            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.6)", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700 }}>{s.label}</div>
+    <section style={{ background: COLORS.darkBlue, padding: "48px 24px" }}>
+      <div className="trust-grid" style={{
+        maxWidth: 1100, margin: "0 auto",
+        display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24,
+        textAlign: "center",
+      }}>
+        {items.map((s, i) => (
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <div style={{ fontSize: 28 }}>{s.icon}</div>
+            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -360,117 +274,102 @@ function Stats() {
 
 function Sobre() {
   return (
-    <section id="sobre" style={{ background: "#fff", padding: "100px 24px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Quem Somos</p>
-          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(28px, 4vw, 42px)", color: COLORS.darkBlue, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 16 }}>
-            Como nasceu a NAP Tintas?
+    <section id="sobre" className="section-pad" style={{ background: "#fff", padding: "100px 24px" }}>
+      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Nossa História</p>
+          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 20, lineHeight: 1.2 }}>
+            Nascemos de paixão. Crescemos com propósito.
           </h2>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 18, color: "#666", lineHeight: 1.8, maxWidth: 650, margin: "0 auto" }}>
-            Como no processo fascinante da mistura das cores, de pigmentos básicos, para a criação de novos tons — a NAP Tintas nasceu através de pigmentos essenciais que surgiram em nossos corações.
-          </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, marginBottom: 64 }}>
-          {PIGMENTOS.map((p) => (
-            <div key={p.name} style={{
-              background: "#fff", borderRadius: 20, padding: 36,
-              border: `2px solid ${p.color}18`,
-              boxShadow: `0 8px 32px ${p.color}10`,
-              transition: "all 0.4s ease", textAlign: "center",
-              position: "relative", overflow: "hidden",
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = `0 12px 40px ${p.color}20`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 8px 32px ${p.color}10`; }}
-            >
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: p.color }} />
-              <div style={{ fontSize: 48, marginBottom: 16 }}>{p.icon}</div>
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 24, fontWeight: 900, color: p.color, marginBottom: 12 }}>{p.name}</h3>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, color: "#666", lineHeight: 1.7 }}>{p.desc}</p>
-            </div>
-          ))}
+        <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#555", lineHeight: 1.85 }}>
+          <p style={{ marginBottom: 20 }}>
+            A NAP Tintas foi construída <strong style={{ color: COLORS.darkBlue }}>pincelada a pincelada</strong>. Mais de duas décadas percorrendo o mercado de tintas, passando por empresas que nos moldaram e pessoas que nos inspiraram. Cada etapa foi um pigmento a mais na formação da nossa base.
+          </p>
+          <p style={{ marginBottom: 20 }}>
+            Chegou o momento em que todos esses aprendizados se encontraram e formaram a cor que sempre quisemos ver: <strong style={{ color: COLORS.darkBlue }}>a nossa própria organização.</strong>
+          </p>
+          <p style={{ marginBottom: 36 }}>
+            Somos uma empresa de família, com alma de vizinhança. Acreditamos que transformar um ambiente começa com uma boa conversa, um atendimento de verdade e a cor certa.
+          </p>
         </div>
 
         <div style={{
           background: `linear-gradient(135deg, ${COLORS.darkBlue}, #1a237e)`,
-          borderRadius: 24, padding: "48px 36px", textAlign: "center",
-          position: "relative", overflow: "hidden",
+          borderRadius: 20, padding: "36px 32px", position: "relative",
+          borderLeft: `5px solid ${COLORS.yellow}`,
         }}>
-          <div style={{ position: "relative", zIndex: 2 }}>
-            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.6)", fontWeight: 700, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-              Direcionados e nutridos por pigmentos de
-            </p>
-            <div style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap", marginBottom: 24 }}>
-              {VALORES.map((v) => (
-                <div key={v.name} style={{
-                  padding: "14px 32px", borderRadius: 50,
-                  background: v.color, color: "#fff",
-                  fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 900,
-                  boxShadow: `0 4px 20px ${v.color}50`,
-                }}>
-                  {v.emoji} {v.name}
-                </div>
-              ))}
-            </div>
-            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 18, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, maxWidth: 500, margin: "0 auto" }}>
-              Com acolhimento, cuidado, alegria, respeito e confiança. Uma gestão <strong style={{ color: "#fff" }}>Colaborativa, Próspera e Humana.</strong>
-            </p>
-          </div>
+          <p style={{
+            fontFamily: "'Nunito', sans-serif", fontSize: 18, color: "rgba(255,255,255,0.9)",
+            lineHeight: 1.7, fontStyle: "italic",
+          }}>
+            &quot;Colorir sonhos, identificando a necessidade e o desejo de cada cliente. Com atendimento humano, especificação correta e capacitação de profissionais.&quot;
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-function Catalog() {
-  const [active, setActive] = useState(null);
+function DiferenciaisSection() {
   return (
-    <section id="catalogo" style={{ background: COLORS.offWhite, padding: "100px 24px" }}>
+    <section id="diferenciais" className="section-pad" style={{ background: COLORS.offWhite, padding: "100px 24px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Nossos Produtos</p>
-          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(28px, 4vw, 42px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16 }}>Tudo pra sua obra</h2>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#888", maxWidth: 480, margin: "0 auto" }}>
-            Das melhores marcas do mercado. Consulte disponibilidade e preços pelo WhatsApp.
-          </p>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Por Que a NAP?</p>
+          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            Diferenciais que fazem a diferença de verdade.
+          </h2>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-          {CATALOG.map((cat, i) => (
-            <div key={cat.id} onClick={() => setActive(active === i ? null : i)} style={{
-              background: "#fff", border: `2px solid ${active === i ? cat.color + "40" : "#eee"}`,
-              borderRadius: 18, padding: 28, cursor: "pointer",
-              transition: "all 0.4s ease", position: "relative", overflow: "hidden",
-              boxShadow: active === i ? `0 8px 30px ${cat.color}15` : "0 2px 12px rgba(0,0,0,0.04)",
-            }}
-              onMouseEnter={(e) => { if (active !== i) e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.08)"; }}
-              onMouseLeave={(e) => { if (active !== i) e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.04)"; }}
-            >
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: cat.color, opacity: active === i ? 1 : 0.3, transition: "opacity 0.3s" }} />
-              <div style={{ fontSize: 36, marginBottom: 14 }}>{cat.emoji}</div>
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{cat.title}</h3>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "#999", marginBottom: active === i ? 18 : 0 }}>{cat.subtitle}</p>
+        <div className="diff-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          {DIFERENCIAIS.map((item, i) => (
+            <div key={i} className="diff-card" style={{
+              background: "#fff", borderRadius: 16, padding: 28,
+              borderTop: `4px solid ${item.color}`,
+              boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
+              transition: "transform 0.3s ease",
+            }}>
+              <div style={{ fontSize: 36, marginBottom: 14 }}>{item.emoji}</div>
+              <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10 }}>{item.title}</h4>
+              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#777", lineHeight: 1.65 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-              <div style={{ maxHeight: active === i ? 400 : 0, overflow: "hidden", transition: "max-height 0.5s cubic-bezier(0.4,0,0.2,1)" }}>
-                <div style={{ borderTop: "1px solid #eee", paddingTop: 14 }}>
-                  {cat.items.map((item, j) => (
-                    <div key={j} style={{
-                      fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#555", padding: "8px 0",
-                      borderBottom: j < cat.items.length - 1 ? "1px solid #f5f5f5" : "none",
-                      display: "flex", alignItems: "center", gap: 10,
-                    }}>
-                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
-                      {item}
-                    </div>
-                  ))}
-                  <div style={{ marginTop: 16 }}>
-                    <WhatsAppBtn text="Consultar Preços" small />
-                  </div>
-                </div>
+function ValoresSection() {
+  return (
+    <section id="valores" className="section-pad" style={{ background: "#fff", padding: "100px 24px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.green, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>O que nos move</p>
+          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            Nossos valores não estão na parede. Estão em cada atendimento.
+          </h2>
+        </div>
+
+        <div className="valores-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 20 }}>
+          {VALORES.map((v, i) => (
+            <div key={i} style={{
+              display: "flex", alignItems: "flex-start", gap: 16,
+              padding: 24, borderRadius: 16,
+              background: COLORS.offWhite, border: `1px solid #eee`,
+              transition: "transform 0.3s ease",
+            }}>
+              <div style={{
+                width: 52, height: 52, borderRadius: 14,
+                background: `${v.color}14`, display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 26, flexShrink: 0,
+              }}>{v.emoji}</div>
+              <div>
+                <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{v.name}</h4>
+                <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#777", lineHeight: 1.6 }}>{v.desc}</p>
               </div>
-
-              {active !== i && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "#bbb", marginTop: 10 }}>Toque para ver produtos →</p>}
             </div>
           ))}
         </div>
@@ -481,7 +380,7 @@ function Catalog() {
 
 function Pintores() {
   return (
-    <section id="pintores" style={{
+    <section id="pintores" className="section-pad" style={{
       background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #0d2f5e 100%)`,
       padding: "100px 24px", position: "relative", overflow: "hidden",
     }}>
@@ -492,132 +391,101 @@ function Pintores() {
           marginBottom: 24,
         }}>
           <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            🖌️ Espaço do Pintor
+            Espaço do Pintor
           </span>
         </div>
 
-        <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(28px, 4vw, 42px)", color: "#fff", fontWeight: 900, marginBottom: 16 }}>
-          Pintor, você é nosso parceiro
+        <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+          Para quem vive de pintura, a NAP é parceira.
         </h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 18, color: "rgba(255,255,255,0.7)", lineHeight: 1.8, maxWidth: 600, margin: "0 auto 40px" }}>
-          Os profissionais da pintura são os que transformam sonhos em realidade. Na NAP Tintas, valorizamos quem está na obra todo dia. Condições especiais, atendimento prioritário e capacitação.
+        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.7)", lineHeight: 1.8, maxWidth: 600, margin: "0 auto 40px" }}>
+          Profissionais de pintura encontram aqui mais do que produtos. Encontram um ponto de apoio, orientação técnica e condições que fazem a diferença na rotina.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20, marginBottom: 40 }}>
+        <div className="pintores-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 40, textAlign: "left" }}>
           {[
-            { emoji: "💰", title: "Preço diferenciado", desc: "Condições especiais pra quem compra com frequência" },
-            { emoji: "📦", title: "Entrega na obra", desc: "Levamos direto pra onde você tá trabalhando" },
-            { emoji: "📚", title: "Capacitação", desc: "Treinamentos e dicas de técnicas de pintura" },
-            { emoji: "⭐", title: "Programa de fidelidade", desc: "Quanto mais compra, mais vantagem acumula" },
+            { emoji: "🔧", title: "Especificação técnica", desc: "Orientação sobre o produto certo para cada tipo de superfície e acabamento." },
+            { emoji: "💰", title: "Condições especiais", desc: "Preços e prazos diferenciados para profissionais cadastrados." },
+            { emoji: "📚", title: "Capacitação", desc: "Conteúdo e treinamentos para evoluir na profissão." },
+            { emoji: "🤝", title: "Relacionamento de longo prazo", desc: "Não é venda, é parceria. Você indica, a gente retribui." },
           ].map((item, i) => (
             <div key={i} style={{
-              background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 16, padding: 24, textAlign: "left",
+              background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 16, padding: 24,
               transition: "all 0.3s ease",
-            }}
-              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
-              onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
-            >
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{item.emoji}</div>
-              <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{item.title}</h4>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{item.desc}</p>
+            }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>{item.emoji}</div>
+              <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{item.title}</h4>
+              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>{item.desc}</p>
             </div>
           ))}
         </div>
 
+        <div style={{
+          display: "inline-block", padding: "14px 28px", borderRadius: 14,
+          background: "rgba(249,168,37,0.15)", border: "1px solid rgba(249,168,37,0.3)",
+          marginBottom: 32,
+        }}>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: COLORS.yellow, fontWeight: 700 }}>
+            Cadastre-se — Condições exclusivas para pintores profissionais
+          </span>
+        </div>
+        <br />
         <WhatsAppBtn text="Quero ser parceiro NAP" />
       </div>
     </section>
   );
 }
 
-function Marcas() {
+function CTASection() {
   return (
-    <section style={{ background: "#fff", padding: "64px 24px", borderTop: "1px solid #eee", borderBottom: "1px solid #eee" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "#bbb", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: 28 }}>Marcas que trabalhamos</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, justifyContent: "center" }}>
-          {BRANDS.map((b, i) => (
-            <div key={i} style={{
-              padding: "12px 24px", borderRadius: 10,
-              border: "1.5px solid #eee", fontFamily: "'Nunito', sans-serif",
-              fontSize: 15, color: "#666", fontWeight: 700,
-              transition: "all 0.3s ease", cursor: "default",
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = COLORS.blue + "40"; e.currentTarget.style.color = COLORS.blue; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#eee"; e.currentTarget.style.color = "#666"; }}
-            >{b}</div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Diferenciais() {
-  return (
-    <section style={{ background: COLORS.offWhite, padding: "80px 24px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
-          {[
-            { emoji: "🏪", title: "Atendimento presencial", desc: "Equipe treinada pra ajudar na escolha de produto, cor e quantidade.", color: COLORS.blue },
-            { emoji: "🎨", title: "Sistema tintométrico", desc: "Preparamos a cor exata que você precisa. Mais de 2.000 tons.", color: COLORS.green },
-            { emoji: "🚚", title: "Entrega na obra", desc: "Levamos direto pra sua obra com agilidade e cuidado.", color: COLORS.orange },
-            { emoji: "💬", title: "Consultoria gratuita", desc: "Ajudamos a calcular rendimento, escolher produtos e combinações.", color: COLORS.pink },
-          ].map((item, i) => (
-            <div key={i} style={{
-              background: "#fff", borderRadius: 16, padding: 28,
-              borderLeft: `4px solid ${item.color}`,
-              boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-              transition: "transform 0.3s ease",
-            }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-3px)"}
-              onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-            >
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{item.emoji}</div>
-              <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 8 }}>{item.title}</h4>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#888", lineHeight: 1.6 }}>{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  return (
-    <section id="contato" style={{ background: "#fff", padding: "100px 24px" }}>
+    <section className="section-pad" style={{ background: "#fff", padding: "100px 24px" }}>
       <div style={{
         maxWidth: 800, margin: "0 auto", textAlign: "center",
-        background: `linear-gradient(135deg, rgba(27,58,140,0.04) 0%, rgba(76,175,80,0.04) 50%, rgba(249,168,37,0.04) 100%)`,
-        border: "2px solid #eee", borderRadius: 28, padding: "64px 36px",
-        position: "relative", overflow: "hidden",
+        background: `linear-gradient(135deg, rgba(27,58,140,0.05) 0%, rgba(76,175,80,0.05) 50%, rgba(249,168,37,0.05) 100%)`,
+        border: "2px solid #eee", borderRadius: 24, padding: "64px 32px",
       }}>
-        <PaintSplash color={COLORS.orange} style={{ top: -30, right: -60, transform: "rotate(15deg) scale(0.6)", opacity: 0.2 }} />
-        <PaintSplash color={COLORS.blue} style={{ bottom: -20, left: -50, transform: "rotate(-10deg) scale(0.5)", opacity: 0.2 }} />
+        <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Pronto pra transformar?</p>
+        <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 4vw, 36px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+          A cor perfeita está a uma conversa de distância.
+        </h2>
+        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#888", lineHeight: 1.7, maxWidth: 500, margin: "0 auto 32px" }}>
+          Fale com a nossa equipe pelo WhatsApp. Orçamento rápido, consultoria gratuita e atendimento que entende o que você precisa.
+        </p>
+        <WhatsAppBtn text="Chamar no WhatsApp" />
+      </div>
+    </section>
+  );
+}
 
-        <div style={{ position: "relative", zIndex: 2 }}>
-          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 38px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16 }}>
-            Pronto pra transformar seu espaço?
+function OndeEstamos() {
+  return (
+    <section id="contato" className="section-pad" style={{ background: COLORS.offWhite, padding: "100px 24px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Onde Estamos</p>
+          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            Venha nos visitar.
           </h2>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#888", lineHeight: 1.7, marginBottom: 32, maxWidth: 500, margin: "0 auto 32px" }}>
-            Fale com a gente pelo WhatsApp. Manda o projeto, a metragem e a ideia — a gente cuida do resto.
-          </p>
-          <WhatsAppBtn text="Chamar no WhatsApp" />
+        </div>
 
-          <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 24 }}>
-            {[
-              { icon: "📍", label: "Rua das Tintas, 123\n[Bairro] — [Cidade/UF]" },
-              { icon: "🕐", label: "Seg a Sex: 8h–18h\nSáb: 8h–13h" },
-              { icon: "📞", label: "(XX) XXXXX-XXXX\n@nap_tintas" },
-            ].map((item, i) => (
-              <div key={i}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>{item.icon}</div>
-                <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "#999", lineHeight: 1.6, whiteSpace: "pre-line" }}>{item.label}</p>
-              </div>
-            ))}
-          </div>
+        <div className="contato-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          {[
+            { icon: "📍", title: "Endereço", lines: ["Rua Cônego André Pieroni, 371", "Jardim Guadalajara — Sorocaba/SP"] },
+            { icon: "🕐", title: "Horário", lines: ["Seg a Sex: 8h às 18h", "Sábado: 8h às 13h"] },
+            { icon: "📱", title: "Contato", lines: ["(15) 99999-9999", "@nap_tintas"] },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: "#fff", borderRadius: 16, padding: 28, textAlign: "center",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+            }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>{item.icon}</div>
+              <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.title}</h4>
+              {item.lines.map((line, j) => (
+                <p key={j} style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#777", lineHeight: 1.7 }}>{line}</p>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -626,22 +494,17 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer style={{ background: COLORS.darkBlue, padding: "32px 24px", textAlign: "center" }}>
+    <footer style={{ background: COLORS.darkBlue, padding: "36px 24px", textAlign: "center" }}>
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: "50%",
-            background: `conic-gradient(${COLORS.red} 0deg, ${COLORS.orange} 50deg, ${COLORS.yellow} 100deg, ${COLORS.green} 160deg, ${COLORS.blue} 220deg, #7B1FA2 280deg, ${COLORS.pink} 330deg, ${COLORS.red} 360deg)`,
-          }}>
-            <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#fff", margin: "9px auto 0" }} />
-          </div>
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: 16, color: "#fff", letterSpacing: "0.06em" }}>NAP <span style={{ fontWeight: 400, letterSpacing: "0.2em", fontSize: 11 }}>TINTAS</span></span>
-        </div>
+        <NAPLogo size={30} light />
       </div>
-      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
-        © 2026 NAP Tintas — Todos os direitos reservados
+      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", marginBottom: 4 }}>
+        Colorindo Sonhos desde 2026
       </p>
-      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.15)", marginTop: 6 }}>
+      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
+        © 2026 NAP Tintas. Todos os direitos reservados. | Sorocaba/SP
+      </p>
+      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.15)", marginTop: 8 }}>
         Desenvolvido com 💛 por PulsarH.ai
       </p>
     </footer>
@@ -653,13 +516,13 @@ export default function Home() {
     <div style={{ background: "#fff", minHeight: "100vh" }}>
       <NavBar />
       <Hero />
-      <Stats />
+      <TrustBar />
       <Sobre />
-      <Catalog />
-      <Diferenciais />
+      <DiferenciaisSection />
+      <ValoresSection />
       <Pintores />
-      <Marcas />
-      <Contact />
+      <CTASection />
+      <OndeEstamos />
       <Footer />
       <FloatingWhatsApp />
     </div>
