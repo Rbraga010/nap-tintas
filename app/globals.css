@@ -26,14 +26,9 @@ img, svg { max-width: 100%; height: auto; }
   transform: translate(-50%, -50%);
   background: conic-gradient(
     from 0deg,
-    #D32F2F 0deg,
-    #FF6D00 50deg,
-    #F9A825 100deg,
-    #4CAF50 160deg,
-    #1B3A8C 220deg,
-    #7B1FA2 280deg,
-    #E91E93 330deg,
-    #D32F2F 360deg
+    #D32F2F 0deg, #FF6D00 50deg, #F9A825 100deg,
+    #4CAF50 160deg, #1B3A8C 220deg, #7B1FA2 280deg,
+    #E91E93 330deg, #D32F2F 360deg
   );
   animation: glowSpin 4s linear infinite;
   z-index: 1;
@@ -41,9 +36,7 @@ img, svg { max-width: 100%; height: auto; }
   transition: opacity 0.4s ease;
 }
 
-.glow-border-wrap:hover .glow-spinner {
-  opacity: 1;
-}
+.glow-border-wrap:hover .glow-spinner { opacity: 1; }
 
 @keyframes glowSpin {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
@@ -76,13 +69,9 @@ img, svg { max-width: 100%; height: auto; }
 
 /* ========== MICRO INTERACTIONS ========== */
 
-/* WhatsApp floating pulse */
 .floating-wpp { animation: pulse 2.5s ease infinite; }
-
-/* Heart beat in footer */
 .heart-beat { animation: heartBeat 1.8s ease infinite; }
 
-/* Nav link underline */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -93,17 +82,12 @@ img, svg { max-width: 100%; height: auto; }
   border-radius: 2px;
 }
 
-/* Social icons */
 .social-icon:hover {
   background: rgba(255,255,255,0.15) !important;
   transform: translateY(-2px);
 }
 
-/* Marquee */
 .marquee-track { will-change: transform; }
-
-/* Video GIF */
-.video-gif { image-rendering: auto; }
 
 /* ========== HOVER (desktop only) ========== */
 
@@ -138,7 +122,7 @@ img, svg { max-width: 100%; height: auto; }
   .nav-mob-menu { display: none !important; }
 }
 
-/* ========== TABLET (900px) ========== */
+/* ========== TABLET (max 900px) ========== */
 
 @media (max-width: 900px) {
   .hero-inner {
@@ -155,25 +139,33 @@ img, svg { max-width: 100%; height: auto; }
   .pintores-grid { grid-template-columns: 1fr !important; }
 }
 
-/* ========== MOBILE (600px) ========== */
+/* ========== MOBILE (max 600px) ========== */
 
 @media (max-width: 600px) {
+
+  /* Hero — full screen, centered */
   .hero-section {
     min-height: 100svh !important;
     min-height: 100vh !important;
   }
-  .hero-inner { padding: 80px 20px 36px !important; }
+  .hero-inner {
+    padding: 88px 20px 40px !important;
+  }
   .hero-h1 {
     font-size: clamp(26px, 8vw, 40px) !important;
     line-height: 1.18 !important;
   }
-  .hero-sub { font-size: 15px !important; }
+  .hero-sub {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+  }
   .hero-ctas {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 12px !important;
   }
-  .hero-ctas a, .hero-ctas .wpp-btn {
+  .hero-ctas a,
+  .hero-ctas .wpp-btn {
     width: 100% !important;
     justify-content: center !important;
     text-align: center !important;
@@ -181,26 +173,54 @@ img, svg { max-width: 100%; height: auto; }
     font-size: 16px !important;
   }
 
+  /* Grids — 1 col except depoimentos (2 col) */
   .diff-grid,
   .valores-grid,
   .pintores-grid,
-  .contato-grid,
-  .depo-grid {
+  .contato-grid {
     grid-template-columns: 1fr !important;
     gap: 14px !important;
   }
 
-  .section-pad { padding: 56px 18px !important; }
+  /* Depoimentos — keep 2 columns on mobile for compact cards */
+  .depo-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* Sections */
+  .section-pad {
+    padding: 56px 16px !important;
+  }
   .section-title {
     font-size: clamp(22px, 6.5vw, 32px) !important;
     line-height: 1.25 !important;
   }
   .tag { font-size: 11px !important; }
 
-  /* Timeline mobile */
+  /* Timeline */
   .timeline { padding-left: 32px !important; }
   .timeline-line { left: 11px !important; }
   .timeline-item { padding-left: 20px !important; }
+
+  /* Floating WhatsApp — bigger tap target */
+  .floating-wpp {
+    width: 56px !important;
+    height: 56px !important;
+    bottom: 18px !important;
+    right: 18px !important;
+  }
+}
+
+/* ========== SMALL MOBILE (max 400px) ========== */
+
+@media (max-width: 400px) {
+  .hero-h1 {
+    font-size: 24px !important;
+  }
+  .depo-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* Viewport fix */

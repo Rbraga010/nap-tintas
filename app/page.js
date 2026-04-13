@@ -117,24 +117,16 @@ function FloatingWhatsApp() {
   );
 }
 
-function NAPLogo({ size = 40, light = false }) {
-  const s = size;
-  const textColor = light ? "#fff" : COLORS.darkBlue;
+function NAPLogo({ size = 40 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      <div style={{
-        width: s, height: s, borderRadius: "50%", position: "relative", overflow: "hidden",
-        background: `conic-gradient(${COLORS.red} 0deg, ${COLORS.orange} 50deg, ${COLORS.yellow} 100deg, ${COLORS.green} 160deg, ${COLORS.blue} 220deg, #7B1FA2 280deg, ${COLORS.pink} 330deg, ${COLORS.red} 360deg)`,
-        boxShadow: light ? "0 2px 20px rgba(255,255,255,0.2)" : "0 2px 12px rgba(0,0,0,0.15)",
+    <img
+      src="/nap-logo.jpg"
+      alt="NAP Tintas"
+      style={{
+        width: size, height: size, borderRadius: "50%", objectFit: "cover",
         flexShrink: 0,
-      }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: s * 0.35, height: s * 0.35, borderRadius: "50%", background: "#fff" }} />
-      </div>
-      <div>
-        <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900, fontSize: s * 0.55, color: textColor, letterSpacing: "0.08em", lineHeight: 1 }}>NAP</div>
-        <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400, fontSize: s * 0.22, color: textColor, letterSpacing: "0.35em", lineHeight: 1, marginTop: 1 }}>TINTAS</div>
-      </div>
-    </div>
+      }}
+    />
   );
 }
 
@@ -176,7 +168,7 @@ function NavBar() {
       boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={36} light={!scrolled} /></a>
+        <a href="#hero" style={{ textDecoration: "none" }}><NAPLogo size={38} /></a>
         <div className="nav-desk" style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {links.map((l) => (
             <a key={l.href} href={l.href} className="nav-link" style={{
@@ -713,7 +705,7 @@ function Footer() {
     <footer style={{ background: COLORS.darkBlue, padding: "48px 24px 32px", textAlign: "center", position: "relative" }}>
 
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 20, paddingTop: 12 }}>
-        <NAPLogo size={32} light />
+        <NAPLogo size={48} />
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", gap: 16, marginBottom: 20 }}>
