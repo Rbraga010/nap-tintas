@@ -314,29 +314,12 @@ function Marquee() {
 
 function HistoriaVideo() {
   return (
-    <section style={{
-      background: `linear-gradient(180deg, #fff 0%, ${COLORS.offWhite} 100%)`,
-      padding: "80px 24px", textAlign: "center",
-    }}>
-      <div style={{ maxWidth: 900, margin: "0 auto" }}>
-        <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Nossa Essência</p>
-        <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 3.5vw, 36px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 12, lineHeight: 1.2 }}>
-          Nascemos de pigmentos essenciais.
-        </h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, color: "#999", marginBottom: 40, maxWidth: 500, margin: "0 auto 40px" }}>
-          Colorir, Solucionar, Capacitar — cada cor carrega um propósito.
-        </p>
-        <div className="video-wrapper" style={{
-          borderRadius: 24, overflow: "hidden",
-          maxWidth: 750, margin: "0 auto",
-        }}>
-          <img
-            src="/hero-bg.gif"
-            alt="NAP Tintas — Pigmentos que nos movem: Colorir, Solucionar, Capacitar, Sonho, Amor, Família"
-            style={{ width: "100%", display: "block" }}
-          />
-        </div>
-      </div>
+    <section style={{ width: "100%", lineHeight: 0 }}>
+      <img
+        src="/hero-bg.gif"
+        alt="NAP Tintas — Pigmentos que nos movem: Colorir, Solucionar, Capacitar, Sonho, Amor, Família"
+        style={{ width: "100%", display: "block", objectFit: "cover" }}
+      />
     </section>
   );
 }
