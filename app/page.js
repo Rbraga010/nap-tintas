@@ -196,21 +196,21 @@ function Hero() {
         backgroundSize: "cover", backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
       }} />
-      {/* Subtle right-side gradient for text readability */}
+      {/* Subtle left-side gradient for text readability */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
-        background: "linear-gradient(90deg, rgba(13,27,62,0.15) 0%, rgba(13,27,62,0.5) 40%, rgba(13,27,62,0.85) 65%, rgba(13,27,62,0.92) 100%)",
+        background: "linear-gradient(90deg, rgba(13,27,62,0.92) 0%, rgba(13,27,62,0.85) 35%, rgba(13,27,62,0.5) 60%, rgba(13,27,62,0.15) 100%)",
       }} />
 
       <div className="hero-inner" style={{
         position: "relative", zIndex: 2,
         maxWidth: 1200, margin: "0 auto", width: "100%",
         padding: "120px 48px 80px",
-        display: "flex", alignItems: "center", justifyContent: "flex-end",
+        display: "flex", alignItems: "center", justifyContent: "flex-start",
       }}>
         <div className="hero-copy" style={{
           maxWidth: 520, animation: "fadeUp 0.8s ease-out",
-          textAlign: "right",
+          textAlign: "left",
         }}>
           <h1 className="hero-h1" style={{
             fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(30px, 4.5vw, 52px)",
@@ -227,7 +227,7 @@ function Hero() {
             Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
           </p>
 
-          <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-start" }}>
             <WhatsAppBtn text="Peça seu Orçamento" />
             <a href="#sobre" className="btn-secondary" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
