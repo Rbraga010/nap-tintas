@@ -467,12 +467,51 @@ function ValoresSection() {
 
 // ---- PINTORES ----
 
-// ---- CALCULADORA M2 ----
+// ---- CALCULADORA M2 (PREMIUM) ----
 
 const TINTA_RENDIMENTO_POR_LITRO = 10; // 1L cobre 10m2 em uma demao
 
+// Animated number counter
+function useCountUp(target, duration = 700) {
+  const [value, setValue] = useState(0);
+  const prevTarget = useRef(0);
+  useEffect(() => {
+    const start = prevTarget.current;
+    const end = target;
+    if (start === end) return;
+    let rafId;
+    const startTime = performance.now();
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const current = start + (end - start) * eased;
+      setValue(current);
+      if (progress < 1) rafId = requestAnimationFrame(animate);
+      else prevTarget.current = end;
+    };
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [target, duration]);
+  return value;
+}
+
+// Stepper for numeric inputs (portas, janelas)
+function Stepper({ value, onChange, label, min = 0, max = 20 }) {
+  return (
+    <div>
+      <label className="calc-label">{label}</label>
+      <div className="calc-stepper">
+        <button type="button" className="calc-stepper-btn" onClick={() => onChange(Math.max(min, value - 1))} aria-label="Diminuir">−</button>
+        <div className="calc-stepper-value">{value}</div>
+        <button type="button" className="calc-stepper-btn" onClick={() => onChange(Math.min(max, value + 1))} aria-label="Aumentar">+</button>
+      </div>
+    </div>
+  );
+}
+
 function CalculadoraM2() {
-  const [modo, setModo] = useState("parede"); // "parede" | "ambiente"
+  const [modo, setModo] = useState("parede");
   const [altura, setAltura] = useState("");
   const [largura, setLargura] = useState("");
   const [comprimento, setComprimento] = useState("");
@@ -502,139 +541,181 @@ function CalculadoraM2() {
 
   const hasResult = area > 0;
 
+  // Animated numbers
+  const animatedArea = useCountUp(area);
+  const animatedLitros = useCountUp(litrosArredondado);
+
   const wppMsg = `Olá! Fiz o cálculo pelo site da NAP:%0A%0AÁrea: ${area.toFixed(2)} m²%0ADemãos: ${demaos}%0ATinta necessária: ${litrosArredondado}L%0A%0AGostaria de um orçamento com essas medidas.`;
   const wppOrcamento = `https://wa.me/${WHATSAPP_NUMBER}?text=${wppMsg}`;
 
   return (
-    <div className="calc-wrap" style={{
-      marginTop: 48, maxWidth: 680, marginLeft: "auto", marginRight: "auto",
-      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-      borderRadius: 20, padding: 32, backdropFilter: "blur(8px)",
-      textAlign: "left",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-        <span style={{ fontSize: 28 }}>🧮</span>
-        <div>
-          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800 }}>Ferramenta do Pintor</p>
-          <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 22, fontWeight: 900, color: "#fff" }}>Calculadora de m² + Tinta</h3>
-        </div>
-      </div>
-      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", marginBottom: 24, lineHeight: 1.6 }}>
-        Informe as medidas e calculamos a área total e quantos litros de tinta você precisa.
-      </p>
+    <div className="calc-premium">
+      {/* Animated gradient border */}
+      <div className="calc-premium-glow" />
 
-      {/* Toggle modo */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 20, background: "rgba(0,0,0,0.2)", padding: 4, borderRadius: 12 }}>
-        {[
-          { v: "parede", label: "🎨 Parede única" },
-          { v: "ambiente", label: "🏠 Ambiente completo" },
-        ].map((m) => (
-          <button key={m.v} type="button" onClick={() => setModo(m.v)} className="calc-toggle" style={{
-            flex: 1, padding: "10px 14px", borderRadius: 8, border: "none", cursor: "pointer",
-            fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700,
-            background: modo === m.v ? COLORS.yellow : "transparent",
-            color: modo === m.v ? COLORS.darkBlue : "rgba(255,255,255,0.6)",
-            transition: "all 0.2s ease",
-          }}>{m.label}</button>
-        ))}
-      </div>
-
-      {/* Inputs */}
-      <div className="calc-inputs" style={{ display: "grid", gridTemplateColumns: modo === "ambiente" ? "repeat(3, 1fr)" : "repeat(2, 1fr)", gap: 12, marginBottom: 16 }}>
-        <div>
-          <label style={calcLabelStyle}>Altura (m)</label>
-          <input type="number" step="0.1" min="0" value={altura} onChange={(e) => setAltura(e.target.value)} placeholder="2.80" className="calc-input" style={calcInputStyle} />
-        </div>
-        <div>
-          <label style={calcLabelStyle}>Largura (m)</label>
-          <input type="number" step="0.1" min="0" value={largura} onChange={(e) => setLargura(e.target.value)} placeholder="4.50" className="calc-input" style={calcInputStyle} />
-        </div>
-        {modo === "ambiente" && (
-          <div>
-            <label style={calcLabelStyle}>Comprimento (m)</label>
-            <input type="number" step="0.1" min="0" value={comprimento} onChange={(e) => setComprimento(e.target.value)} placeholder="6.00" className="calc-input" style={calcInputStyle} />
-          </div>
-        )}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
-        <div>
-          <label style={calcLabelStyle}>Demãos</label>
-          <select value={demaos} onChange={(e) => setDemaos(Number(e.target.value))} className="calc-input" style={calcInputStyle}>
-            <option value={1}>1 demão</option>
-            <option value={2}>2 demãos</option>
-            <option value={3}>3 demãos</option>
-          </select>
-        </div>
-        <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", cursor: "pointer", paddingTop: 24 }}>
-          <input type="checkbox" checked={descontar} onChange={(e) => setDescontar(e.target.checked)} style={{ width: 18, height: 18, accentColor: COLORS.yellow }} />
-          Descontar portas/janelas
-        </label>
-      </div>
-
-      {descontar && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
-          <div>
-            <label style={calcLabelStyle}>Qtd de portas</label>
-            <input type="number" min="0" value={qtdPortas} onChange={(e) => setQtdPortas(Number(e.target.value) || 0)} className="calc-input" style={calcInputStyle} />
+      <div className="calc-premium-inner">
+        {/* Header */}
+        <div className="calc-premium-header">
+          <div className="calc-premium-icon">
+            <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" />
+              <line x1="8" y1="6" x2="16" y2="6" />
+              <line x1="8" y1="10" x2="10" y2="10" />
+              <line x1="13" y1="10" x2="13.01" y2="10" />
+              <line x1="16" y1="10" x2="16.01" y2="10" />
+              <line x1="8" y1="14" x2="10" y2="14" />
+              <line x1="13" y1="14" x2="13.01" y2="14" />
+              <line x1="16" y1="14" x2="16.01" y2="14" />
+              <line x1="8" y1="18" x2="10" y2="18" />
+              <line x1="13" y1="18" x2="13.01" y2="18" />
+              <line x1="16" y1="18" x2="16.01" y2="18" />
+            </svg>
           </div>
           <div>
-            <label style={calcLabelStyle}>Qtd de janelas</label>
-            <input type="number" min="0" value={qtdJanelas} onChange={(e) => setQtdJanelas(Number(e.target.value) || 0)} className="calc-input" style={calcInputStyle} />
+            <div className="calc-premium-tag">Ferramenta Exclusiva do Pintor</div>
+            <h3 className="calc-premium-title">Calculadora de Área & Tinta</h3>
+            <p className="calc-premium-subtitle">Informe as medidas e calculamos tudo automaticamente.</p>
           </div>
         </div>
-      )}
 
-      {/* Output */}
-      {hasResult && (
-        <div style={{
-          marginTop: 20, padding: 24, borderRadius: 14,
-          background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.blue} 100%)`,
-          border: `2px solid ${COLORS.yellow}40`,
-        }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 20 }} className="calc-output">
-            <div>
-              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Área total</div>
-              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.yellow }}>{area.toFixed(1)} m²</div>
-            </div>
-            <div>
-              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Tinta necessária</div>
-              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.yellow }}>{litrosArredondado} L</div>
-            </div>
-            <div>
-              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Sugestão</div>
-              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: "#fff", lineHeight: 1.4 }}>{galoes36} galão(ões) 3,6L<br /><span style={{ color: "rgba(255,255,255,0.5)", fontSize: 13 }}>ou {latas18} lata(s) 18L</span></div>
+        {/* Toggle modo — pill com indicador deslizante */}
+        <div className="calc-pill">
+          <div className="calc-pill-indicator" style={{ transform: modo === "parede" ? "translateX(0%)" : "translateX(100%)" }} />
+          {[
+            { v: "parede", label: "Parede única", icon: (
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><rect x="3" y="3" width="18" height="18" rx="2" /></svg>
+            ) },
+            { v: "ambiente", label: "Ambiente completo", icon: (
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M3 21V8l9-5 9 5v13" /><path d="M9 21V12h6v9" /></svg>
+            ) },
+          ].map((m) => (
+            <button key={m.v} type="button" onClick={() => setModo(m.v)} className={`calc-pill-btn ${modo === m.v ? "active" : ""}`}>
+              {m.icon}
+              <span>{m.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Inputs dimensoes */}
+        <div className={`calc-dims ${modo === "ambiente" ? "three" : "two"}`}>
+          <div className="calc-field">
+            <label className="calc-label">Altura</label>
+            <div className="calc-input-wrap">
+              <input type="number" step="0.1" min="0" value={altura} onChange={(e) => setAltura(e.target.value)} placeholder="2,80" className="calc-input-premium" />
+              <span className="calc-unit">m</span>
             </div>
           </div>
-          <a href={wppOrcamento} target="_blank" rel="noopener noreferrer" className="wpp-btn" style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            background: "#25D366", color: "#fff", padding: "14px 28px",
-            borderRadius: 60, fontSize: 15, fontWeight: 700,
-            textDecoration: "none", fontFamily: "'Nunito', sans-serif",
-            boxShadow: "0 4px 20px rgba(37,211,102,0.3)",
-            transition: "all 0.3s ease", width: "100%", justifyContent: "center",
-          }}>
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
-            Pedir Orçamento com essas medidas
+          <div className="calc-field">
+            <label className="calc-label">Largura</label>
+            <div className="calc-input-wrap">
+              <input type="number" step="0.1" min="0" value={largura} onChange={(e) => setLargura(e.target.value)} placeholder="4,50" className="calc-input-premium" />
+              <span className="calc-unit">m</span>
+            </div>
+          </div>
+          {modo === "ambiente" && (
+            <div className="calc-field">
+              <label className="calc-label">Comprimento</label>
+              <div className="calc-input-wrap">
+                <input type="number" step="0.1" min="0" value={comprimento} onChange={(e) => setComprimento(e.target.value)} placeholder="6,00" className="calc-input-premium" />
+                <span className="calc-unit">m</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Demaos selector */}
+        <div className="calc-field" style={{ marginBottom: 20 }}>
+          <label className="calc-label">Número de demãos</label>
+          <div className="calc-demaos">
+            {[1, 2, 3].map((n) => (
+              <button key={n} type="button" onClick={() => setDemaos(n)} className={`calc-demaos-btn ${demaos === n ? "active" : ""}`}>
+                <span className="calc-demaos-num">{n}</span>
+                <span className="calc-demaos-txt">{n === 1 ? "demão" : "demãos"}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Portas/janelas — expansivel */}
+        <div className="calc-descontar">
+          <label className="calc-switch">
+            <input type="checkbox" checked={descontar} onChange={(e) => setDescontar(e.target.checked)} />
+            <span className="calc-switch-track"><span className="calc-switch-thumb" /></span>
+            <span className="calc-switch-label">Descontar portas e janelas</span>
+          </label>
+
+          <div className={`calc-descontar-content ${descontar ? "open" : ""}`}>
+            <div className="calc-descontar-grid">
+              <Stepper value={qtdPortas} onChange={setQtdPortas} label="Portas" />
+              <Stepper value={qtdJanelas} onChange={setQtdJanelas} label="Janelas" />
+            </div>
+            <p className="calc-descontar-hint">Consideramos 2,2 m² por porta e 1,5 m² por janela (valores médios).</p>
+          </div>
+        </div>
+
+        {/* Divisor */}
+        <div className="calc-divider" />
+
+        {/* Output — sempre presente, so ativa quando ha result */}
+        <div className={`calc-result ${hasResult ? "active" : ""}`}>
+          <div className="calc-result-shine" />
+
+          <div className="calc-result-label">
+            <span className="calc-result-dot" />
+            Seu cálculo
+          </div>
+
+          <div className="calc-result-grid">
+            <div className="calc-result-item primary">
+              <div className="calc-result-key">Área Total</div>
+              <div className="calc-result-value">
+                <span className="calc-result-num">{hasResult ? animatedArea.toFixed(1) : "0.0"}</span>
+                <span className="calc-result-suffix">m²</span>
+              </div>
+            </div>
+
+            <div className="calc-result-divider" />
+
+            <div className="calc-result-item">
+              <div className="calc-result-key">Tinta Necessária</div>
+              <div className="calc-result-value">
+                <span className="calc-result-num">{hasResult ? animatedLitros.toFixed(1) : "0.0"}</span>
+                <span className="calc-result-suffix">L</span>
+              </div>
+            </div>
+
+            <div className="calc-result-divider" />
+
+            <div className="calc-result-item sugestao">
+              <div className="calc-result-key">Sugestão</div>
+              <div className="calc-result-sug">
+                <div className="calc-result-sug-main">{hasResult ? galoes36 : 0} <span>galão{galoes36 !== 1 ? "ões" : ""} 3,6L</span></div>
+                <div className="calc-result-sug-alt">ou {hasResult ? latas18 : 0} lata{latas18 !== 1 ? "s" : ""} de 18L</div>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href={hasResult ? wppOrcamento : "#"}
+            target={hasResult ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            className={`calc-cta ${!hasResult ? "disabled" : ""}`}
+            onClick={(e) => !hasResult && e.preventDefault()}
+          >
+            <span className="calc-cta-shine" />
+            <svg width={20} height={20} viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+            <span>Pedir orçamento com essas medidas</span>
+            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="calc-cta-arrow">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
           </a>
+
+          {!hasResult && <p className="calc-result-hint">Preencha as medidas para ver o resultado</p>}
         </div>
-      )}
+      </div>
     </div>
   );
 }
-
-const calcLabelStyle = {
-  display: "block", fontFamily: "'Nunito', sans-serif", fontSize: 12,
-  color: "rgba(255,255,255,0.65)", fontWeight: 700, marginBottom: 6,
-  textTransform: "uppercase", letterSpacing: "0.06em",
-};
-
-const calcInputStyle = {
-  width: "100%", padding: "12px 14px", borderRadius: 10,
-  background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.15)",
-  color: "#fff", fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 600,
-  outline: "none", transition: "border-color 0.2s ease",
-};
 
 // ---- PINTORES ----
 
