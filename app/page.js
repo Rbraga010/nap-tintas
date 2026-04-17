@@ -596,31 +596,112 @@ function CalculadoraM2() {
           ))}
         </div>
 
-        {/* Inputs dimensoes */}
-        <div className={`calc-dims ${modo === "ambiente" ? "three" : "two"}`}>
-          <div className="calc-field">
-            <label className="calc-label">Altura</label>
-            <div className="calc-input-wrap">
-              <input type="number" step="0.1" min="0" value={altura} onChange={(e) => setAltura(e.target.value)} placeholder="2,80" className="calc-input-premium" />
-              <span className="calc-unit">m</span>
-            </div>
-          </div>
-          <div className="calc-field">
-            <label className="calc-label">Largura</label>
-            <div className="calc-input-wrap">
-              <input type="number" step="0.1" min="0" value={largura} onChange={(e) => setLargura(e.target.value)} placeholder="4,50" className="calc-input-premium" />
-              <span className="calc-unit">m</span>
-            </div>
-          </div>
-          {modo === "ambiente" && (
-            <div className="calc-field">
-              <label className="calc-label">Comprimento</label>
-              <div className="calc-input-wrap">
-                <input type="number" step="0.1" min="0" value={comprimento} onChange={(e) => setComprimento(e.target.value)} placeholder="6,00" className="calc-input-premium" />
-                <span className="calc-unit">m</span>
+        {/* Sliders — altura vertical, largura/comprimento horizontal */}
+        <div className={`calc-sliders ${modo === "ambiente" ? "has-comp" : ""}`}>
+
+          {/* ALTURA — vertical */}
+          <div className="calc-slider-block altura-block">
+            <div className="calc-slider-meta">
+              <span className="calc-label">Altura</span>
+              <div className="calc-value-pill">
+                <input
+                  type="number" step="0.1" min="0" max="10"
+                  value={altura}
+                  onChange={(e) => setAltura(e.target.value)}
+                  placeholder="0.0"
+                  className="calc-value-input"
+                  aria-label="Altura em metros"
+                />
+                <span className="calc-value-unit">m</span>
               </div>
             </div>
-          )}
+            <div className="calc-vslider-wrap">
+              <div className="calc-vticks">
+                <span>10m</span>
+                <span>5m</span>
+                <span>0m</span>
+              </div>
+              <input
+                type="range" min="0" max="10" step="0.1"
+                value={parseFloat(altura) || 0}
+                onChange={(e) => setAltura(e.target.value)}
+                className="calc-vslider"
+                style={{ "--pct": `${((parseFloat(altura) || 0) / 10) * 100}%` }}
+                aria-label="Ajustar altura"
+              />
+            </div>
+          </div>
+
+          {/* LARGURA + COMPRIMENTO — horizontais */}
+          <div className="calc-h-stack">
+            <div className="calc-slider-block largura-block">
+              <div className="calc-slider-meta">
+                <span className="calc-label">Largura</span>
+                <div className="calc-value-pill">
+                  <input
+                    type="number" step="0.1" min="0" max="15"
+                    value={largura}
+                    onChange={(e) => setLargura(e.target.value)}
+                    placeholder="0.0"
+                    className="calc-value-input"
+                    aria-label="Largura em metros"
+                  />
+                  <span className="calc-value-unit">m</span>
+                </div>
+              </div>
+              <div className="calc-hslider-wrap">
+                <input
+                  type="range" min="0" max="15" step="0.1"
+                  value={parseFloat(largura) || 0}
+                  onChange={(e) => setLargura(e.target.value)}
+                  className="calc-hslider"
+                  style={{ "--pct": `${((parseFloat(largura) || 0) / 15) * 100}%` }}
+                  aria-label="Ajustar largura"
+                />
+                <div className="calc-hticks">
+                  <span>0m</span>
+                  <span>5m</span>
+                  <span>10m</span>
+                  <span>15m</span>
+                </div>
+              </div>
+            </div>
+
+            {modo === "ambiente" && (
+              <div className="calc-slider-block comprimento-block">
+                <div className="calc-slider-meta">
+                  <span className="calc-label">Comprimento</span>
+                  <div className="calc-value-pill">
+                    <input
+                      type="number" step="0.1" min="0" max="15"
+                      value={comprimento}
+                      onChange={(e) => setComprimento(e.target.value)}
+                      placeholder="0.0"
+                      className="calc-value-input"
+                      aria-label="Comprimento em metros"
+                    />
+                    <span className="calc-value-unit">m</span>
+                  </div>
+                </div>
+                <div className="calc-hslider-wrap">
+                  <input
+                    type="range" min="0" max="15" step="0.1"
+                    value={parseFloat(comprimento) || 0}
+                    onChange={(e) => setComprimento(e.target.value)}
+                    className="calc-hslider"
+                    style={{ "--pct": `${((parseFloat(comprimento) || 0) / 15) * 100}%` }}
+                    aria-label="Ajustar comprimento"
+                  />
+                  <div className="calc-hticks">
+                    <span>0m</span>
+                    <span>5m</span>
+                    <span>10m</span>
+                    <span>15m</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Demaos selector */}
