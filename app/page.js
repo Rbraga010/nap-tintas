@@ -27,12 +27,12 @@ const VALORES = [
 ];
 
 const DIFERENCIAIS = [
-  { emoji: "🎨", title: "Sistema Tintométrico", desc: "Mais de 2.000 opções de cores misturadas na hora. O tom exato que você quer, sem erro, sem desperdício.", color: COLORS.blue },
-  { emoji: "💬", title: "Consultoria Personalizada", desc: "Nossa equipe orienta de verdade. Desde tons neutros até cores vibrantes e efeitos decorativos.", color: COLORS.green },
+  { emoji: "🎨", title: "Sistema Tintométrico", desc: "Auxiliamos você na escolha do tom perfeito para seu ambiente. Montamos o seu projeto para que você possa visualizar como ficará a cor antes de pintar. São mais de 2.000 opções de cores preparadas na hora.", color: COLORS.blue },
+  { emoji: "💬", title: "Consultoria Personalizada", desc: "Nossa equipe está preparada para te auxiliar com a melhor opção de custo-benefício, entendendo a sua necessidade e te indicando a melhor opção.", color: COLORS.green },
   { emoji: "🪣", title: "Portfólio Completo", desc: "Tintas internas e externas, primers, texturas, efeitos decorativos e todos os acessórios. Tudo em um só lugar.", color: COLORS.orange },
   { emoji: "🚚", title: "Entrega em Sorocaba", desc: "Comprou, a gente leva. Entrega disponível para Sorocaba e região. Sem complicação.", color: COLORS.pink },
   { emoji: "⭐", title: "+20 Anos de Experiência", desc: "Duas décadas de mercado formaram nosso olhar técnico e nossa capacidade de orientação.", color: COLORS.yellow },
-  { emoji: "👨‍👩‍👧‍👦", title: "Atendimento Familiar", desc: "Aqui você é recebido como gente, não como número. Somos uma loja de família.", color: COLORS.red },
+  { emoji: "👨‍👩‍👧‍👦", title: "Atendimento Familiar", desc: "Aqui você é recebido como gente e não como número. Somos uma loja de família, com uma gestão colaborativa, próspera e humana.", color: COLORS.red },
 ];
 
 // ---- HOOKS ----
@@ -467,6 +467,184 @@ function ValoresSection() {
 
 // ---- PINTORES ----
 
+// ---- CALCULADORA M2 ----
+
+const TINTA_RENDIMENTO_POR_LITRO = 10; // 1L cobre 10m2 em uma demao
+
+function CalculadoraM2() {
+  const [modo, setModo] = useState("parede"); // "parede" | "ambiente"
+  const [altura, setAltura] = useState("");
+  const [largura, setLargura] = useState("");
+  const [comprimento, setComprimento] = useState("");
+  const [demaos, setDemaos] = useState(2);
+  const [descontar, setDescontar] = useState(false);
+  const [qtdPortas, setQtdPortas] = useState(0);
+  const [qtdJanelas, setQtdJanelas] = useState(0);
+
+  const parsedAlt = parseFloat(altura) || 0;
+  const parsedLarg = parseFloat(largura) || 0;
+  const parsedComp = parseFloat(comprimento) || 0;
+
+  let areaBruta = 0;
+  if (modo === "parede") {
+    areaBruta = parsedAlt * parsedLarg;
+  } else {
+    areaBruta = 2 * parsedAlt * parsedLarg + 2 * parsedAlt * parsedComp;
+  }
+
+  const descontoPortas = descontar ? qtdPortas * 2.2 : 0;
+  const descontoJanelas = descontar ? qtdJanelas * 1.5 : 0;
+  const area = Math.max(0, areaBruta - descontoPortas - descontoJanelas);
+  const litros = (area * demaos) / TINTA_RENDIMENTO_POR_LITRO;
+  const litrosArredondado = Math.ceil(litros * 10) / 10;
+  const galoes36 = Math.ceil(litrosArredondado / 3.6);
+  const latas18 = Math.ceil(litrosArredondado / 18);
+
+  const hasResult = area > 0;
+
+  const wppMsg = `Olá! Fiz o cálculo pelo site da NAP:%0A%0AÁrea: ${area.toFixed(2)} m²%0ADemãos: ${demaos}%0ATinta necessária: ${litrosArredondado}L%0A%0AGostaria de um orçamento com essas medidas.`;
+  const wppOrcamento = `https://wa.me/${WHATSAPP_NUMBER}?text=${wppMsg}`;
+
+  return (
+    <div className="calc-wrap" style={{
+      marginTop: 48, maxWidth: 680, marginLeft: "auto", marginRight: "auto",
+      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 20, padding: 32, backdropFilter: "blur(8px)",
+      textAlign: "left",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+        <span style={{ fontSize: 28 }}>🧮</span>
+        <div>
+          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800 }}>Ferramenta do Pintor</p>
+          <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 22, fontWeight: 900, color: "#fff" }}>Calculadora de m² + Tinta</h3>
+        </div>
+      </div>
+      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", marginBottom: 24, lineHeight: 1.6 }}>
+        Informe as medidas e calculamos a área total e quantos litros de tinta você precisa.
+      </p>
+
+      {/* Toggle modo */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 20, background: "rgba(0,0,0,0.2)", padding: 4, borderRadius: 12 }}>
+        {[
+          { v: "parede", label: "🎨 Parede única" },
+          { v: "ambiente", label: "🏠 Ambiente completo" },
+        ].map((m) => (
+          <button key={m.v} type="button" onClick={() => setModo(m.v)} className="calc-toggle" style={{
+            flex: 1, padding: "10px 14px", borderRadius: 8, border: "none", cursor: "pointer",
+            fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700,
+            background: modo === m.v ? COLORS.yellow : "transparent",
+            color: modo === m.v ? COLORS.darkBlue : "rgba(255,255,255,0.6)",
+            transition: "all 0.2s ease",
+          }}>{m.label}</button>
+        ))}
+      </div>
+
+      {/* Inputs */}
+      <div className="calc-inputs" style={{ display: "grid", gridTemplateColumns: modo === "ambiente" ? "repeat(3, 1fr)" : "repeat(2, 1fr)", gap: 12, marginBottom: 16 }}>
+        <div>
+          <label style={calcLabelStyle}>Altura (m)</label>
+          <input type="number" step="0.1" min="0" value={altura} onChange={(e) => setAltura(e.target.value)} placeholder="2.80" className="calc-input" style={calcInputStyle} />
+        </div>
+        <div>
+          <label style={calcLabelStyle}>Largura (m)</label>
+          <input type="number" step="0.1" min="0" value={largura} onChange={(e) => setLargura(e.target.value)} placeholder="4.50" className="calc-input" style={calcInputStyle} />
+        </div>
+        {modo === "ambiente" && (
+          <div>
+            <label style={calcLabelStyle}>Comprimento (m)</label>
+            <input type="number" step="0.1" min="0" value={comprimento} onChange={(e) => setComprimento(e.target.value)} placeholder="6.00" className="calc-input" style={calcInputStyle} />
+          </div>
+        )}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+        <div>
+          <label style={calcLabelStyle}>Demãos</label>
+          <select value={demaos} onChange={(e) => setDemaos(Number(e.target.value))} className="calc-input" style={calcInputStyle}>
+            <option value={1}>1 demão</option>
+            <option value={2}>2 demãos</option>
+            <option value={3}>3 demãos</option>
+          </select>
+        </div>
+        <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", cursor: "pointer", paddingTop: 24 }}>
+          <input type="checkbox" checked={descontar} onChange={(e) => setDescontar(e.target.checked)} style={{ width: 18, height: 18, accentColor: COLORS.yellow }} />
+          Descontar portas/janelas
+        </label>
+      </div>
+
+      {descontar && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+          <div>
+            <label style={calcLabelStyle}>Qtd de portas</label>
+            <input type="number" min="0" value={qtdPortas} onChange={(e) => setQtdPortas(Number(e.target.value) || 0)} className="calc-input" style={calcInputStyle} />
+          </div>
+          <div>
+            <label style={calcLabelStyle}>Qtd de janelas</label>
+            <input type="number" min="0" value={qtdJanelas} onChange={(e) => setQtdJanelas(Number(e.target.value) || 0)} className="calc-input" style={calcInputStyle} />
+          </div>
+        </div>
+      )}
+
+      {/* Output */}
+      {hasResult && (
+        <div style={{
+          marginTop: 20, padding: 24, borderRadius: 14,
+          background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.blue} 100%)`,
+          border: `2px solid ${COLORS.yellow}40`,
+        }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 20 }} className="calc-output">
+            <div>
+              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Área total</div>
+              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.yellow }}>{area.toFixed(1)} m²</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Tinta necessária</div>
+              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.yellow }}>{litrosArredondado} L</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 4 }}>Sugestão</div>
+              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: "#fff", lineHeight: 1.4 }}>{galoes36} galão(ões) 3,6L<br /><span style={{ color: "rgba(255,255,255,0.5)", fontSize: 13 }}>ou {latas18} lata(s) 18L</span></div>
+            </div>
+          </div>
+          <a href={wppOrcamento} target="_blank" rel="noopener noreferrer" className="wpp-btn" style={{
+            display: "inline-flex", alignItems: "center", gap: 10,
+            background: "#25D366", color: "#fff", padding: "14px 28px",
+            borderRadius: 60, fontSize: 15, fontWeight: 700,
+            textDecoration: "none", fontFamily: "'Nunito', sans-serif",
+            boxShadow: "0 4px 20px rgba(37,211,102,0.3)",
+            transition: "all 0.3s ease", width: "100%", justifyContent: "center",
+          }}>
+            <svg width={18} height={18} viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+            Pedir Orçamento com essas medidas
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const calcLabelStyle = {
+  display: "block", fontFamily: "'Nunito', sans-serif", fontSize: 12,
+  color: "rgba(255,255,255,0.65)", fontWeight: 700, marginBottom: 6,
+  textTransform: "uppercase", letterSpacing: "0.06em",
+};
+
+const calcInputStyle = {
+  width: "100%", padding: "12px 14px", borderRadius: 10,
+  background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.15)",
+  color: "#fff", fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 600,
+  outline: "none", transition: "border-color 0.2s ease",
+};
+
+// ---- PINTORES ----
+
+const PINTOR_CARDS = [
+  { emoji: "🔧", title: "Especificação Técnica", desc: "Acesse a biblioteca completa com informações de embalagens, rendimentos, aplicação e cores disponíveis de cada produto.", tab: "biblioteca" },
+  { emoji: "📚", title: "Capacitação", desc: "Agenda de treinamentos, cursos online e presenciais. Evolua na profissão com conteúdo que realmente faz diferença na obra.", tab: "cursos" },
+  { emoji: "🤝", title: "Parceria de Longo Prazo", desc: "Você faz parte e dá cor para a NAP Tintas. Ao se tornar parceiro, vira membro do Centro de Treinamento Colorindo com a NAP, com suporte em obras e empréstimo de ferramentas sem custo para agilizar a aplicação.", tab: "parceiros" },
+  { emoji: "💎", title: "Programa de Indicação", desc: "Indique e ganhe. Comissão para cada cliente que você trouxer, bonificações exclusivas e preços diferenciados para parceiros cadastrados.", tab: "indicacao" },
+];
+
 function Pintores() {
   return (
     <section id="pintores" className="section-pad" style={{
@@ -474,7 +652,7 @@ function Pintores() {
       padding: "100px 24px", position: "relative", overflow: "hidden",
     }}>
 
-      <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2, paddingTop: 20 }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2, paddingTop: 20 }}>
         <RevealWrap>
           <div style={{
             display: "inline-block", padding: "8px 24px", borderRadius: 40,
@@ -483,37 +661,59 @@ function Pintores() {
           }}>
             <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>Espaço do Pintor</span>
           </div>
-          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 12, lineHeight: 1.2 }}>
             Para quem vive de pintura, a NAP é parceira.
           </h2>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.65)", lineHeight: 1.8, maxWidth: 600, margin: "0 auto 40px" }}>
-            Profissionais de pintura encontram aqui mais do que produtos. Encontram um ponto de apoio, orientação técnica e condições que fazem a diferença.
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", color: COLORS.yellow, fontWeight: 700, marginBottom: 20, letterSpacing: "0.01em" }}>
+            Centro de Treinamento e Capacitação — Colorindo com a NAP!
+          </p>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.65)", lineHeight: 1.8, maxWidth: 680, margin: "0 auto 40px" }}>
+            Profissionais da pintura encontram aqui mais do que os produtos. Encontram um ponto de apoio, orientação técnica, suporte em obras, capacitação e condições que fazem a diferença.
           </p>
         </RevealWrap>
 
         <div className="pintores-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 40, textAlign: "left" }}>
-          {[
-            { emoji: "🔧", title: "Especificação técnica", desc: "Orientação sobre o produto certo para cada superfície e acabamento." },
-            { emoji: "💰", title: "Condições especiais", desc: "Preços e prazos diferenciados para profissionais cadastrados." },
-            { emoji: "📚", title: "Capacitação", desc: "Conteúdo e treinamentos para evoluir na profissão." },
-            { emoji: "🤝", title: "Parceria de longo prazo", desc: "Não é venda, é parceria. Você indica, a gente retribui." },
-          ].map((item, i) => (
+          {PINTOR_CARDS.map((item, i) => (
             <RevealWrap key={i} delay={i * 0.1}>
-              <div className="glass-card-dark" style={{
-                background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 16, padding: 24, transition: "all 0.3s ease",
-                backdropFilter: "blur(8px)",
-              }}>
-                <div style={{ fontSize: 28, marginBottom: 10 }}>{item.emoji}</div>
-                <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{item.title}</h4>
-                <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{item.desc}</p>
-              </div>
+              <a
+                href={`/centro-treinamento?tab=${item.tab}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pintor-card-link"
+                style={{
+                  display: "block", textDecoration: "none", height: "100%",
+                }}
+              >
+                <div className="glass-card-dark pintor-card" style={{
+                  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 16, padding: 24, transition: "all 0.3s ease",
+                  backdropFilter: "blur(8px)", height: "100%", position: "relative",
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                    <div style={{ fontSize: 28 }}>{item.emoji}</div>
+                    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke={COLORS.yellow} strokeWidth={2.5} style={{ opacity: 0.7 }}>
+                      <path d="M7 17L17 7M17 7H9M17 7V15" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 8 }}>{item.title}</h4>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, marginBottom: 10 }}>{item.desc}</p>
+                  <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    Acessar portal →
+                  </span>
+                </div>
+              </a>
             </RevealWrap>
           ))}
         </div>
 
         <RevealWrap delay={0.4}>
-          <WhatsAppBtn text="Quero ser parceiro NAP" />
+          <CalculadoraM2 />
+        </RevealWrap>
+
+        <RevealWrap delay={0.5}>
+          <div style={{ marginTop: 40 }}>
+            <WhatsAppBtn text="Quero ser parceiro NAP" />
+          </div>
         </RevealWrap>
       </div>
     </section>

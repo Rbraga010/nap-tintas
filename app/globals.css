@@ -89,6 +89,62 @@ img, svg { max-width: 100%; height: auto; }
 
 .marquee-track { will-change: transform; }
 
+/* ========== CENTRO DE TREINAMENTO ========== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Calculadora inputs */
+.calc-input:focus {
+  border-color: #F9A825 !important;
+  background: rgba(0,0,0,0.4) !important;
+}
+
+/* Pintor card hover */
+.pintor-card-link:hover .pintor-card {
+  background: rgba(255,255,255,0.09) !important;
+  transform: translateY(-4px);
+  border-color: rgba(249,168,37,0.3) !important;
+}
+
+/* Curso card hover */
+.curso-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+}
+
+/* Agenda item hover */
+.agenda-item:hover {
+  border-color: #F9A825 !important;
+  box-shadow: 0 6px 20px rgba(249,168,37,0.12) !important;
+}
+.agenda-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37,211,102,0.4) !important;
+}
+
+/* Parceiro card hover */
+.parceiro-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+}
+
+/* Header link hover */
+.header-link:hover {
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Tab active line animation */
+.ct-tab {
+  position: relative;
+}
+.ct-tab:hover {
+  color: #0D1B3E !important;
+}
+
 /* ========== HOVER (desktop only) ========== */
 
 @media (hover: hover) {
@@ -209,6 +265,55 @@ img, svg { max-width: 100%; height: auto; }
     height: 56px !important;
     bottom: 18px !important;
     right: 18px !important;
+  }
+
+  /* Calculadora mobile */
+  .calc-wrap {
+    padding: 24px 18px !important;
+    margin-top: 36px !important;
+  }
+  .calc-inputs {
+    grid-template-columns: 1fr !important;
+  }
+  .calc-output {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Centro de Treinamento mobile */
+  .curso-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .agenda-item {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    padding: 20px !important;
+  }
+  .agenda-item .agenda-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .parceiros-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .biblio-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .indicacao-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ========== TABLET (601-900px) ========== */
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .curso-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .parceiros-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 
