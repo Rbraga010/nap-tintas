@@ -1,0 +1,27 @@
+{
+  "name": "NAP Tintas — Colorindo Sonhos",
+  "short_name": "NAP Tintas",
+  "description": "Tintas, formação de pintores e atendimento familiar em Sorocaba/SP.",
+  "start_url": "/bio",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFBF2",
+  "theme_color": "#0D1B3E",
+  "lang": "pt-BR",
+  "scope": "/",
+  "categories": ["shopping", "business", "lifestyle"],
+  "icons": [
+    {
+      "src": "/nap-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/nap-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

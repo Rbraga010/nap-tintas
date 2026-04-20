@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { COLORS, WHATSAPP_NUMBER, RevealWrap } from "../page";
+import ScrollTop from "../components/ScrollTop";
 
 // ============ PRODUTOS MOCKADOS ============
 
@@ -358,6 +359,7 @@ export default function PedidosPage() {
   const [busca, setBusca] = useState("");
   const [carrinho, setCarrinho] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [toast, setToast] = useState(null);
 
   // Load carrinho do localStorage
   useEffect(() => {
@@ -374,6 +376,13 @@ export default function PedidosPage() {
     } catch {}
   }, [carrinho]);
 
+  // Toast auto-dismiss
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 2600);
+    return () => clearTimeout(t);
+  }, [toast]);
+
   const addToCart = (produto, delta = 1) => {
     setCarrinho((prev) => {
       const found = prev.find((i) => i.id === produto.id);
@@ -386,7 +395,8 @@ export default function PedidosPage() {
       return [...prev, { ...produto, qty: 1 }];
     });
     if (delta > 0 && !drawerOpen) {
-      // Feedback sutil — nao abre o drawer, só um "pulse" no icone via CSS
+      // Toast + pulse no icone do carrinho
+      setToast({ produto, ts: Date.now() });
       const btn = document.querySelector(".ped-cart-btn");
       if (btn) {
         btn.classList.remove("ped-cart-pulse");
@@ -523,6 +533,35 @@ export default function PedidosPage() {
         onClear={clearCart}
         total={total}
       />
+
+      <ScrollTop />
+
+      {/* Toast "Adicionado ao carrinho" */}
+      {toast && (
+        <div
+          key={toast.ts}
+          className="ped-toast"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="ped-toast-icon" style={{ background: toast.produto.cor }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </div>
+          <div className="ped-toast-body">
+            <div className="ped-toast-title">Adicionado ao pedido!</div>
+            <div className="ped-toast-msg">{toast.produto.nome}</div>
+          </div>
+          <button
+            onClick={() => setDrawerOpen(true)}
+            className="ped-toast-btn"
+            aria-label="Ver carrinho"
+          >
+            Ver
+          </button>
+        </div>
+      )}
     </div>
   );
 }

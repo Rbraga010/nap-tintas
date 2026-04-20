@@ -1897,6 +1897,90 @@ img, svg { max-width: 100%; height: auto; }
   letter-spacing: 0.01em;
 }
 
+/* TOAST (adicionado ao carrinho) */
+@keyframes pedToastIn {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  12% { opacity: 1; transform: translate(-50%, 0); }
+  88% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+.ped-toast {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 902;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 12px 12px;
+  min-width: 280px;
+  max-width: calc(100% - 32px);
+  background: #fff;
+  border: 1.5px solid #F3F4F6;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(13, 27, 62, 0.14);
+  animation: pedToastIn 2.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+.ped-toast-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.ped-toast-body {
+  flex: 1;
+  min-width: 0;
+}
+.ped-toast-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  color: #0D1B3E;
+  letter-spacing: -0.01em;
+  margin-bottom: 1px;
+}
+.ped-toast-msg {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.ped-toast-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 24px;
+  background: #E91E93;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+.ped-toast-btn:hover {
+  background: #C4277A;
+  transform: translateY(-1px);
+}
+@media (max-width: 480px) {
+  .ped-toast { top: 78px; padding: 10px 12px; min-width: 0; }
+  .ped-toast-title { font-size: 12px; }
+  .ped-toast-msg { font-size: 11px; max-width: 120px; }
+  .ped-toast-btn { padding: 5px 10px; font-size: 10px; }
+}
+
 /* DRAWER CARRINHO */
 .ped-drawer-overlay {
   position: fixed;

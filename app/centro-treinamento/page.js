@@ -366,7 +366,7 @@ function ParceirosTab() {
             boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           }}>
             <div style={{ position: "relative", aspectRatio: "1 / 1", overflow: "hidden" }}>
-              <img src={p.img} alt={p.servico} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src={p.img} alt={p.servico} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{
                 position: "absolute", top: 10, right: 10,
                 padding: "4px 10px", borderRadius: 20,

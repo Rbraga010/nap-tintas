@@ -1470,34 +1470,63 @@ function ConversaSection() {
         >
           <RevealWrap>
             <div
+              className="ccn-wpp-mascote-card"
               style={{
-                background: "linear-gradient(135deg, #25D366, #1ea952)",
+                background: "linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%)",
                 borderRadius: 24,
-                padding: "3rem 2rem",
-                color: "#fff",
+                padding: "2rem 1.5rem 1.5rem",
                 textAlign: "center",
+                position: "relative",
+                overflow: "hidden",
+                border: "2px solid rgba(37,211,102,0.15)",
               }}
             >
-              <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>💬</div>
+              {/* Respingos decorativos */}
+              <div style={{ position: "absolute", top: -30, right: -30, width: 140, height: 140, borderRadius: "50%", background: "#25D366", opacity: 0.08, filter: "blur(2px)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", bottom: -40, left: -40, width: 160, height: 160, borderRadius: "50%", background: "#F9A825", opacity: 0.08, filter: "blur(2px)", pointerEvents: "none" }} />
+
+              <img
+                src="/mascote-whatsapp.jpg"
+                alt="Mascote NAP pintando WhatsApp"
+                loading="lazy"
+                decoding="async"
+                style={{
+                  width: "100%",
+                  maxWidth: 320,
+                  height: "auto",
+                  margin: "0 auto 0.5rem",
+                  display: "block",
+                  position: "relative",
+                  zIndex: 1,
+                  mixBlendMode: "multiply",
+                }}
+              />
               <h3
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "1.5rem",
-                  fontWeight: 800,
-                  marginBottom: "0.5rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "1.4rem",
+                  fontWeight: 900,
+                  marginBottom: "0.4rem",
+                  color: "#064E3B",
+                  letterSpacing: "-0.01em",
+                  position: "relative",
+                  zIndex: 2,
                 }}
               >
-                WhatsApp direto
+                Chama no Zap!
               </h3>
               <p
                 style={{
                   fontFamily: "'Nunito', sans-serif",
-                  fontSize: "1rem",
-                  opacity: 0.92,
-                  marginBottom: "1.5rem",
+                  fontSize: "0.95rem",
+                  color: "#047857",
+                  marginBottom: "1.25rem",
+                  position: "relative",
+                  zIndex: 2,
+                  lineHeight: 1.5,
                 }}
               >
-                Conversa rápida, direta, com gente da NAP.
+                Conversa rápida e direta com gente da NAP.<br />Sem robô, sem enrolação.
               </p>
               <a
                 href={WPP_CONHECER}
@@ -1508,15 +1537,18 @@ function ConversaSection() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 10,
-                  background: "#fff",
-                  color: "#25D366",
-                  padding: "1rem 2rem",
+                  background: "#25D366",
+                  color: "#fff",
+                  padding: "0.95rem 2rem",
                   borderRadius: 50,
-                  fontFamily: "'Nunito', sans-serif",
+                  fontFamily: "'Poppins', sans-serif",
                   fontWeight: 800,
                   fontSize: "1rem",
                   textDecoration: "none",
-                  transition: "transform 0.2s",
+                  transition: "all 0.3s ease",
+                  boxShadow: "0 8px 24px rgba(37,211,102,0.35)",
+                  position: "relative",
+                  zIndex: 2,
                 }}
               >
                 Chamar no WhatsApp →

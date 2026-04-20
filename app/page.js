@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import ScrollTop from "./components/ScrollTop";
+import SchemaLocalBusiness from "./components/SchemaLocalBusiness";
 
 export const WHATSAPP_NUMBER = "5515999999999";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!`;
@@ -843,7 +845,7 @@ function ParceirosSection() {
                 background: `conic-gradient(from 0deg, ${COLORS.blue}, ${COLORS.green}, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.pink}, #C4277A, ${COLORS.blue})`,
                 filter: "blur(14px)", opacity: 0.25,
               }} />
-              <img src="/mascote-menino.jpg" alt="Pintor NAP" style={{
+              <img src="/mascote-menino.jpg" alt="Pintor NAP" loading="lazy" decoding="async" style={{
                 position: "relative", width: "100%", aspectRatio: "1 / 1", objectFit: "cover",
                 borderRadius: "50%", border: "6px solid #fff",
                 boxShadow: "0 20px 50px rgba(27,58,140,0.18)",
@@ -1030,7 +1032,7 @@ function EspacoPintorSection() {
                 background: `conic-gradient(from 90deg, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.pink}, ${COLORS.blue}, ${COLORS.yellow})`,
                 filter: "blur(18px)", opacity: 0.35,
               }} />
-              <img src="/mascote-roda.jpg" alt="Mascote NAP" style={{
+              <img src="/mascote-roda.jpg" alt="Mascote NAP" loading="lazy" decoding="async" style={{
                 position: "relative", width: "100%", aspectRatio: "1 / 1", objectFit: "cover",
                 borderRadius: "50%", border: "6px solid rgba(255,255,255,0.9)",
                 boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
@@ -1302,6 +1304,8 @@ export default function Home() {
       <OndeEstamos />
       <Footer />
       <FloatingWhatsApp />
+      <ScrollTop />
+      <SchemaLocalBusiness />
     </div>
   );
 }
