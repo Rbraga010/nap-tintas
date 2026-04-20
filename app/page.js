@@ -238,7 +238,7 @@ function Hero() {
       }}>
         <div className="hero-copy" style={{ maxWidth: 540, animation: "fadeUp 0.8s ease-out", textAlign: "left" }}>
           <h1 className="hero-h1" style={{
-            fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(30px, 4.5vw, 52px)",
+            fontFamily: "'Poppins', sans-serif", fontSize: "clamp(30px, 4.5vw, 52px)",
             fontWeight: 900, color: "#fff", lineHeight: 1.12,
             letterSpacing: "-0.02em", marginBottom: 24,
           }}>
@@ -329,13 +329,22 @@ function HistoriaVideo() {
 
 function Sobre() {
   return (
-    <section id="sobre" className="section-pad" style={{ background: "#fff", padding: "100px 24px", position: "relative" }}>
+    <section id="sobre" className="section-pad section-light-bg" style={{
+      background: "linear-gradient(180deg, #FFFBF2 0%, #FFF8F0 100%)",
+      padding: "100px 24px", position: "relative", overflow: "hidden",
+    }}>
+      {/* Respingos decorativos sutis */}
+      <div style={{ position: "absolute", top: -60, right: -80, width: 240, height: 240, borderRadius: "50%", background: COLORS.yellow, opacity: 0.07, filter: "blur(2px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: -40, left: -60, width: 200, height: 200, borderRadius: "50%", background: COLORS.pink, opacity: 0.06, filter: "blur(2px)", pointerEvents: "none" }} />
 
-      <div style={{ maxWidth: 800, margin: "0 auto", paddingTop: 20 }}>
+      <div style={{ maxWidth: 800, margin: "0 auto", paddingTop: 20, position: "relative", zIndex: 2 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Nossa História</p>
-            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 20, lineHeight: 1.2 }}>
+            <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+              <span style={{ width: 20, height: 3, background: COLORS.orange, borderRadius: 2 }} />
+              Nossa História
+            </p>
+            <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 20, lineHeight: 1.2 }}>
               Nascemos de paixão. Crescemos com propósito.
             </h2>
           </div>
@@ -381,8 +390,11 @@ function DiferenciaisSection() {
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Por Que a NAP?</p>
-            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+              <span style={{ width: 20, height: 3, background: COLORS.blue, borderRadius: 2 }} />
+              Por Que a NAP?
+            </p>
+            <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
               Diferenciais que fazem a diferença de verdade.
             </h2>
           </div>
@@ -400,7 +412,7 @@ function DiferenciaisSection() {
               }}>
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${item.color}, ${item.color}80)` }} />
                 <div style={{ fontSize: 40, marginBottom: 16 }}>{item.emoji}</div>
-                <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10 }}>{item.title}</h4>
+                <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10 }}>{item.title}</h4>
                 <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#666", lineHeight: 1.65 }}>{item.desc}</p>
               </div>
             </RevealWrap>
@@ -415,12 +427,22 @@ function DiferenciaisSection() {
 
 function ValoresSection() {
   return (
-    <section id="valores" className="section-pad" style={{ background: "#fff", padding: "100px 24px", position: "relative" }}>
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+    <section id="valores" className="section-pad section-light-bg" style={{
+      background: "linear-gradient(180deg, #FFF8F0 0%, #FFFBF2 100%)",
+      padding: "100px 24px", position: "relative", overflow: "hidden",
+    }}>
+      {/* Respingos decorativos sutis */}
+      <div style={{ position: "absolute", top: 40, left: -80, width: 220, height: 220, borderRadius: "50%", background: COLORS.green, opacity: 0.05, filter: "blur(2px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: -50, right: -60, width: 180, height: 180, borderRadius: "50%", background: COLORS.pink, opacity: 0.07, filter: "blur(2px)", pointerEvents: "none" }} />
+
+      <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.green, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>O que nos move</p>
-            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.green, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+              <span style={{ width: 20, height: 3, background: COLORS.green, borderRadius: 2 }} />
+              O que nos move
+            </p>
+            <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
               Nossos valores não estão na parede.<br />Estão em cada atendimento.
             </h2>
           </div>
@@ -454,7 +476,7 @@ function ValoresSection() {
                   border: `1px solid #eee`,
                   transition: "all 0.3s ease",
                 }}>
-                  <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: v.color, marginBottom: 6 }}>{v.name}</h4>
+                  <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 18, fontWeight: 800, color: v.color, marginBottom: 6 }}>{v.name}</h4>
                   <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#666", lineHeight: 1.6 }}>{v.desc}</p>
                 </div>
               </div>
@@ -1060,8 +1082,11 @@ function DepoimentosSection() {
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Depoimentos</p>
-            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
+            <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.yellow, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+              <span style={{ width: 20, height: 3, background: COLORS.yellow, borderRadius: 2 }} />
+              Depoimentos
+            </p>
+            <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
               O que nossos clientes dizem
             </h2>
             <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.55)", maxWidth: 520, margin: "0 auto", lineHeight: 1.7 }}>
@@ -1106,7 +1131,7 @@ function DepoimentosSection() {
                     ))}
                   </div>
                   <div style={{
-                    fontFamily: "'Montserrat', sans-serif", fontWeight: 800,
+                    fontFamily: "'Poppins', sans-serif", fontWeight: 800,
                     fontSize: 13, color: "rgba(255,255,255,0.9)",
                   }}>— {d.name}</div>
                 </div>
@@ -1123,17 +1148,29 @@ function DepoimentosSection() {
 
 function CTASection() {
   return (
-    <section className="section-pad" style={{ background: "#fff", padding: "100px 24px", position: "relative" }}>
+    <section className="section-pad section-light-bg" style={{
+      background: "linear-gradient(180deg, #FFFBF2 0%, #FFF0F5 100%)",
+      padding: "100px 24px", position: "relative", overflow: "hidden",
+    }}>
+      {/* Respingos decorativos sutis */}
+      <div style={{ position: "absolute", top: -40, right: -60, width: 200, height: 200, borderRadius: "50%", background: COLORS.orange, opacity: 0.07, filter: "blur(2px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: -60, left: -60, width: 220, height: 220, borderRadius: "50%", background: COLORS.blue, opacity: 0.05, filter: "blur(2px)", pointerEvents: "none" }} />
 
       <RevealWrap>
         <div style={{
           maxWidth: 800, margin: "0 auto", textAlign: "center",
-          background: `linear-gradient(135deg, rgba(27,58,140,0.04), rgba(76,175,80,0.04), rgba(249,168,37,0.04))`,
-          border: "1px solid #eee", borderRadius: 28, padding: "64px 32px",
-          position: "relative", overflow: "hidden",
+          background: "rgba(255,255,255,0.7)",
+          backdropFilter: "blur(12px)",
+          border: "2px solid rgba(255,255,255,0.9)",
+          borderRadius: 28, padding: "64px 32px",
+          position: "relative", overflow: "hidden", zIndex: 2,
+          boxShadow: "0 8px 32px rgba(233,30,147,0.08)",
         }}>
-          <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Pronto pra transformar?</p>
-          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 4vw, 36px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+          <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+            <span style={{ width: 20, height: 3, background: COLORS.orange, borderRadius: 2 }} />
+            Pronto pra transformar?
+          </p>
+          <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(24px, 4vw, 36px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
             A cor perfeita está a uma conversa de distância.
           </h2>
           <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#888", lineHeight: 1.7, maxWidth: 500, margin: "0 auto 32px" }}>
@@ -1150,12 +1187,22 @@ function CTASection() {
 
 function OndeEstamos() {
   return (
-    <section id="contato" className="section-pad" style={{ background: COLORS.offWhite, padding: "100px 24px" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+    <section id="contato" className="section-pad section-light-bg" style={{
+      background: "linear-gradient(180deg, #FFF8F0 0%, #FFFBF2 100%)",
+      padding: "100px 24px", position: "relative", overflow: "hidden",
+    }}>
+      {/* Respingos decorativos sutis */}
+      <div style={{ position: "absolute", top: 60, left: -70, width: 200, height: 200, borderRadius: "50%", background: COLORS.pink, opacity: 0.06, filter: "blur(2px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 40, right: -60, width: 180, height: 180, borderRadius: "50%", background: COLORS.green, opacity: 0.06, filter: "blur(2px)", pointerEvents: "none" }} />
+
+      <div style={{ maxWidth: 900, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <RevealWrap>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p className="tag" style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 800, marginBottom: 12 }}>Onde Estamos</p>
-            <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
+            <p className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 14 }}>
+              <span style={{ width: 20, height: 3, background: COLORS.blue, borderRadius: 2 }} />
+              Onde Estamos
+            </p>
+            <h2 className="section-title" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
               Venha nos visitar.
             </h2>
           </div>
@@ -1175,7 +1222,7 @@ function OndeEstamos() {
                 boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
               }}>
                 <div style={{ fontSize: 36, marginBottom: 14 }}>{item.icon}</div>
-                <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.06em" }}>{item.title}</h4>
+                <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 14, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.06em" }}>{item.title}</h4>
                 {item.lines.map((line, j) => (
                   <p key={j} style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#666", lineHeight: 1.7 }}>{line}</p>
                 ))}
