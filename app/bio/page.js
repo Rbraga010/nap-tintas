@@ -95,14 +95,15 @@ function BioCard({
   subtitle,
   desc,
   href,
-  external = true,
   highlight = false,
 }) {
+  // Bio é porta de entrada — TODOS os cards abrem em nova guia
+  // pra manter a bio sempre visível atrás
   return (
     <a
       href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`bio-card ${highlight ? "bio-card-hl" : ""}`}
       style={{
         "--card-color": iconColor,
@@ -154,7 +155,6 @@ export default function BioPage() {
       subtitle: "Aqui, pintor é da família.",
       desc: "Formação em técnica, gestão e vendas. Apoio em obra, empréstimo de equipamento, indicação de cliente e uma família inteira do seu lado.",
       href: "/colorindo-com-a-nap",
-      external: false,
       highlight: true,
     },
     {
@@ -165,7 +165,6 @@ export default function BioPage() {
       subtitle: "Colorindo com a NAP",
       desc: "Portal do parceiro com cursos técnicos, biblioteca de produtos, agenda de treinamentos e comunidade de pintores.",
       href: "/centro-treinamento",
-      external: false,
     },
     {
       icon: <IconCasa width="22" height="22" />,
@@ -175,17 +174,15 @@ export default function BioPage() {
       subtitle: "Colorindo Sonhos desde sempre",
       desc: "Mais de 20 anos pintando histórias em Sorocaba. Nossa família, nossos valores, nossa forma de atender.",
       href: "/",
-      external: false,
     },
     {
       icon: <IconPedido width="20" height="20" />,
       iconColor: COLORS.green,
-      badge: "ATENDIMENTO",
+      badge: "LOJA ONLINE",
       title: "Faça seu pedido",
-      subtitle: "WhatsApp direto, sem enrolação",
-      desc: "Orçamento rápido, consultoria personalizada, entrega em Sorocaba. A gente resolve contigo.",
-      href: WPP_PEDIDO,
-      external: true,
+      subtitle: "Tintas, acessórios e texturas",
+      desc: "Vitrine completa de produtos. Escolha, monte seu pedido e finalize direto no WhatsApp com consultoria incluída.",
+      href: "/pedidos",
     },
   ];
 

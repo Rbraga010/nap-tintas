@@ -154,7 +154,8 @@ function NavBar() {
     { label: "Sobre", href: "#sobre" },
     { label: "Diferenciais", href: "#diferenciais" },
     { label: "Valores", href: "#valores" },
-    { label: "Pintores", href: "#pintores" },
+    { label: "Parceiros", href: "#parceiros" },
+    { label: "Espaço Pintor", href: "#espaco-pintor" },
     { label: "Contato", href: "#contato" },
   ];
   const navText = scrolled ? COLORS.darkBlue : "#fff";
@@ -798,85 +799,223 @@ export function CalculadoraM2() {
   );
 }
 
-// ---- PINTORES ----
+// ---- PARCEIROS (CTA Formação) ----
 
-const PINTOR_CARDS = [
-  { emoji: "🔧", title: "Especificação Técnica", desc: "Acesse a biblioteca completa com informações de embalagens, rendimentos, aplicação e cores disponíveis de cada produto.", tab: "biblioteca" },
-  { emoji: "📚", title: "Capacitação", desc: "Agenda de treinamentos, cursos online e presenciais. Evolua na profissão com conteúdo que realmente faz diferença na obra.", tab: "cursos" },
-  { emoji: "🤝", title: "Parceria de Longo Prazo", desc: "Você faz parte e dá cor para a NAP Tintas. Ao se tornar parceiro, vira membro do Centro de Treinamento Colorindo com a NAP, com suporte em obras e empréstimo de ferramentas sem custo para agilizar a aplicação.", tab: "parceiros" },
-  { emoji: "💎", title: "Programa de Indicação", desc: "Indique e ganhe. Comissão para cada cliente que você trouxer, bonificações exclusivas e preços diferenciados para parceiros cadastrados.", tab: "indicacao" },
-];
-
-function Pintores() {
+function ParceirosSection() {
   return (
-    <section id="pintores" className="section-pad" style={{
-      background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #0d2f5e 100%)`,
-      padding: "100px 24px", position: "relative", overflow: "hidden",
+    <section id="parceiros" className="section-pad section-parceiros" style={{
+      padding: "100px 24px",
+      background: "linear-gradient(135deg, #FFFBF2 0%, #FFF0F5 100%)",
+      position: "relative", overflow: "hidden",
     }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <div className="parceiros-grid-v3" style={{
+          display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: 60, alignItems: "center",
+        }}>
+          <RevealWrap>
+            <div className="parceiros-mascote-wrap" style={{
+              position: "relative", width: "100%", maxWidth: 380, margin: "0 auto",
+            }}>
+              <div style={{
+                position: "absolute", inset: -12, borderRadius: "50%",
+                background: `conic-gradient(from 0deg, ${COLORS.blue}, ${COLORS.green}, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.pink}, #C4277A, ${COLORS.blue})`,
+                filter: "blur(14px)", opacity: 0.25,
+              }} />
+              <img src="/mascote-menino.jpg" alt="Pintor NAP" style={{
+                position: "relative", width: "100%", aspectRatio: "1 / 1", objectFit: "cover",
+                borderRadius: "50%", border: "6px solid #fff",
+                boxShadow: "0 20px 50px rgba(27,58,140,0.18)",
+              }} />
+            </div>
+          </RevealWrap>
 
-      <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2, paddingTop: 20 }}>
-        <RevealWrap>
-          <div style={{
-            display: "inline-block", padding: "8px 24px", borderRadius: 40,
-            background: "rgba(249,168,37,0.15)", border: "1px solid rgba(249,168,37,0.3)",
-            marginBottom: 24,
-          }}>
-            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>Espaço do Pintor</span>
-          </div>
-          <h2 className="section-title" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(26px, 4vw, 40px)", color: "#fff", fontWeight: 900, marginBottom: 12, lineHeight: 1.2 }}>
-            Para quem vive de pintura, a NAP é parceira.
-          </h2>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", color: COLORS.yellow, fontWeight: 700, marginBottom: 20, letterSpacing: "0.01em" }}>
-            Centro de Treinamento e Capacitação — Colorindo com a NAP!
-          </p>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.65)", lineHeight: 1.8, maxWidth: 680, margin: "0 auto 40px" }}>
-            Profissionais da pintura encontram aqui mais do que os produtos. Encontram um ponto de apoio, orientação técnica, suporte em obras, capacitação e condições que fazem a diferença.
-          </p>
-        </RevealWrap>
+          <RevealWrap delay={0.1}>
+            <div>
+              <p className="tag" style={{
+                fontFamily: "'Poppins', sans-serif", fontSize: 13, color: COLORS.pink,
+                textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 800, marginBottom: 14,
+                display: "inline-flex", alignItems: "center", gap: 10,
+              }}>
+                <span style={{ width: 20, height: 3, background: COLORS.pink, borderRadius: 2 }} />
+                Pintor Parceiro
+              </p>
+              <h2 className="section-title" style={{
+                fontFamily: "'Poppins', sans-serif", fontSize: "clamp(28px, 4.5vw, 44px)",
+                color: COLORS.darkBlue, fontWeight: 900, marginBottom: 18, lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+              }}>
+                Aqui, pintor é{" "}
+                <span style={{
+                  background: `linear-gradient(90deg, ${COLORS.pink}, ${COLORS.orange})`,
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>da família.</span>
+              </h2>
+              <p style={{
+                fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "#4a5568",
+                lineHeight: 1.75, marginBottom: 26,
+              }}>
+                A Formação <strong style={{ color: COLORS.darkBlue }}>Colorindo com a NAP</strong> ensina técnica, gestão e vendas — e coloca uma família inteira do seu lado. Apoio em obra, empréstimo de equipamento, indicação de cliente e comunidade ativa.
+              </p>
 
-        <div className="pintores-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 40, textAlign: "left" }}>
-          {PINTOR_CARDS.map((item, i) => (
-            <RevealWrap key={i} delay={i * 0.1}>
+              <ul className="parceiros-lista" style={{
+                listStyle: "none", padding: 0, marginBottom: 30,
+                display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10,
+              }}>
+                {[
+                  { emoji: "🎨", txt: "Formação completa" },
+                  { emoji: "🛠️", txt: "Empréstimo de equipamento" },
+                  { emoji: "🎯", txt: "Indicação de cliente" },
+                  { emoji: "🤝", txt: "Apoio em obra" },
+                ].map((i, k) => (
+                  <li key={k} style={{
+                    display: "flex", alignItems: "center", gap: 10,
+                    fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700,
+                    color: COLORS.darkBlue,
+                  }}>
+                    <span style={{ fontSize: 18 }}>{i.emoji}</span>
+                    {i.txt}
+                  </li>
+                ))}
+              </ul>
+
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <a
+                  href="/colorindo-com-a-nap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="parceiros-btn-main"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 10,
+                    padding: "14px 28px", borderRadius: 60,
+                    background: `linear-gradient(135deg, ${COLORS.pink}, ${COLORS.orange})`,
+                    color: "#fff", fontFamily: "'Poppins', sans-serif",
+                    fontSize: 15, fontWeight: 800, textDecoration: "none",
+                    letterSpacing: "0.01em",
+                    boxShadow: `0 8px 24px ${COLORS.pink}40`,
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  Conhecer a Formação →
+                </a>
+                <WhatsAppBtn text="Quero ser parceiro" small />
+              </div>
+            </div>
+          </RevealWrap>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---- ESPAÇO PINTOR (CTA Centro de Formação) ----
+
+function EspacoPintorSection() {
+  return (
+    <section id="espaco-pintor" className="section-pad section-espaco" style={{
+      padding: "100px 24px",
+      background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #0d2f5e 100%)`,
+      position: "relative", overflow: "hidden", color: "#fff",
+    }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <div className="espaco-grid-v3" style={{
+          display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 60, alignItems: "center",
+        }}>
+          <RevealWrap>
+            <div>
+              <p className="tag" style={{
+                fontFamily: "'Poppins', sans-serif", fontSize: 13, color: COLORS.yellow,
+                textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 800, marginBottom: 14,
+                display: "inline-flex", alignItems: "center", gap: 10,
+              }}>
+                <span style={{ width: 20, height: 3, background: COLORS.yellow, borderRadius: 2 }} />
+                Espaço do Pintor
+              </p>
+              <h2 className="section-title" style={{
+                fontFamily: "'Poppins', sans-serif", fontSize: "clamp(28px, 4.5vw, 44px)",
+                color: "#fff", fontWeight: 900, marginBottom: 18, lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+              }}>
+                Portal completo pro pintor{" "}
+                <span style={{
+                  background: `linear-gradient(90deg, ${COLORS.yellow}, ${COLORS.orange})`,
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>parceiro NAP.</span>
+              </h2>
+              <p style={{
+                fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.75)",
+                lineHeight: 1.75, marginBottom: 28,
+              }}>
+                Área exclusiva com cursos técnicos, gestão e marketing. Biblioteca de fichas de produto, calculadora de tinta, agenda de treinamentos presenciais e vitrine de pintores parceiros.
+              </p>
+
+              <div className="espaco-feats" style={{
+                display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 30,
+              }}>
+                {[
+                  { emoji: "🎓", titulo: "Cursos técnicos", desc: "Aplicação, texturas, epóxi" },
+                  { emoji: "💼", titulo: "Gestão & Vendas", desc: "Precificar, cobrar, fechar" },
+                  { emoji: "📅", titulo: "Agenda Presencial", desc: "Turmas em Sorocaba" },
+                  { emoji: "📚", titulo: "Biblioteca Técnica", desc: "Fichas, calculadoras, PDFs" },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    padding: "14px 16px", borderRadius: 14,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(6px)",
+                  }}>
+                    <div style={{ fontSize: 22, marginBottom: 6 }}>{item.emoji}</div>
+                    <div style={{
+                      fontFamily: "'Poppins', sans-serif", fontSize: 14, fontWeight: 800,
+                      color: "#fff", marginBottom: 2,
+                    }}>{item.titulo}</div>
+                    <div style={{
+                      fontFamily: "'Nunito', sans-serif", fontSize: 12,
+                      color: "rgba(255,255,255,0.6)",
+                    }}>{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+
               <a
-                href={`/centro-treinamento?tab=${item.tab}`}
+                href="/centro-treinamento"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pintor-card-link"
+                className="espaco-btn-main"
                 style={{
-                  display: "block", textDecoration: "none", height: "100%",
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "14px 28px", borderRadius: 60,
+                  background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.orange})`,
+                  color: COLORS.darkBlue, fontFamily: "'Poppins', sans-serif",
+                  fontSize: 15, fontWeight: 800, textDecoration: "none",
+                  letterSpacing: "0.01em",
+                  boxShadow: `0 8px 24px ${COLORS.yellow}60`,
+                  transition: "all 0.3s ease",
                 }}
               >
-                <div className="glass-card-dark pintor-card" style={{
-                  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 16, padding: 24, transition: "all 0.3s ease",
-                  backdropFilter: "blur(8px)", height: "100%", position: "relative",
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-                    <div style={{ fontSize: 28 }}>{item.emoji}</div>
-                    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke={COLORS.yellow} strokeWidth={2.5} style={{ opacity: 0.7 }}>
-                      <path d="M7 17L17 7M17 7H9M17 7V15" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 8 }}>{item.title}</h4>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, marginBottom: 10 }}>{item.desc}</p>
-                  <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                    Acessar portal →
-                  </span>
-                </div>
+                Acessar o Centro →
               </a>
-            </RevealWrap>
-          ))}
+            </div>
+          </RevealWrap>
+
+          <RevealWrap delay={0.1}>
+            <div style={{
+              position: "relative", width: "100%", maxWidth: 360, margin: "0 auto",
+            }}>
+              <div style={{
+                position: "absolute", inset: -16, borderRadius: "50%",
+                background: `conic-gradient(from 90deg, ${COLORS.yellow}, ${COLORS.orange}, ${COLORS.pink}, ${COLORS.blue}, ${COLORS.yellow})`,
+                filter: "blur(18px)", opacity: 0.35,
+              }} />
+              <img src="/mascote-roda.jpg" alt="Mascote NAP" style={{
+                position: "relative", width: "100%", aspectRatio: "1 / 1", objectFit: "cover",
+                borderRadius: "50%", border: "6px solid rgba(255,255,255,0.9)",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+              }} />
+            </div>
+          </RevealWrap>
         </div>
-
-        <RevealWrap delay={0.4}>
-          <CalculadoraM2 />
-        </RevealWrap>
-
-        <RevealWrap delay={0.5}>
-          <div style={{ marginTop: 40 }}>
-            <WhatsAppBtn text="Quero ser parceiro NAP" />
-          </div>
-        </RevealWrap>
       </div>
     </section>
   );
@@ -1109,7 +1248,8 @@ export default function Home() {
       <Sobre />
       <DiferenciaisSection />
       <ValoresSection />
-      <Pintores />
+      <ParceirosSection />
+      <EspacoPintorSection />
       <CTASection />
       <DepoimentosSection />
       <OndeEstamos />
