@@ -1291,3 +1291,177 @@ img, svg { max-width: 100%; height: auto; }
 @supports (min-height: 100svh) {
   .hero-section { min-height: 100svh; }
 }
+
+/* ========== COLORINDO COM A NAP — LANDING ========== */
+
+/* Pulse do badge dot */
+@keyframes ccnBadgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+.ccn-badge-dot {
+  animation: ccnBadgePulse 2s infinite;
+}
+
+/* Highlight embaixo do texto "da familia" no hero */
+.ccn-highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  width: 100%;
+  height: 14px;
+  background: #F9A825;
+  opacity: 0.35;
+  z-index: -1;
+  border-radius: 5px;
+}
+
+/* Hover CTAs */
+@media (hover: hover) {
+  .ccn-nav-link:hover {
+    color: #E91E93 !important;
+  }
+  .ccn-nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(37,211,102,0.4);
+  }
+  .ccn-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(37,211,102,0.5);
+  }
+  .ccn-btn-secondary:hover {
+    border-color: #E91E93 !important;
+    color: #E91E93 !important;
+  }
+  .ccn-pilar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    border-color: transparent !important;
+  }
+  .ccn-familia-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+  }
+  .ccn-turma-card:hover {
+    border-color: #E91E93 !important;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(233,30,147,0.12);
+  }
+  .ccn-turma-btn:hover {
+    background: #E91E93 !important;
+    color: #fff !important;
+  }
+  .ccn-ferramenta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  }
+  .ccn-ferr-link:hover {
+    gap: 10px !important;
+  }
+  .ccn-btn-wp-big:hover {
+    transform: translateY(-3px);
+  }
+  .ccn-dep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  }
+  .ccn-btn-cta-big:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  }
+  .ccn-footer-link:hover {
+    color: #fff !important;
+  }
+  .ccn-form-submit:hover {
+    background: #C4277A !important;
+    transform: translateY(-2px);
+  }
+  .ccn-video-embed:hover .ccn-video-play {
+    transform: scale(1.1);
+  }
+}
+
+/* Inputs do formulario */
+.ccn-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  background: #fff;
+  transition: border-color 0.2s;
+  outline: none;
+  color: #1F2937;
+}
+.ccn-input:focus {
+  border-color: #E91E93;
+}
+
+/* Responsive — tablet */
+@media (max-width: 900px) {
+  .ccn-nav-links { display: none !important; }
+  .ccn-hamburger { display: flex !important; }
+
+  .ccn-hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+    text-align: center;
+  }
+  .ccn-hero-inner > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ccn-hero-sub {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .ccn-hero-ctas {
+    justify-content: center;
+  }
+  .ccn-hero-features {
+    justify-content: center;
+  }
+
+  .ccn-pilares-grid,
+  .ccn-familia-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .ccn-ferramentas-grid,
+  .ccn-conversa-grid,
+  .ccn-local-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ccn-section {
+    padding: 4rem 1.2rem !important;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 600px) {
+  .ccn-hero-h1 {
+    font-size: 2.2rem !important;
+  }
+  .ccn-section-title {
+    font-size: 1.8rem !important;
+  }
+  .ccn-turmas-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .ccn-hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+  .ccn-hero-ctas a {
+    justify-content: center !important;
+    width: 100%;
+  }
+  .ccn-ferramenta-card {
+    flex-direction: column !important;
+    text-align: left;
+  }
+}

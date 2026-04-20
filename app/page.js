@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const WHATSAPP_NUMBER = "5515999999999";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!`;
+export const WHATSAPP_NUMBER = "5515999999999";
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!`;
 
-const COLORS = {
+export const COLORS = {
   blue: "#1B3A8C",
   green: "#4CAF50",
   yellow: "#F9A825",
@@ -37,7 +37,7 @@ const DIFERENCIAIS = [
 
 // ---- HOOKS ----
 
-function useReveal(threshold = 0.15) {
+export function useReveal(threshold = 0.15) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -62,7 +62,7 @@ function useParallax() {
 
 // ---- COMPONENTS ----
 
-function RevealWrap({ children, delay = 0, className = "" }) {
+export function RevealWrap({ children, delay = 0, className = "" }) {
   const [ref, visible] = useReveal();
   return (
     <div ref={ref} className={className} style={{
@@ -73,7 +73,7 @@ function RevealWrap({ children, delay = 0, className = "" }) {
   );
 }
 
-function WhatsAppBtn({ text = "Fale Conosco", small = false }) {
+export function WhatsAppBtn({ text = "Fale Conosco", small = false }) {
   return (
     <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="wpp-btn" style={{
       display: "inline-flex", alignItems: "center", gap: small ? 8 : 10,
@@ -93,7 +93,7 @@ function WhatsAppBtn({ text = "Fale Conosco", small = false }) {
   );
 }
 
-function FloatingWhatsApp() {
+export function FloatingWhatsApp() {
   const [show, setShow] = useState(false);
   useEffect(() => {
     const h = () => setShow(window.scrollY > 400);
@@ -510,7 +510,7 @@ function Stepper({ value, onChange, label, min = 0, max = 20 }) {
   );
 }
 
-function CalculadoraM2() {
+export function CalculadoraM2() {
   const [modo, setModo] = useState("parede");
   const [altura, setAltura] = useState("");
   const [largura, setLargura] = useState("");
