@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;600;700;800;900&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1292,498 +1292,611 @@ img, svg { max-width: 100%; height: auto; }
   .hero-section { min-height: 100svh; }
 }
 
-/* ========== LINK BIO (estilo Denderson adaptado — tema pintura) ========== */
+/* ========== LINK BIO NAP — Tema Pintura, Família, Alegre ========== */
 
-.bio-page {
-  position: relative;
-  min-height: 100vh;
-  background: #0a0e1a;
-  color: #fff;
-  overflow-x: hidden;
-  font-family: 'Courier New', monospace;
-}
-
-/* Matrix canvas fundo */
-.bio-matrix {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.55;
-}
-
-.bio-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse at top, rgba(10,14,26,0.5) 0%, rgba(10,14,26,0.85) 100%),
-    linear-gradient(180deg, rgba(10,14,26,0.2) 0%, rgba(10,14,26,0.6) 100%);
-  pointer-events: none;
-}
-
-.bio-main {
-  position: relative;
-  z-index: 2;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 48px 20px 40px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header */
-.bio-header {
-  text-align: center;
-  margin-bottom: 40px;
-  animation: bioFadeIn 0.6s ease;
-}
-
-@keyframes bioFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes bioV2FadeUp {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.bio-avatar-wrap {
-  position: relative;
-  width: 128px;
-  height: 128px;
-  margin: 0 auto 24px;
-}
-
-.bio-avatar-glow {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #1B3A8C, #4CAF50, #F9A825, #FF6D00, #D32F2F, #E91E93, #1B3A8C
-  );
-  filter: blur(14px);
-  opacity: 0.6;
-  animation: bioGlow 8s linear infinite;
-}
-
-@keyframes bioGlow {
+@keyframes bioV2RingSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-.bio-avatar {
+@keyframes bioV2Drip {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(calc(100vh + 120px)); opacity: 0.2; }
+}
+
+@keyframes bioV2DotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+@keyframes bioV2RibbonShine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bioV2Confete {
+  0% { opacity: 0.3; transform: rotate(0deg) scale(1); }
+  50% { opacity: 0.6; transform: rotate(180deg) scale(1.05); }
+  100% { opacity: 0.3; transform: rotate(360deg) scale(1); }
+}
+
+/* Page base */
+.bio-page-v2 {
   position: relative;
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.9);
-  box-shadow:
-    0 12px 40px rgba(0,0,0,0.5),
-    inset 0 2px 0 rgba(255,255,255,0.3);
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px ellipse at 50% 0%, #FFF8F0 0%, #FFFFFF 60%),
+    linear-gradient(180deg, #FFFBF2 0%, #FFFFFF 40%, #FFF8F5 100%);
+  color: #1F2937;
+  overflow-x: hidden;
+  font-family: 'Nunito', sans-serif;
 }
 
-.bio-verified {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  z-index: 2;
-  background: #0a0e1a;
-  border-radius: 50%;
-  padding: 1px;
+/* Respingos SVG fundo — sutis */
+.bio-page-v2 > svg[aria-hidden] {
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
 }
 
-.bio-name {
-  font-family: 'Courier New', monospace;
-  font-size: 38px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  line-height: 1.1;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
+/* Gotas animadas (svgs 6-9 sao os PaintDripSVG) */
+.bio-page-v2 > svg[aria-hidden]:nth-of-type(6) {
+  opacity: 0.6;
+  z-index: 1;
+  animation: bioV2Drip 12s linear infinite;
+}
+.bio-page-v2 > svg[aria-hidden]:nth-of-type(7) {
+  opacity: 0.5;
+  z-index: 1;
+  animation: bioV2Drip 16s linear infinite;
+  animation-delay: 3s;
+}
+.bio-page-v2 > svg[aria-hidden]:nth-of-type(8) {
+  opacity: 0.55;
+  z-index: 1;
+  animation: bioV2Drip 14s linear infinite;
+  animation-delay: 6s;
+}
+.bio-page-v2 > svg[aria-hidden]:nth-of-type(9) {
+  opacity: 0.45;
+  z-index: 1;
+  animation: bioV2Drip 18s linear infinite;
+  animation-delay: 9s;
 }
 
-.bio-name-nap {
-  background: linear-gradient(135deg, #F9A825, #FF6D00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 24px rgba(249,168,37,0.35);
-}
-
-.bio-name-tintas {
-  background: linear-gradient(135deg, #E91E93, #D63384);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 24px rgba(233,30,147,0.35);
-}
-
-.bio-subtitle {
-  font-family: 'Courier New', monospace;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 16px;
-}
-
-.bio-prompt {
-  color: #4CAF50;
-  font-weight: 700;
-  margin-right: 6px;
-}
-
-.bio-stats {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: #4CAF50;
-  text-shadow: 0 0 10px rgba(76,175,80,0.35);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.bio-sep {
-  color: rgba(255,255,255,0.3);
-}
-
-/* Cards */
-.bio-cards {
+.bio-main-v2 {
+  position: relative;
+  z-index: 5;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 22px 36px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-bottom: 40px;
+}
+
+/* ----- HEADER ----- */
+.bio-header-v2 {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: bioV2FadeUp 0.6s ease;
+}
+
+.bio-avatar-v2 {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 22px;
+}
+
+.bio-avatar-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #1B3A8C 0deg,
+    #4CAF50 60deg,
+    #F9A825 120deg,
+    #FF6D00 180deg,
+    #D32F2F 220deg,
+    #E91E93 300deg,
+    #1B3A8C 360deg
+  );
+  animation: bioV2RingSpin 10s linear infinite;
+  filter: blur(2px);
+  opacity: 0.35;
+}
+
+.bio-avatar-img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow:
+    0 18px 44px rgba(27,58,140,0.2),
+    0 4px 12px rgba(233,30,147,0.15);
+}
+
+/* ----- NAME ----- */
+.bio-name-v2 {
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  font-size: clamp(40px, 10vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bio-name-nap-v2 {
+  background: linear-gradient(135deg, #1B3A8C 0%, #4CAF50 35%, #F9A825 70%, #FF6D00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bio-name-tintas-v2 {
+  background: linear-gradient(135deg, #E91E93 0%, #D63384 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.bio-tagline-v2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(18px, 4.5vw, 22px);
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.35;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.bio-tagline-v2 strong {
+  background: linear-gradient(90deg, #E91E93, #FF6D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+.bio-sub-v2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+.bio-sub-v2 strong {
+  color: #1B3A8C;
+  font-weight: 800;
+}
+
+.bio-stats-v2 {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bio-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 40px;
+  background: #fff;
+  border: 1.5px solid var(--c, #E91E93);
+  color: var(--c, #E91E93);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+.bio-stat-pill strong {
+  font-weight: 900;
+  font-size: 13px;
+}
+.bio-stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, #E91E93);
+  flex-shrink: 0;
+  animation: bioV2DotPulse 2s ease infinite;
+}
+
+/* ----- CARDS ----- */
+.bio-cards-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.bio-card-enter {
+  animation: bioV2FadeUp 0.55s ease backwards;
 }
 
 .bio-card {
   position: relative;
-  display: block;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  border: 2px solid #F3F4F6;
+  border-radius: 22px;
   text-decoration: none;
-  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  transition: transform 0.3s ease;
-  animation: bioFadeIn 0.6s ease backwards;
 }
 
-.bio-card:nth-child(1) { animation-delay: 0.05s; }
-.bio-card:nth-child(2) { animation-delay: 0.12s; }
-.bio-card:nth-child(3) { animation-delay: 0.19s; }
-.bio-card:nth-child(4) { animation-delay: 0.26s; }
+.bio-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--card-color, #E91E93);
+  opacity: 0.9;
+}
 
 @media (hover: hover) {
   .bio-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    border-color: var(--card-color, #E91E93);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.08);
   }
   .bio-card:hover .bio-card-arrow {
     transform: translateX(4px);
+    background: var(--card-color, #E91E93);
+    color: #fff !important;
   }
 }
 
-/* Glow animado no card de destaque */
-.bio-card-highlight {
-  padding: 2px;
-  background: linear-gradient(
-    135deg,
-    rgba(76,175,80,0.4),
-    rgba(249,168,37,0.4),
-    rgba(233,30,147,0.4),
-    rgba(27,58,140,0.4)
-  );
-  background-size: 300% 300%;
-  animation: bioFadeIn 0.6s ease backwards, bioHighlightFlow 6s ease infinite 0.05s;
+/* Card destaque — borda rainbow animada */
+.bio-card-hl {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #1B3A8C, #4CAF50, #F9A825, #FF6D00, #E91E93, #1B3A8C) border-box;
+  border: 3px solid transparent;
+  background-size: 100% 100%, 300% 300%;
+  animation: bioV2RibbonShine 6s ease infinite;
+  box-shadow:
+    0 8px 24px rgba(233,30,147,0.12),
+    0 4px 16px rgba(249,168,37,0.1);
 }
 
-@keyframes bioHighlightFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+.bio-card-hl::before {
+  display: none;
 }
 
-.bio-card-inner {
-  background: linear-gradient(
-    180deg,
-    rgba(26,26,46,0.95) 0%,
-    rgba(13,27,62,0.95) 100%
-  );
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  overflow: hidden;
-  backdrop-filter: blur(12px);
-}
-
-.bio-card-highlight .bio-card-inner {
-  border: none;
-}
-
-/* Barra terminal */
-.bio-card-bar {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 16px;
-  background: rgba(0,0,0,0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.bio-card-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.bio-card-dots span {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.bio-card-url {
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.04em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Body do card */
-.bio-card-body {
-  padding: 18px 18px 20px;
-}
-
-.bio-card-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid;
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-}
-
-.bio-card-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 14px;
+.bio-card-ribbon {
+  position: absolute;
+  top: 10px;
+  right: -34px;
+  transform: rotate(35deg);
+  padding: 4px 40px;
+  background: linear-gradient(90deg, #E91E93 0%, #FF6D00 50%, #F9A825 100%);
+  background-size: 200% auto;
+  animation: bioV2RibbonShine 3s linear infinite;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  box-shadow: 0 3px 10px rgba(233,30,147,0.3);
+  z-index: 3;
 }
 
 .bio-card-icon {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  border: 1px solid;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
-.bio-card-text {
-  flex: 1;
+.bio-card-body {
   min-width: 0;
 }
 
-.bio-card-category {
-  font-family: 'Courier New', monospace;
+.bio-card-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  background: #fff;
+  font-family: 'Nunito', sans-serif;
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 3px;
-  opacity: 0.9;
+  margin-bottom: 6px;
 }
 
 .bio-card-title {
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+
+.bio-card-subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
   font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.04em;
-  line-height: 1.25;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+
+.bio-card-desc {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #6b7280;
 }
 
 .bio-card-arrow {
   flex-shrink: 0;
   width: 40px;
   height: 40px;
-  border-radius: 10px;
-  border: 1px solid;
+  border-radius: 50%;
+  background: #F9FAFB;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.bio-card-desc {
-  font-family: 'Courier New', monospace;
-  font-size: 12.5px;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.65);
-  padding-left: 58px;
-}
-
-/* Rodape */
-.bio-footer {
-  margin-top: auto;
-  padding-top: 24px;
-  text-align: center;
-  animation: bioFadeIn 0.6s ease backwards;
-  animation-delay: 0.35s;
-}
-
-.bio-video-card {
-  background: linear-gradient(180deg, rgba(26,26,46,0.95), rgba(13,27,62,0.95));
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 20px;
+/* ----- SECAO MASCOTE PINTOR ----- */
+.bio-pintor-cta {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 22px 22px 18px;
+  background: linear-gradient(135deg, #FFFBF2 0%, #FFF0F5 100%);
+  border: 2px solid #FFD4E0;
+  border-radius: 26px;
+  margin-bottom: 32px;
+  overflow: hidden;
+  animation: bioV2FadeUp 0.6s ease backwards;
+  animation-delay: 0.4s;
+}
+
+.bio-pintor-img-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+}
+
+.bio-pintor-confete {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(249,168,37,0.4), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(233,30,147,0.4), transparent 60%),
+    radial-gradient(circle at 50% 20%, rgba(76,175,80,0.3), transparent 60%);
+  animation: bioV2Confete 8s linear infinite;
+}
+
+.bio-pintor-img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 24px rgba(27,58,140,0.18);
+}
+
+.bio-pintor-text {
+  min-width: 0;
+}
+
+.bio-pintor-quote {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #1F2937;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.bio-pintor-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.bio-pintor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #E91E93, #FF6D00);
+  background-size: 200% auto;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 40px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(233,30,147,0.3);
+  transition: all 0.3s ease;
+}
+@media (hover: hover) {
+  .bio-pintor-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(233,30,147,0.4);
+  }
+}
+
+/* ----- VIDEO SECTION ----- */
+.bio-video-section {
+  background: linear-gradient(180deg, #0A0E1A 0%, #0D1B3E 100%);
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 32px rgba(13,27,62,0.2);
+  animation: bioV2FadeUp 0.6s ease backwards;
+  animation-delay: 0.5s;
+}
+
+.bio-video-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
 }
 
 .bio-video-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  background: rgba(0,0,0,0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.65);
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.85);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 700;
 }
 
-.bio-video-dot {
+.bio-video-dot-v2 {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #E91E93;
   box-shadow: 0 0 10px rgba(233,30,147,0.7);
-  animation: bioVideoDot 1.5s ease infinite;
+  animation: bioV2DotPulse 1.5s ease infinite;
 }
 
-@keyframes bioVideoDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+.bio-video-frame {
+  background: #000;
 }
 
-.bio-video {
+.bio-video-v2 {
   display: block;
   width: 100%;
   height: auto;
-  background: #0a0e1a;
 }
 
-/* Social buttons */
-.bio-social {
+/* ----- FOOTER ----- */
+.bio-footer-v2 {
+  text-align: center;
+  animation: bioV2FadeUp 0.6s ease backwards;
+  animation-delay: 0.55s;
+}
+
+.bio-social-v2 {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   flex-wrap: wrap;
 }
 
-.bio-social-btn {
+.bio-social-v2-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  border-radius: 30px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.8);
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  background: #fff;
+  border: 2px solid var(--c, #E91E93);
+  color: var(--c, #E91E93);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
   text-decoration: none;
-  transition: all 0.2s ease;
+  border-radius: 40px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.04);
 }
 
 @media (hover: hover) {
-  .bio-social-btn:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.25);
+  .bio-social-v2-btn:hover {
+    background: var(--c, #E91E93);
     color: #fff;
     transform: translateY(-2px);
   }
 }
 
-.bio-copy {
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.08em;
-  line-height: 1.6;
+.bio-copy-v2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+  line-height: 1.5;
 }
 
-/* Mobile */
+.bio-copy-small-v2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  color: #9CA3AF;
+  font-style: italic;
+}
+
+/* ----- MOBILE ----- */
 @media (max-width: 480px) {
-  .bio-main {
-    padding: 36px 16px 32px;
-  }
-  .bio-name {
-    font-size: 30px;
-    gap: 10px;
-  }
-  .bio-subtitle {
-    font-size: 12px;
-  }
-  .bio-stats {
-    font-size: 11px;
-    gap: 8px;
-  }
-  .bio-avatar-wrap,
-  .bio-avatar {
-    width: 108px;
-    height: 108px;
-  }
-  .bio-avatar-wrap {
-    margin-bottom: 20px;
-  }
-  .bio-card-title {
-    font-size: 14px;
-  }
-  .bio-card-desc {
-    font-size: 12px;
-    padding-left: 0;
-  }
-  .bio-card-arrow {
-    width: 36px;
-    height: 36px;
-  }
-  .bio-card-icon {
-    width: 40px;
-    height: 40px;
-  }
-  .bio-card-url {
-    font-size: 10px;
-  }
-  .bio-card-body {
-    padding: 14px 14px 16px;
-  }
-  .bio-video-label {
-    font-size: 10px;
-  }
-}
+  .bio-main-v2 { padding: 30px 16px 28px; }
+  .bio-avatar-v2 { width: 120px; height: 120px; margin-bottom: 18px; }
+  .bio-name-v2 { gap: 8px; }
+  .bio-tagline-v2 { font-size: 18px; }
+  .bio-sub-v2 { font-size: 13px; }
+  .bio-stat-pill { padding: 6px 12px; font-size: 11px; }
 
-/* Reduce matrix density no mobile pra performance */
-@media (max-width: 600px) {
-  .bio-matrix {
-    opacity: 0.35;
+  .bio-card {
+    padding: 16px;
+    gap: 12px;
+    border-radius: 18px;
   }
+  .bio-card-icon { width: 42px; height: 42px; border-radius: 12px; }
+  .bio-card-title { font-size: 15px; }
+  .bio-card-subtitle { font-size: 12px; }
+  .bio-card-desc { font-size: 12px; }
+  .bio-card-arrow { width: 34px; height: 34px; }
+  .bio-card-badge { font-size: 9px; }
+  .bio-card-ribbon { font-size: 8px; right: -38px; padding: 3px 42px; }
+
+  .bio-pintor-cta { padding: 18px 16px 18px 14px; gap: 14px; }
+  .bio-pintor-img-wrap { width: 88px; height: 88px; }
+  .bio-pintor-quote { font-size: 15px; }
+  .bio-pintor-sub { font-size: 12px; }
+  .bio-pintor-btn { font-size: 12px; padding: 7px 14px; }
 }
 
 /* ========== COLORINDO COM A NAP — LANDING ========== */
