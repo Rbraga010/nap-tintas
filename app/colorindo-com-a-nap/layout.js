@@ -1,8 +1,8 @@
-const SITE_URL = "https://nap-tintas.vercel.app";
+import { SITE_URL } from "../lib/constants";
 const OG_IMAGE = `${SITE_URL}/mascote-menino.jpg`;
 
 export const metadata = {
-  title: "Formação Colorindo com a NAP — Centro de Treinamento para Pintores",
+  title: "Formação Colorindo com a NAP · Centro de Treinamento para Pintores",
   description:
     "A NAP Tintas tem um centro de treinamento pra pintor da região de Sorocaba. Técnica, gestão, vendas e apoio completo. Aqui, pintor é da família.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata = {
     "vendas para pintor",
   ],
   openGraph: {
-    title: "Formação Colorindo com a NAP — Aqui, pintor é da família.",
+    title: "Formação Colorindo com a NAP · Aqui, pintor é da família.",
     description:
       "Formação completa em técnica, gestão e vendas pra quem vive de pintar. Família NAP do seu lado na loja, na obra e no dia a dia.",
     url: `${SITE_URL}/colorindo-com-a-nap`,
@@ -26,7 +26,7 @@ export const metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Formação Colorindo com a NAP — Pintor parceiro",
+        alt: "Formação Colorindo com a NAP · Pintor parceiro",
       },
     ],
     type: "website",

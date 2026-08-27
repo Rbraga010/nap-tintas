@@ -4,7 +4,7 @@
 > Este documento diz o que já existe, como trabalhamos e onde continuar.
 > Leia também o `AGENTS.md` (raiz) e o `README.md`.
 
-## Estado atual (28/08/2026)
+## Estado atual (27/08/2026)
 
 Tudo abaixo está NO AR em https://nap-tintas.vercel.app (deploy
 automático: push na `master` do GitHub → Vercel).
@@ -55,12 +55,14 @@ automático: push na `master` do GitHub → Vercel).
 
 ## Pendências conhecidas (comece por aqui)
 
-1. **WhatsApp placeholder `5515999999999`** em todos os CTAs — trocar em
-   `app/lib/constants.js` assim que o número real chegar. PRIORIDADE 1.
-2. **Assets premium do "Bloco 3"**: prompts de capa (hero institucional)
-   e vídeo de logo já foram entregues ao Rodrigo; quando os arquivos
-   chegarem: capa → `public/hero-cans.jpg` (ou novo nome + refs) e vídeo
-   → `public/hero-video.mp4` (usado na home e na bio).
+1. ~~WhatsApp real~~ FEITO — (15) 99813-7222 em `app/lib/constants.js`.
+   ~~Assets premium~~ FEITO — capa `hero-cans.jpg` + vídeo `hero-video.mp4`.
+2. **Revisão de copy/dados factuais ANTES de divulgar** (auditoria
+   27/08/2026): pintores parceiros fictícios com foto de banco de imagem
+   (centro-treinamento), turmas/agenda com datas passadas e vagas
+   inventadas, rendimentos de tinta irreais e descrições trocadas no
+   catálogo, "desde 2026" vs "+20 anos", depoimentos a confirmar com o
+   dono. Nada disso é código: é decisão do dono — colher os dados reais.
 3. **Ativar Supabase real do cliente** — roteiro pronto em
    `docs/SETUP-CLIENTE.md`; criar primeiro admin (README).
 4. **Fotos reais dos produtos** — o card v3 e o admin já suportam

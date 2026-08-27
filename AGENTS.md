@@ -4,9 +4,9 @@
 
 Antes de qualquer outra coisa, verifique o estado desta instalação:
 
-- **NÃO existe `.env.local`** na raiz, OU
-- o remote do git é `Rbraga010/nap-tintas` (repo de origem, não o do cliente), OU
-- não existe `node_modules/`
+- não existe `.git` (a pasta veio de um ZIP), OU
+- o remote **`origin`** aponta para `Rbraga010/nap-tintas` (repo de
+  origem, não o do cliente — outros remotes não contam)
 
 Se QUALQUER um desses sinais for verdadeiro, esta é uma máquina nova:
 **leia `docs/SETUP-CLIENTE.md` e conduza o setup completo com o usuário**
@@ -21,7 +21,8 @@ casa e pendências priorizadas).
 
 Esta versão tem breaking changes — APIs, convenções e estrutura de arquivos
 podem diferir do seu treinamento. Leia o guia relevante em
-`node_modules/next/dist/docs/` antes de escrever código. Respeite avisos de
+`node_modules/next/dist/docs/` (existe após o `npm install`) antes de
+escrever código. Respeite avisos de
 deprecação.
 
 ## Mapa do projeto

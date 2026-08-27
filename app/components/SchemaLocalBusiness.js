@@ -1,15 +1,17 @@
+import { SITE_URL } from "../lib/constants";
+
 export default function SchemaLocalBusiness() {
   const data = {
     "@context": "https://schema.org",
     "@type": "PaintStore",
-    "@id": "https://nap-tintas.vercel.app/#business",
+    "@id": `${SITE_URL}/#business`,
     name: "NAP Tintas",
-    alternateName: "NAP Tintas — Colorindo Sonhos",
+    alternateName: "NAP Tintas · Colorindo Sonhos",
     description:
       "Loja de tintas, texturas, acessórios e centro de formação para pintores em Sorocaba/SP. Mais de 20 anos de mercado com atendimento familiar.",
-    url: "https://nap-tintas.vercel.app",
-    logo: "https://nap-tintas.vercel.app/nap-logo.jpg",
-    image: "https://nap-tintas.vercel.app/mascote-roda.jpg",
+    url: `${SITE_URL}`,
+    logo: `${SITE_URL}/nap-logo.jpg`,
+    image: `${SITE_URL}/mascote-roda.jpg`,
     telephone: "+5515998137222",
     priceRange: "$$",
     address: {
@@ -53,7 +55,7 @@ export default function SchemaLocalBusiness() {
           name: "Formação Colorindo com a NAP",
           description:
             "Centro de treinamento para pintores com cursos de técnica, gestão e vendas.",
-          url: "https://nap-tintas.vercel.app/colorindo-com-a-nap",
+          url: `${SITE_URL}/colorindo-com-a-nap`,
         },
       },
     ],

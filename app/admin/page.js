@@ -14,7 +14,8 @@ import { temBanco, adminLogin, adminLogout, adminSessao,
   getCategorias, upsertCategoria, deleteCategoria,
   adminListProdutos, upsertProduto, deleteProduto,
   adminListBanners, upsertBanner, deleteBanner, uploadImagem,
-  adminListClientes, upsertCliente, deleteCliente, adminListPedidos } from "../lib/db";
+  adminListClientes, upsertCliente, deleteCliente, adminListPedidos,
+  updatePedidoStatus, deletePedido } from "../lib/db";
 
 const fmt = (v) => Number(v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const CORES_MARCA = [
@@ -61,8 +62,8 @@ function Login({ onOk }) {
           <>
             <div className="adm-demo-aviso">
               <strong>Modo demonstração</strong> — sem banco conectado. As alterações
-              valem só neste navegador. Conecte o Supabase (ver README) para ativar
-              o login real.
+              valem só neste navegador. Para ativar a gestão real, peça ao suporte
+              para conectar o banco de dados (guia técnico no README).
             </div>
             <button type="button" className="adm-btn-primario" onClick={onOk}>
               Entrar em modo demonstração
@@ -150,7 +151,7 @@ function FormProduto({ inicial, categorias, onSalvar, onFechar }) {
               onChange={(e) => set("embalagem", e.target.value)} />
           </label>
           <label>Rendimento
-            <input placeholder="350 m²/galão" value={p.rendimento || ""}
+            <input placeholder="até 40 m²/demão" value={p.rendimento || ""}
               onChange={(e) => set("rendimento", e.target.value)} />
           </label>
           <label>Cor de destaque do card
@@ -175,7 +176,7 @@ function FormProduto({ inicial, categorias, onSalvar, onFechar }) {
           <label className="adm-check">
             <input type="checkbox" checked={!!p.destaque}
               onChange={(e) => set("destaque", e.target.checked)} />
-            ⭐ Destaque (aparece nos “Queridinhos”)
+            ⭐ Destaque (ganha o selo Destaque na loja)
           </label>
           <label className="adm-check">
             <input type="checkbox" checked={p.ativo !== false}
@@ -581,27 +582,45 @@ function AbaClientes() {
 function AbaPedidos() {
   const [lista, setLista] = useState([]);
   const [clientes, setClientes] = useState([]);
-  useEffect(() => {
+  const carregar = () => {
     adminListPedidos().then(setLista);
     adminListClientes().then(setClientes);
-  }, []);
+  };
+  useEffect(() => { carregar(); }, []);
   const nomeCliente = (id) => clientes.find((c) => c.id === id)?.nome || "—";
+  const mudarStatus = async (p, status) => {
+    const r = await updatePedidoStatus(p.id, status);
+    r.ok ? carregar() : alert(r.error);
+  };
+  const excluir = async (p) => {
+    if (!confirm(`Excluir o pedido #${p.id}? Essa ação não tem volta.`)) return;
+    const r = await deletePedido(p.id);
+    r.ok ? carregar() : alert(r.error);
+  };
   return (
     <div className="adm-tabela-wrap">
       <table className="adm-tabela">
-        <thead><tr><th>#</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Status</th><th>Data</th></tr></thead>
+        <thead><tr><th>#</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Status</th><th>Data</th><th></th></tr></thead>
         <tbody>
           {lista.map((p) => (
-            <tr key={p.id}>
+            <tr key={p.id} className={p.status === "cancelado" ? "adm-inativo" : ""}>
               <td>{p.id}</td>
               <td><strong>{nomeCliente(p.cliente_id)}</strong></td>
               <td>{(p.itens || []).map((i) => `${i.qtd}× ${i.nome}`).join(", ")}</td>
               <td className="adm-preco">{fmt(p.total)}</td>
-              <td><span className="adm-tag adm-tag-on">{p.status}</span></td>
+              <td>
+                <select value={p.status || "novo"} aria-label="Status do pedido"
+                  onChange={(e) => mudarStatus(p, e.target.value)}>
+                  <option value="novo">novo</option>
+                  <option value="atendido">atendido</option>
+                  <option value="cancelado">cancelado</option>
+                </select>
+              </td>
               <td>{new Date(p.criado_em).toLocaleString("pt-BR")}</td>
+              <td className="adm-acoes"><button onClick={() => excluir(p)}>🗑️</button></td>
             </tr>
           ))}
-          {!lista.length && <tr><td colSpan={6} className="adm-vazio">Nenhum pedido registrado ainda.</td></tr>}
+          {!lista.length && <tr><td colSpan={7} className="adm-vazio">Nenhum pedido registrado ainda.</td></tr>}
         </tbody>
       </table>
     </div>
@@ -650,8 +669,8 @@ export default function AdminPage() {
 
       {!temBanco && (
         <div className="adm-demo-faixa">
-          Modo demonstração: alterações valem só neste navegador. Conecte o
-          Supabase (README) para gestão real.
+          Modo demonstração: alterações valem só neste navegador. Para gestão
+          real, peça ao suporte para conectar o banco de dados.
         </div>
       )}
 

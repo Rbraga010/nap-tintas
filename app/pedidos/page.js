@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { COLORS, WHATSAPP_NUMBER, RevealWrap } from "../page";
-import { getProdutos, getCategorias, cadastrarCliente, registrarPedido } from "../lib/db";
+import { COLORS, WHATSAPP_NUMBER } from "../lib/constants";
+import { temBanco, getProdutos, getCategorias, cadastrarCliente, registrarPedido } from "../lib/db";
 import { CATEGORIAS as CATEGORIAS_DEMO } from "../lib/catalogo-demo";
 import OfertasCarrossel from "../components/OfertasCarrossel";
 import { PRODUTOS as PRODUTOS_DEMO } from "../lib/catalogo-demo";
@@ -106,7 +106,7 @@ function PedidosHero({ busca, setBusca, marcas, marca, setMarca, ordem, setOrdem
           <span className="ped-hero-accent">Na palma da mão.</span>
         </h1>
         <p className="ped-hero-sub">
-          Monte seu pedido, finalize no WhatsApp e receba em Sorocaba. Sem cadastro, sem complicação. <strong>A NAP cuida contigo.</strong>
+          Monte seu pedido, finalize no WhatsApp e receba em Sorocaba e região. Sem cadastro obrigatório, sem complicação. <strong>A NAP cuida de tudo com você.</strong>
         </p>
         <div className="ped-busca-linha">
           <div className="ped-hero-search">
@@ -247,25 +247,26 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
     }
   }, [open]);
 
-  const finalizarWpp = async () => {
-    try {
-      let cliente_id = null;
-      if (nome.trim() && zap.trim()) {
-        try { localStorage.setItem("nap.cliente", JSON.stringify({ nome, zap })); } catch {}
-        const r = await cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim() });
-        cliente_id = r?.cliente?.id ?? null;
-      }
-      await registrarPedido({
-        cliente_id,
-        itens: carrinho.map((i) => ({ produto_id: i.id, nome: i.nome, qtd: i.qty, preco: i.preco })),
-        total,
-      });
-    } catch {}
-    const itens = carrinho.map((i) =>
+  const finalizarWpp = () => {
+    // abre o WhatsApp JA, dentro do gesto do clique — await antes do
+    // window.open = popup bloqueado no Safari/iOS, bem no botao da venda
+    const itensTxt = carrinho.map((i) =>
       `• ${i.qty}× ${i.nome} (${i.marca}) — ${fmt(i.preco * i.qty)}`
     ).join("\n");
-    const texto = `*Olá NAP!* Quero fazer este pedido:\n\n${itens}\n\n*Total:* ${fmt(total)}\n\nPode me confirmar disponibilidade e forma de pagamento?`;
+    const texto = `*Olá NAP!* Quero fazer este pedido:\n\n${itensTxt}\n\n*Total:* ${fmt(total)}\n\nPode me confirmar disponibilidade e forma de pagamento?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`, "_blank");
+    // registro do pedido segue em segundo plano
+    const itens = carrinho.map((i) => ({ produto_id: i.id, nome: i.nome, qtd: i.qty, preco: i.preco }));
+    try {
+      if (nome.trim() && zap.trim()) {
+        try { localStorage.setItem("nap.cliente", JSON.stringify({ nome, zap })); } catch {}
+        cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim() })
+          .then((r) => registrarPedido({ cliente_id: r?.cliente?.id ?? null, itens, total }))
+          .catch(() => {});
+      } else {
+        registrarPedido({ cliente_id: null, itens, total }).catch(() => {});
+      }
+    } catch {}
   };
 
   if (!open) return null;
@@ -293,7 +294,7 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
           {carrinho.length === 0 ? (
             <div className="ped-drawer-empty">
               <div className="ped-drawer-empty-emoji">🧺</div>
-              <p>Seu carrinho está vazio.</p>
+              <p>Seu pedido ainda está vazio.</p>
               <span>Escolha seus produtos e eles aparecem aqui.</span>
             </div>
           ) : (
@@ -331,7 +332,7 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
             <div className="ped-cliente">
               <input className="ped-cliente-campo" placeholder="Seu nome"
                 value={nome} onChange={(e) => setNome(e.target.value)} autoComplete="name" />
-              <input className="ped-cliente-campo" placeholder="Seu WhatsApp (15 9…)"
+              <input className="ped-cliente-campo" placeholder="Seu WhatsApp (15) 99999-9999"
                 value={zap} onChange={(e) => setZap(e.target.value)} inputMode="tel" autoComplete="tel" />
             </div>
             <button onClick={finalizarWpp} className="ped-drawer-finalize">
@@ -340,7 +341,7 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
               <IconArrow width="16" height="16" />
             </button>
             <button onClick={onClear} className="ped-drawer-clear">
-              Limpar carrinho
+              Limpar pedido
             </button>
           </footer>
         )}
@@ -433,7 +434,8 @@ function ModalCadastro({ open, onClose }) {
   const salvar = async (e) => {
     e.preventDefault();
     try { localStorage.setItem("nap.cliente", JSON.stringify({ nome, zap, email })); } catch {}
-    await cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim(), email: email.trim() || null });
+    const r = await cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim(), email: email.trim() || null });
+    if (!r?.ok) { alert("Não conseguimos salvar seu cadastro agora. Tente de novo em instantes."); return; }
     setFeito(true);
   };
   return (
@@ -451,11 +453,11 @@ function ModalCadastro({ open, onClose }) {
           <form onSubmit={salvar}>
             <h3>Meu cadastro</h3>
             <p className="ped-modal-sub">
-              Deixe seus dados e agilize seus pedidos — a NAP te atende pelo nome.
+              Deixe seus dados e agilize seus pedidos: a NAP te atende pelo nome.
             </p>
             <input className="ped-cliente-campo" placeholder="Nome completo" required
               value={nome} onChange={(e) => setNome(e.target.value)} autoComplete="name" />
-            <input className="ped-cliente-campo" placeholder="WhatsApp (15 9…)" required
+            <input className="ped-cliente-campo" placeholder="WhatsApp (15) 99999-9999" required
               value={zap} onChange={(e) => setZap(e.target.value)} inputMode="tel" autoComplete="tel" />
             <input className="ped-cliente-campo" placeholder="E-mail (opcional)" type="email"
               value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
@@ -470,7 +472,8 @@ function ModalCadastro({ open, onClose }) {
 
 export default function PedidosPage() {
   // produtos: demo como valor inicial (sem flash), banco assume se existir
-  const [PRODUTOS, setProdutos] = useState(PRODUTOS_DEMO);
+  // com banco real, nada de flash do catalogo ficticio: comeca vazio
+  const [PRODUTOS, setProdutos] = useState(temBanco ? [] : PRODUTOS_DEMO);
   useEffect(() => { getProdutos().then(setProdutos); }, []);
 
   // filtros da loja (nav) + banner de destaque do slot "loja"
@@ -623,7 +626,7 @@ export default function PedidosPage() {
             <div className="ped-ajuda-emoji">💬</div>
             <div>
               <h3 className="ped-ajuda-title">Não encontrou o que queria?</h3>
-              <p className="ped-ajuda-sub">Manda mensagem no WhatsApp com o que precisa — a gente procura pra você. A NAP tem muito mais na loja física.</p>
+              <p className="ped-ajuda-sub">Manda mensagem no WhatsApp com o que precisa que a gente procura pra você. A NAP tem muito mais na loja física.</p>
             </div>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Oi NAP! Estou na loja online e queria ajuda pra encontrar um produto específico.")}`}

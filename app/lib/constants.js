@@ -25,3 +25,7 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 export const wppLink = (msg) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 export { WHATSAPP_NUMBER };
+
+// URL publica do site — trocar SO AQUI quando entrar o dominio proprio
+// (Fase 7 da docs/SETUP-CLIENTE.md)
+export const SITE_URL = "https://nap-tintas.vercel.app";

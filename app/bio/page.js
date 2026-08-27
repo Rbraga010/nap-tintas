@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import OfertasCarrossel from "../components/OfertasCarrossel";
-import { COLORS, WHATSAPP_NUMBER } from "../page";
+import { COLORS, WHATSAPP_NUMBER } from "../lib/constants";
 
 const WPP_PEDIDO = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   "Oi NAP! Quero fazer um pedido / pedir um orçamento."
@@ -108,8 +108,6 @@ function BioCard({
         "--card-color": iconColor,
       }}
     >
-      {highlight && <span className="bio-card-ribbon">VAGAS LIMITADAS</span>}
-
       <div className="bio-card-icon" style={{ background: iconColor, color: "#fff" }}>
         {icon}
       </div>
@@ -155,7 +153,7 @@ export default function BioPage() {
       badge: "LOJA ONLINE",
       title: "Faça seu pedido",
       subtitle: "Tintas, acessórios e texturas",
-      desc: "Vitrine completa de produtos. Escolha, monte seu pedido e finalize direto no WhatsApp com consultoria incluída.",
+      desc: "Vitrine completa de produtos. Escolha, monte seu pedido e finalize direto no WhatsApp com a ajuda da nossa equipe.",
       href: "/pedidos",
     },
     {
@@ -163,7 +161,7 @@ export default function BioPage() {
       iconColor: COLORS.blue,
       badge: "INSTITUCIONAL",
       title: "Conheça a NAP",
-      subtitle: "Colorindo Sonhos desde sempre",
+      subtitle: "Colorindo Sonhos há mais de 20 anos",
       desc: "Mais de 20 anos pintando histórias em Sorocaba. Nossa família, nossos valores, nossa forma de atender.",
       href: "/",
     },
@@ -215,7 +213,7 @@ export default function BioPage() {
             Aqui, pintor é <strong>da família.</strong>
           </p>
           <p className="bio-sub-v2">
-            Colorindo sonhos em <strong>Sorocaba/SP</strong> · +20 anos de estrada
+            Colorindo Sonhos em <strong>Sorocaba/SP</strong> · +20 anos de estrada
           </p>
 
           <div className="bio-stats-v2">
@@ -254,7 +252,7 @@ export default function BioPage() {
 
         {/* Secao com mascote menino + CTA pra pintor */}
         <section className="bio-pintor-cta bio-pintor-destaque">
-          <span className="bio-destaque-fita">★ DESTAQUE · VAGAS LIMITADAS</span>
+          <span className="bio-destaque-fita">★ DESTAQUE</span>
           <div className="bio-pintor-img-wrap">
             <img
               src="/mascote-menino.jpg"

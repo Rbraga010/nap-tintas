@@ -27,6 +27,13 @@ export default function CookieBanner() {
     setVisible(false);
   };
 
+  const decline = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ accepted: false, ts: Date.now() }));
+    } catch {}
+    setVisible(false);
+  };
+
   if (!visible) return null;
 
   return (
@@ -78,11 +85,27 @@ export default function CookieBanner() {
               lineHeight: 1.55,
             }}
           >
-            Cookies essenciais pra navegação e, com seu aceite, pra entender o que você gostou. Nada de invasão — só pra colorir melhor sua experiência.
+            Cookies essenciais pra navegação e, com seu aceite, pra entender o que você gostou. Nada de invasão, só pra colorir melhor sua experiência.
           </p>
         </div>
       </div>
       <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+        <button
+          onClick={decline}
+          style={{
+            padding: "10px 16px",
+            borderRadius: 40,
+            background: "transparent",
+            color: "#6b7280",
+            border: "1.5px solid #E5E7EB",
+            cursor: "pointer",
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: 13,
+            fontWeight: 700,
+          }}
+        >
+          Só os essenciais
+        </button>
         <button
           onClick={accept}
           style={{

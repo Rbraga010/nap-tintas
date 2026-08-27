@@ -105,9 +105,10 @@ create policy "produtos: escrita admin" on produtos
 create policy "banners: escrita admin" on banners
   for all using (is_admin()) with check (is_admin());
 
--- clientes: qualquer visitante pode se cadastrar; so admin le
-create policy "clientes: insert publico" on clientes
-  for insert with check (true);
+-- clientes: visitante se cadastra SO pela funcao cadastrar_cliente
+-- (security definer, mais abaixo); escrita direta e so de admin
+create policy "clientes: insert admin" on clientes
+  for insert with check (is_admin());
 create policy "clientes: leitura admin" on clientes
   for select using (is_admin());
 create policy "clientes: update admin" on clientes
@@ -122,12 +123,48 @@ create policy "pedidos: leitura admin" on pedidos
   for select using (is_admin());
 create policy "pedidos: update admin" on pedidos
   for update using (is_admin()) with check (is_admin());
+create policy "pedidos: delete admin" on pedidos
+  for delete using (is_admin());
 
 -- admins: somente admins veem a lista
 create policy "admins: leitura admin" on admins
   for select using (is_admin());
 
 -- ============================================================
--- STORAGE (fotos de produto e banners enviados pelo admin)
--- Crie um bucket PUBLICO chamado "midia" no Dashboard > Storage.
+-- CADASTRO PUBLICO DE CLIENTE (usado pela loja no checkout)
+-- Por que RPC: o RLS nao da SELECT de clientes ao visitante, entao um
+-- insert().select() do front falharia; esta funcao roda como definer,
+-- deduplica pelo WhatsApp (so digitos) e devolve apenas o id.
 -- ============================================================
+create unique index if not exists clientes_whatsapp_digitos_key
+  on clientes ((regexp_replace(whatsapp, '\D', '', 'g')));
+
+create or replace function public.cadastrar_cliente(
+  p_nome text, p_whatsapp text, p_email text default null
+) returns bigint
+language sql
+security definer
+set search_path = public
+as $$
+  insert into clientes (nome, whatsapp, email)
+  values (p_nome, p_whatsapp, p_email)
+  on conflict ((regexp_replace(whatsapp, '\D', '', 'g'))) do update
+    set nome = excluded.nome,
+        email = coalesce(excluded.email, clientes.email)
+  returning id;
+$$;
+grant execute on function public.cadastrar_cliente(text, text, text)
+  to anon, authenticated;
+
+-- ============================================================
+-- STORAGE (fotos de produto e banners enviados pelo admin)
+-- Crie um bucket PUBLICO chamado "midia" no Dashboard > Storage e rode
+-- as policies abaixo (bucket publico cobre so a LEITURA; sem elas o
+-- upload do admin falha com erro de RLS).
+-- ============================================================
+create policy "midia: upload admin" on storage.objects
+  for insert with check (bucket_id = 'midia' and is_admin());
+create policy "midia: update admin" on storage.objects
+  for update using (bucket_id = 'midia' and is_admin());
+create policy "midia: delete admin" on storage.objects
+  for delete using (bucket_id = 'midia' and is_admin());

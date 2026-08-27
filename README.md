@@ -60,7 +60,8 @@ npm run dev
 
 ## Deploy (Vercel)
 
-Projeto conectado ao GitHub: push na `master` = deploy automático.
+Projeto conectado ao GitHub: push na branch padrão (`master` neste repo;
+`main` num repo criado do zero) = deploy automático.
 Configure as mesmas variáveis do `.env.local` em
 **Vercel → Settings → Environment Variables** quando ativar o Supabase.
 

@@ -19,11 +19,11 @@ const VALORES = [
 
 const DIFERENCIAIS = [
   { emoji: "🎨", title: "Sistema Tintométrico", desc: "Auxiliamos você na escolha do tom perfeito para seu ambiente. Montamos o seu projeto para que você possa visualizar como ficará a cor antes de pintar. São mais de 2.000 opções de cores preparadas na hora.", color: COLORS.blue },
-  { emoji: "💬", title: "Consultoria Personalizada", desc: "Nossa equipe está preparada para te auxiliar com a melhor opção de custo-benefício, entendendo a sua necessidade e te indicando a melhor opção.", color: COLORS.green },
+  { emoji: "💬", title: "Consultoria Personalizada", desc: "Nossa equipe está preparada para te auxiliar com a melhor opção de custo-benefício, entendendo a sua necessidade e indicando o produto certo pra sua obra.", color: COLORS.green },
   { emoji: "🪣", title: "Portfólio Completo", desc: "Tintas internas e externas, primers, texturas, efeitos decorativos e todos os acessórios. Tudo em um só lugar.", color: COLORS.orange },
-  { emoji: "🚚", title: "Entrega em Sorocaba", desc: "Comprou, a gente leva. Entrega disponível para Sorocaba e região. Sem complicação.", color: COLORS.pink },
+  { emoji: "🚚", title: "Entrega em Sorocaba", desc: "Comprou, a gente leva. Entrega disponível para Sorocaba e região. Sem complicação. Consulte condições no WhatsApp.", color: COLORS.pink },
   { emoji: "⭐", title: "+20 Anos de Experiência", desc: "Duas décadas de mercado formaram nosso olhar técnico e nossa capacidade de orientação.", color: COLORS.yellow },
-  { emoji: "👨‍👩‍👧‍👦", title: "Atendimento Familiar", desc: "Aqui você é recebido como gente e não como número. Somos uma loja de família, com uma gestão colaborativa, próspera e humana.", color: COLORS.red },
+  { emoji: "👨‍👩‍👧‍👦", title: "Atendimento Familiar", desc: "Aqui você é recebido pelo nome, como gente de casa. Somos uma loja de família, tocada por gente que atende no balcão.", color: COLORS.red },
 ];
 
 // ---- HOOKS ----
@@ -252,7 +252,7 @@ function Hero() {
             fontFamily: "var(--font-body)", fontSize: "clamp(15px, 1.8vw, 18px)",
             color: "rgba(255,255,255,0.7)", lineHeight: 1.75, marginBottom: 40,
           }}>
-            Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores misturadas na hora. Consultoria personalizada que vai além do balcão.
+            Mais de 20 anos de experiência no mercado de tintas. Mais de 2.000 opções de cores preparadas na hora. Consultoria personalizada que vai além do balcão.
           </p>
 
           <div className="hero-ctas" style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-start" }}>
@@ -387,7 +387,7 @@ function DiferenciaisSection() {
               Por Que a NAP?
             </p>
             <h2 className="section-title" style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
-              Diferenciais que fazem a diferença de verdade.
+              O que você só encontra na NAP.
             </h2>
           </div>
         </RevealWrap>
@@ -435,7 +435,7 @@ function ValoresSection() {
               O que nos move
             </p>
             <h2 className="section-title" style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", color: COLORS.darkBlue, fontWeight: 900, marginBottom: 16, lineHeight: 1.2 }}>
-              Nossos valores não estão na parede.<br />Estão em cada atendimento.
+              Nossos valores aparecem em cada atendimento.
             </h2>
           </div>
         </RevealWrap>
@@ -785,7 +785,7 @@ export function CalculadoraM2() {
             <div className="calc-result-item sugestao">
               <div className="calc-result-key">Sugestão</div>
               <div className="calc-result-sug">
-                <div className="calc-result-sug-main">{hasResult ? galoes36 : 0} <span>galão{galoes36 !== 1 ? "ões" : ""} 3,6L</span></div>
+                <div className="calc-result-sug-main">{hasResult ? galoes36 : 0} <span>{galoes36 === 1 ? "galão" : "galões"} 3,6L</span></div>
                 <div className="calc-result-sug-alt">ou {hasResult ? latas18 : 0} lata{latas18 !== 1 ? "s" : ""} de 18L</div>
               </div>
             </div>
@@ -869,7 +869,7 @@ function ParceirosSection() {
                 fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#4a5568",
                 lineHeight: 1.75, marginBottom: 26,
               }}>
-                A Formação <strong style={{ color: COLORS.darkBlue }}>Colorindo com a NAP</strong> ensina técnica, gestão e vendas — e coloca uma família inteira do seu lado. Apoio em obra, empréstimo de equipamento, indicação de cliente e comunidade ativa.
+                A Formação <strong style={{ color: COLORS.darkBlue }}>Colorindo com a NAP</strong> ensina técnica, gestão e vendas, e coloca uma família inteira do seu lado. Apoio em obra, empréstimo de equipamento, indicação de cliente e comunidade ativa.
               </p>
 
               <ul className="parceiros-lista" style={{
@@ -1040,9 +1040,9 @@ function EspacoPintorSection() {
 const DEPOIMENTOS = [
   { name: "Osnir Z.", handle: "@osnir_zanardo", text: "Recomendo! Já fiz algumas melhorias com as ideias e tintas que trouxeram. Vai com tudo!", color: COLORS.blue },
   { name: "Vitincarvalhoo", handle: "@vitincarvalhoo", text: "Melhor loja de Sorocaba e região!", color: COLORS.green },
-  { name: "Frangravalos", handle: "@frangravalos_", text: "Eu amo essa cor — escolhi pra minha casa nesse tom e ficou lindíssima!", color: COLORS.pink },
+  { name: "Frangravalos", handle: "@frangravalos_", text: "Eu amo essa cor, escolhi pra minha casa nesse tom e ficou lindíssima!", color: COLORS.pink },
   { name: "Ana Claudia G.", handle: "@anaclaudia.garrido3", text: "Vocês se superam a cada vídeo! A loja é incrível.", color: COLORS.orange },
-  { name: "Giselegaloni", handle: "@giselegaloni", text: "Sucesso! Estamos construindo — chegando nessa parte já vamos chamar vocês!", color: COLORS.yellow },
+  { name: "Giselegaloni", handle: "@giselegaloni", text: "Sucesso! Estamos construindo, chegando nessa parte já vamos chamar vocês!", color: COLORS.yellow },
   { name: "Solange D.", handle: "@solangedutravieira", text: "Deus abençoe essa família tão querida!", color: COLORS.red },
   { name: "Veronica D.", handle: "@veronica.l.dourado", text: "Nossa, que tinta mágica! Ficou perfeito!", color: COLORS.blue },
   { name: "Privilela", handle: "@privilela__", text: "Perfeita essa tinta! Aprovadíssima!", color: COLORS.green },
@@ -1114,18 +1114,10 @@ function DepoimentosSection() {
                     &ldquo;{d.text}&rdquo;
                   </p>
 
-                  {/* Stars + Name */}
-                  <div style={{ display: "flex", gap: 2, marginBottom: 6 }}>
-                    {[...Array(5)].map((_, j) => (
-                      <svg key={j} width={13} height={13} viewBox="0 0 24 24" fill="#FFD700">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                  </div>
                   <div style={{
                     fontFamily: "var(--font-display)", fontWeight: 800,
                     fontSize: "var(--fs-sm)", color: "rgba(255,255,255,0.9)",
-                  }}>— {d.name}</div>
+                  }}>{d.name}</div>
                 </div>
               </div>
             </RevealWrap>
@@ -1166,7 +1158,7 @@ function CTASection() {
             A cor perfeita está a uma conversa de distância.
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#888", lineHeight: 1.7, maxWidth: 500, margin: "0 auto 32px" }}>
-            Fale com a nossa equipe pelo WhatsApp. Orçamento rápido, consultoria gratuita e atendimento que entende.
+            Fale com a nossa equipe pelo WhatsApp. Orçamento rápido, consultoria gratuita e atendimento que entende de obra.
           </p>
           <WhatsAppBtn text="Chamar no WhatsApp" />
         </div>
@@ -1202,7 +1194,7 @@ function OndeEstamos() {
 
         <div className="contato-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 40 }}>
           {[
-            { icon: "📍", title: "Endereço", lines: ["Rua Cônego André Pieroni, 371", "Jd. Guadalajara — Sorocaba/SP"] },
+            { icon: "📍", title: "Endereço", lines: ["Rua Cônego André Pieroni, 371", "Jd. Guadalajara · Sorocaba/SP"] },
             { icon: "🕐", title: "Horário", lines: ["Seg a Sex: 8h às 18h", "Sábado: 8h às 13h"] },
             { icon: "📱", title: "Contato", lines: ["(15) 99813-7222", "@nap_tintas"] },
           ].map((item, i) => (
@@ -1229,7 +1221,7 @@ function OndeEstamos() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.2!2d-47.48!3d-23.52!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMxJzEyLjAiUyA0N8KwMjgnNDguMCJX!5e0!3m2!1spt-BR!2sbr!4v1"
               width="100%" height="280" style={{ border: 0, display: "block" }}
               allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-              title="NAP Tintas — Sorocaba"
+              title="NAP Tintas · Sorocaba"
             />
           </div>
         </RevealWrap>
@@ -1263,7 +1255,7 @@ function Footer() {
       </div>
 
       <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "rgba(255,255,255,0.45)", marginBottom: 4 }}>
-        Colorindo Sonhos desde 2026
+        Colorindo Sonhos há mais de 20 anos
       </p>
       <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "rgba(255,255,255,0.25)" }}>
         © 2026 NAP Tintas. Todos os direitos reservados. | Sorocaba/SP

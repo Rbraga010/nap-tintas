@@ -15,7 +15,7 @@ export { CATEGORIAS, temBanco };
 // DEMO_V versiona o sandbox: quando o catalogo-base evolui (novos campos),
 // sobe a versao e o navegador re-semeia — senao o storage antigo "vence"
 // e esconde os campos novos.
-const DEMO_V = "v3";
+const DEMO_V = "v4";
 const LS = {
   categorias: `nap.demo.${DEMO_V}.categorias`,
   produtos: `nap.demo.${DEMO_V}.produtos`,
@@ -60,8 +60,9 @@ export async function getProdutos() {
   if (!temBanco) return demoProdutos().filter((p) => p.ativo);
   const { data, error } = await supabase
     .from("produtos").select("*").eq("ativo", true).order("ordem");
-  if (error || !data?.length) return demoProdutos().filter((p) => p.ativo);
-  return data;
+  // com banco REAL nunca cair no catalogo ficticio (precos demo na loja
+  // do cliente = desastre); banco vazio/erro = vitrine vazia mesmo
+  return error ? [] : data;
 }
 
 export async function getBanners(slot = "bio") {
@@ -72,8 +73,7 @@ export async function getBanners(slot = "bio") {
   if (!temBanco) return demo();
   const { data, error } = await supabase
     .from("banners").select("*").eq("slot", slot).eq("ativo", true).order("ordem");
-  if (error) return demo();
-  if (!data?.length) return slot === "bio" ? demo() : [];
+  if (error || !data?.length) return [];
   return data.map((b) => ({ src: b.imagem_url, alt: b.alt || b.titulo, href: b.href || "/pedidos" }));
 }
 
@@ -83,8 +83,7 @@ export async function getBanners(slot = "bio") {
 export async function getCategorias() {
   if (!temBanco) return demoCategorias().sort((a, b) => a.ordem - b.ordem);
   const { data, error } = await supabase.from("categorias").select("*").order("ordem");
-  if (error || !data?.length) return demoCategorias().sort((a, b) => a.ordem - b.ordem);
-  return data;
+  return error ? [] : data;
 }
 
 export async function upsertCategoria(c) {
@@ -119,13 +118,25 @@ export async function deleteCategoria(id) {
 export async function cadastrarCliente({ nome, whatsapp, email }) {
   if (!temBanco) {
     const lista = lsGet(LS.clientes, []);
+    const dig = String(whatsapp || "").replace(/\D/g, "");
+    const ja = lista.find((c) => String(c.whatsapp).replace(/\D/g, "") === dig);
+    if (ja) {
+      const atualizado = { ...ja, nome, whatsapp, email: email || ja.email };
+      lsSet(LS.clientes, lista.map((c) => (c.id === ja.id ? atualizado : c)));
+      return { ok: true, demo: true, cliente: atualizado };
+    }
     const c = { id: Date.now(), nome, whatsapp, email, criado_em: new Date().toISOString() };
-    lsSet(LS.clientes, [...lista, c]);
+    lsSet(LS.clientes, [c, ...lista]);
     return { ok: true, demo: true, cliente: c };
   }
-  const { data, error } = await supabase
-    .from("clientes").insert({ nome, whatsapp, email }).select().single();
-  return { ok: !error, error: error?.message, cliente: data };
+  // via RPC security definer: o RLS (certo!) nao deixa visitante dar
+  // SELECT em clientes, entao insert().select() falharia inteiro; a
+  // funcao insere com dedupe por WhatsApp e devolve so o id
+  const { data, error } = await supabase.rpc("cadastrar_cliente", {
+    p_nome: nome, p_whatsapp: whatsapp, p_email: email || null,
+  });
+  return { ok: !error, error: error?.message,
+    cliente: error ? null : { id: data, nome, whatsapp, email } };
 }
 
 export async function registrarPedido({ cliente_id, itens, total }) {
@@ -164,7 +175,14 @@ export async function adminLogout() {
 export async function adminSessao() {
   if (!temBanco) return null;
   const { data } = await supabase.auth.getSession();
-  return data?.session || null;
+  const sessao = data?.session;
+  if (!sessao) return null;
+  // sessao restaurada tambem re-verifica a tabela admins: conta criada
+  // por signup avulso nao pode nem ver o shell do painel
+  const { data: adm } = await supabase
+    .from("admins").select("user_id").eq("user_id", sessao.user.id).maybeSingle();
+  if (!adm) { await supabase.auth.signOut(); return null; }
+  return sessao;
 }
 
 // ============================================================
@@ -305,4 +323,22 @@ export async function adminListPedidos() {
   const { data, error } = await supabase
     .from("pedidos").select("*").order("criado_em", { ascending: false });
   return error ? [] : data;
+}
+
+export async function updatePedidoStatus(id, status) {
+  if (!temBanco) {
+    lsSet(LS.pedidos, lsGet(LS.pedidos, []).map((p) => (p.id === id ? { ...p, status } : p)));
+    return { ok: true, demo: true };
+  }
+  const { error } = await supabase.from("pedidos").update({ status }).eq("id", id);
+  return { ok: !error, error: error?.message };
+}
+
+export async function deletePedido(id) {
+  if (!temBanco) {
+    lsSet(LS.pedidos, lsGet(LS.pedidos, []).filter((p) => p.id !== id));
+    return { ok: true, demo: true };
+  }
+  const { error } = await supabase.from("pedidos").delete().eq("id", id);
+  return { ok: !error, error: error?.message };
 }

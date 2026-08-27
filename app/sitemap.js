@@ -1,4 +1,4 @@
-const SITE_URL = "https://nap-tintas.vercel.app";
+import { SITE_URL } from "./lib/constants";
 
 export default function sitemap() {
   const now = new Date();

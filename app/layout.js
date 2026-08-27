@@ -18,17 +18,17 @@ const nunito = Nunito({
   display: "swap",
 });
 
-const SITE_URL = "https://nap-tintas.vercel.app";
+import { SITE_URL } from "./lib/constants";
 const OG_IMAGE = `${SITE_URL}/mascote-roda.jpg`;
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "NAP Tintas — Colorindo Sonhos em Sorocaba",
+    default: "NAP Tintas · Colorindo Sonhos em Sorocaba",
     template: "%s · NAP Tintas",
   },
   description:
-    "Mais de 20 anos de experiência no mercado de Tintas. Consultoria personalizada, capacitação de pintores e as melhores marcas. Aqui, pintor é da família.",
+    "Mais de 20 anos de experiência no mercado de tintas. Consultoria personalizada, capacitação de pintores e as melhores marcas. Aqui, pintor é da família.",
   keywords: [
     "NAP Tintas",
     "tintas Sorocaba",
@@ -55,7 +55,7 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: "NAP Tintas — Colorindo Sonhos em Sorocaba",
+    title: "NAP Tintas · Colorindo Sonhos em Sorocaba",
     description:
       "Mais de 20 anos pintando histórias em Sorocaba. Loja de tintas, formação de pintores e família NAP. Venha colorir com a gente!",
     url: SITE_URL,
@@ -67,13 +67,13 @@ export const metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "NAP Tintas — Colorindo Sonhos",
+        alt: "NAP Tintas · Colorindo Sonhos",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NAP Tintas — Colorindo Sonhos em Sorocaba",
+    title: "NAP Tintas · Colorindo Sonhos em Sorocaba",
     description:
       "20+ anos em Sorocaba. Tintas, formação pra pintor e família NAP.",
     images: [OG_IMAGE],

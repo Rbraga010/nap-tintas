@@ -3,10 +3,12 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import { COLORS, WHATSAPP_NUMBER } from "../lib/constants";
+import { COLORS, WHATSAPP_NUMBER, wppLink } from "../lib/constants";
 
 // mensagem propria do Portal (diferente da institucional)
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim do Portal do Pintor da NAP e gostaria de saber mais!`;
+const WHATSAPP_URL = wppLink("Olá! Vim do Portal do Pintor da NAP e gostaria de saber mais!");
+const wppPortal = (extra) =>
+  wppLink(`Olá! Vim do Portal do Pintor da NAP. ${extra}`);
 
 // ---- DATA ----
 
@@ -31,30 +33,30 @@ const CURSOS = [
 ];
 
 const AGENDA = [
-  { data: "28 ABR", dia: "SEG", mes: "Abril/2026", title: "Workshop Prático: Texturas e Efeitos Decorativos", tema: "Técnico", desc: "Mão na massa com grafiato, marmorato e cimento queimado. Material incluso.", local: "NAP Tintas — Sorocaba/SP", vagas: "8 de 20" },
-  { data: "05 MAI", dia: "TER", mes: "Maio/2026", title: "Precificação: Planilha + Método NAP", tema: "Gestão", desc: "Workshop com planilha pronta. Saia sabendo cobrar corretamente.", local: "NAP Tintas — Sorocaba/SP", vagas: "14 de 25" },
-  { data: "12 MAI", dia: "TER", mes: "Maio/2026", title: "Pintura Epóxi em Pisos — Aula Prática", tema: "Técnico", desc: "Aplicação real de epóxi em 20m². Certificado NAP ao final.", local: "NAP Tintas — Sorocaba/SP", vagas: "6 de 15" },
-  { data: "19 MAI", dia: "TER", mes: "Maio/2026", title: "Instagram para Pintor: Foto, Feed e Bio", tema: "Marketing", desc: "Seu celular é o seu catálogo. Aprenda a montar um feed vendedor.", local: "NAP Tintas — Sorocaba/SP", vagas: "11 de 20" },
-  { data: "02 JUN", dia: "TER", mes: "Junho/2026", title: "Sistema Tintométrico: Misturando Cores na Prática", tema: "Técnico", desc: "Como funciona o tintométrico NAP. Casos reais e ajustes finos.", local: "NAP Tintas — Sorocaba/SP", vagas: "9 de 15" },
-  { data: "16 JUN", dia: "TER", mes: "Junho/2026", title: "WhatsApp Business: Atendimento Profissional", tema: "Marketing", desc: "Bot de resposta, etiquetas, catálogo e respostas rápidas.", local: "NAP Tintas — Sorocaba/SP", vagas: "17 de 25" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "Workshop Prático: Texturas e Efeitos Decorativos", tema: "Técnico", desc: "Mão na massa com grafiato, marmorato e cimento queimado. Material incluso.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "Precificação: Planilha + Método NAP", tema: "Gestão", desc: "Workshop com planilha pronta. Saia sabendo cobrar corretamente.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "Pintura Epóxi em Pisos: Aula Prática", tema: "Técnico", desc: "Aplicação real de epóxi em 20m². Certificado NAP ao final.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "Instagram para Pintor: Foto, Feed e Bio", tema: "Marketing", desc: "Seu celular é o seu catálogo. Aprenda a montar um feed vendedor.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "Sistema Tintométrico: Misturando Cores na Prática", tema: "Técnico", desc: "Como funciona o tintométrico NAP. Casos reais e ajustes finos.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
+  { data: "Data a definir", dia: "", mes: "A confirmar", title: "WhatsApp Business: Atendimento Profissional", tema: "Marketing", desc: "Bot de resposta, etiquetas, catálogo e respostas rápidas.", local: "NAP Tintas · Sorocaba/SP", vagas: "Turma em formação" },
 ];
 
 const PARCEIROS = [
-  { nome: "Carlos Silva", cidade: "Sorocaba/SP", servico: "Textura externa — 180m²", img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&h=600&fit=crop" },
-  { nome: "Marco Antônio", cidade: "Votorantim/SP", servico: "Epóxi garagem industrial — 320m²", img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=600&fit=crop" },
-  { nome: "José Roberto", cidade: "Itu/SP", servico: "Cimento queimado sala — 85m²", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=600&fit=crop" },
-  { nome: "Wesley Oliveira", cidade: "Sorocaba/SP", servico: "Fachada residencial — 240m²", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=600&fit=crop" },
-  { nome: "Paulo Henrique", cidade: "Porto Feliz/SP", servico: "Grafiato condomínio — 650m²", img: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=600&h=600&fit=crop" },
-  { nome: "Rafael Costa", cidade: "Sorocaba/SP", servico: "Pintura comercial loja — 140m²", img: "https://images.unsplash.com/photo-1615529162924-f8605388461d?w=600&h=600&fit=crop" },
-  { nome: "Fernando Lima", cidade: "Boituva/SP", servico: "Marmorato entrada hall — 45m²", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop" },
-  { nome: "Anderson Souza", cidade: "Sorocaba/SP", servico: "Pintura residencial completa — 380m²", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=600&fit=crop" },
+  { nome: "Carlos Silva", cidade: "Sorocaba/SP", servico: "Textura externa · 180m²", img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&h=600&fit=crop" },
+  { nome: "Marco Antônio", cidade: "Votorantim/SP", servico: "Epóxi garagem industrial · 320m²", img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=600&fit=crop" },
+  { nome: "José Roberto", cidade: "Itu/SP", servico: "Cimento queimado sala · 85m²", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=600&fit=crop" },
+  { nome: "Wesley Oliveira", cidade: "Sorocaba/SP", servico: "Fachada residencial · 240m²", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=600&fit=crop" },
+  { nome: "Paulo Henrique", cidade: "Porto Feliz/SP", servico: "Grafiato condomínio · 650m²", img: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=600&h=600&fit=crop" },
+  { nome: "Rafael Costa", cidade: "Sorocaba/SP", servico: "Pintura comercial loja · 140m²", img: "https://images.unsplash.com/photo-1615529162924-f8605388461d?w=600&h=600&fit=crop" },
+  { nome: "Fernando Lima", cidade: "Boituva/SP", servico: "Marmorato entrada hall · 45m²", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop" },
+  { nome: "Anderson Souza", cidade: "Sorocaba/SP", servico: "Pintura residencial completa · 380m²", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=600&fit=crop" },
 ];
 
 const FICHAS_TECNICAS = [
-  { nome: "Tinta Látex PVA Premium", rendimento: "350 m²/galão", diluicao: "Até 20% água", secagem: "2h entre demãos", color: COLORS.blue },
-  { nome: "Tinta Acrílica Fachada", rendimento: "280 m²/galão", diluicao: "Até 15% água", secagem: "4h entre demãos", color: COLORS.green },
-  { nome: "Esmalte Sintético Brilhante", rendimento: "200 m²/galão", diluicao: "Aguarrás 10%", secagem: "6h entre demãos", color: COLORS.orange },
-  { nome: "Tinta Epóxi Industrial", rendimento: "160 m²/galão", diluicao: "Não diluir", secagem: "24h cura total", color: COLORS.red },
+  { nome: "Tinta Látex PVA Premium", rendimento: "até 40 m²/demão", diluicao: "Até 20% água", secagem: "2h entre demãos", color: COLORS.blue },
+  { nome: "Tinta Acrílica Fachada", rendimento: "até 40 m²/demão", diluicao: "Até 15% água", secagem: "4h entre demãos", color: COLORS.green },
+  { nome: "Esmalte Sintético Brilhante", rendimento: "até 40 m²/demão", diluicao: "Aguarrás 10%", secagem: "6h entre demãos", color: COLORS.orange },
+  { nome: "Tinta Epóxi Industrial", rendimento: "até 40 m²/demão", diluicao: "Não diluir", secagem: "24h cura total", color: COLORS.red },
 ];
 
 // ---- ICONS ----
@@ -101,7 +103,7 @@ function Header({ onLogin }) {
             background: COLORS.yellow, color: COLORS.darkBlue,
             fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 800,
             letterSpacing: "0.02em", boxShadow: `0 4px 16px ${COLORS.yellow}40`,
-          }}>Entrar como Membro</button>
+          }}>Entrar como Parceiro</button>
         </div>
       </div>
     </header>
@@ -139,7 +141,7 @@ function Hero() {
           fontFamily: "var(--font-body)", fontSize: "clamp(15px, 2vw, 18px)",
           color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto",
         }}>
-          O portal completo para o pintor profissional. Cursos técnicos, de gestão e marketing, agenda de treinamentos presenciais, vitrine de trabalhos parceiros e biblioteca técnica — tudo em um só lugar.
+          O portal completo para o pintor profissional. Cursos técnicos, de gestão e marketing, agenda de treinamentos presenciais, vitrine de trabalhos parceiros e biblioteca técnica: tudo em um só lugar.
         </p>
       </div>
     </section>
@@ -197,7 +199,7 @@ function CursosTab({ onLock }) {
           <span style={{ width: 20, height: 3, background: COLORS.pink, borderRadius: 2 }} />
           Área Exclusiva
         </p>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Área de Membros</h2>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Área do Parceiro</h2>
         <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280", marginBottom: 20 }}>
           Cursos técnicos, de gestão e marketing. Alguns liberados para demo, o acervo completo é exclusivo para parceiros.
         </p>
@@ -314,13 +316,13 @@ function AgendaTab() {
                   color: e.tema === "Técnico" ? COLORS.blue : e.tema === "Gestão" ? COLORS.green : COLORS.pink,
                   fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em",
                 }}>{e.tema}</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", fontWeight: 700 }}>{e.vagas} vagas</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", fontWeight: 700 }}>{e.vagas}</span>
               </div>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-base)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{e.title}</h3>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.5, marginBottom: 8 }}>{e.desc}</p>
               <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", fontWeight: 600 }}>📍 {e.local}</div>
             </div>
-            <a href={`${WHATSAPP_URL}%20%2D%20Quero%20reservar%20vaga%20no%20curso%20%22${encodeURIComponent(e.title)}%22`} target="_blank" rel="noopener noreferrer" className="agenda-btn" style={{
+            <a href={wppPortal(`Quero reservar vaga no curso "${e.title}"`)} target="_blank" rel="noopener noreferrer" className="agenda-btn" style={{
               flexShrink: 0, padding: "12px 22px", borderRadius: 30,
               background: "#25D366", color: "#fff",
               fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 800,
@@ -345,6 +347,9 @@ function ParceirosTab() {
         <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Pintores Parceiros NAP</h2>
         <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280" }}>
           Vitrine de trabalhos dos nossos parceiros. Seu próximo cliente pode estar aqui.
+        </p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 12, opacity: 0.55, marginTop: 8 }}>
+          Vitrine ilustrativa: é assim que a sua obra vai aparecer aqui.
         </p>
       </div>
 
@@ -382,7 +387,7 @@ function ParceirosTab() {
         <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "rgba(255,255,255,0.8)", marginBottom: 20, maxWidth: 520, margin: "0 auto 20px" }}>
           Cadastre-se como parceiro NAP e participe da vitrine. Sua obra aparece aqui, na nossa rede e no marketing da NAP.
         </p>
-        <a href={`${WHATSAPP_URL}%20%2D%20Quero%20divulgar%20meu%20trabalho%20como%20parceiro%20NAP`} target="_blank" rel="noopener noreferrer" style={{
+        <a href={wppPortal("Quero divulgar meu trabalho como parceiro NAP")} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", padding: "14px 32px", borderRadius: 30,
           background: "#25D366", color: "#fff",
           fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", fontWeight: 800,
@@ -422,7 +427,7 @@ function BibliotecaTab() {
                 <div><span style={{ color: "#9ca3af" }}>Diluição:</span> <strong style={{ color: COLORS.darkBlue }}>{f.diluicao}</strong></div>
                 <div><span style={{ color: "#9ca3af" }}>Secagem:</span> <strong style={{ color: COLORS.darkBlue }}>{f.secagem}</strong></div>
               </div>
-              <button onClick={(e) => { e.preventDefault(); alert("Ficha técnica em PDF — link fake para demo."); }} style={{
+              <button onClick={(e) => { e.preventDefault(); alert("Ficha técnica em preparação. Em breve pra download!"); }} style={{
                 padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${f.color}`,
                 background: `${f.color}10`, color: f.color,
                 fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", fontWeight: 800, cursor: "pointer",
@@ -436,7 +441,7 @@ function BibliotecaTab() {
         <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-md)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>🎨 Tabelas de Cores</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
           {["Suvinil", "Coral", "Sherwin-Williams", "Lukscolor"].map((m, i) => (
-            <a key={i} href="#" onClick={(e) => { e.preventDefault(); alert(`Tabela de cores ${m} — em breve.`); }} style={{
+            <a key={i} href="#" onClick={(e) => { e.preventDefault(); alert(`Tabela de cores ${m}. Em breve.`); }} style={{
               padding: 16, borderRadius: 12, background: "#fff",
               border: "1px solid #e5e7eb", textDecoration: "none",
               fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700,
@@ -454,7 +459,7 @@ function BibliotecaTab() {
             "Guia de Preparação de Superfícies",
             "Técnicas de Texturas e Efeitos",
           ].map((m, i) => (
-            <button key={i} onClick={() => alert(`${m} — PDF em demo.`)} style={{
+            <button key={i} onClick={() => alert(`${m}. PDF em breve.`)} style={{
               padding: 16, borderRadius: 12, background: "#fff",
               border: "1px solid #e5e7eb", cursor: "pointer",
               fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700,
@@ -478,10 +483,10 @@ function IndicacaoTab() {
           <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>Programa de Indicação</span>
         </div>
         <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
-          Indique. Receba. Repita.
+          Indicou, vendeu, ganhou.
         </h2>
         <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 600, marginBottom: 28 }}>
-          A cada cliente que você traz pra NAP, você recebe uma comissão direta. Sem burocracia, sem letras miúdas. Pintor parceiro ganha mais trabalhando o que já faz.
+          A cada cliente que você traz pra NAP, você recebe uma comissão direta. Regras simples, combinadas de frente. Pintor parceiro ganha mais trabalhando o que já faz.
         </p>
       </div>
 
@@ -503,7 +508,7 @@ function IndicacaoTab() {
       </div>
 
       <div style={{ textAlign: "center" }}>
-        <a href={`${WHATSAPP_URL}%20%2D%20Quero%20participar%20do%20Programa%20de%20Indicação%20NAP`} target="_blank" rel="noopener noreferrer" style={{
+        <a href={wppPortal("Quero participar do Programa de Indicação NAP")} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", padding: "16px 36px", borderRadius: 30,
           background: "#25D366", color: "#fff",
           fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", fontWeight: 800,
@@ -543,7 +548,7 @@ function ModalMembro({ open, onClose, lockedCourse }) {
             <IconLock size={28} />
           </div>
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-xl)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8 }}>
-            {lockedCourse ? "Conteúdo de membro" : "Área do Membro NAP"}
+            {lockedCourse ? "Conteúdo de parceiro" : "Área do Parceiro NAP"}
           </h3>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.6 }}>
             {lockedCourse
@@ -651,7 +656,7 @@ function CentroContent() {
       {tab === "indicacao" && <IndicacaoTab />}
 
       <footer style={{ background: COLORS.darkBlue, padding: "36px 24px", textAlign: "center", color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)" }}>
-        <div style={{ marginBottom: 8 }}>© 2026 NAP Tintas — Centro de Treinamento | Sorocaba/SP</div>
+        <div style={{ marginBottom: 8 }}>© 2026 NAP Tintas · Centro de Treinamento | Sorocaba/SP</div>
         <a href="/bio" style={{ color: COLORS.yellow, textDecoration: "none", fontWeight: 700 }}>← Início</a>
       </footer>
 

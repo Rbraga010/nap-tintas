@@ -38,8 +38,8 @@ const PILARES = [
     icon: "💰",
     color: COLORS.pink,
     title: "Vendas",
-    subtitle: "Cobre o que seu trabalho vale.",
-    desc: "Como apresentar seu projeto pro cliente, negociar sem medo, fechar o orçamento e deixar porta aberta pra indicação. Pintar bem é metade — vender bem é a outra.",
+    subtitle: "Saiba cobrar o que seu trabalho vale.",
+    desc: "Como apresentar seu projeto pro cliente, negociar sem medo, fechar o orçamento e deixar porta aberta pra indicação. Pintar bem é metade do serviço. Vender bem é a outra metade.",
   },
 ];
 
@@ -54,7 +54,7 @@ const FAMILIA = [
     icon: "🛠️",
     color: COLORS.green,
     title: "Empréstimo de equipamento",
-    desc: "Precisa de compressora, lixadeira ou pulverizadora? Parceiro NAP leva sem pagar nada. Usa na obra, devolve, pronto.",
+    desc: "Precisa de compressora, lixadeira ou pulverizadora? Parceiro NAP leva sem custo: assina um termo simples de responsabilidade, usa na obra e devolve.",
   },
   {
     icon: "🎯",
@@ -84,25 +84,25 @@ const FAMILIA = [
 
 const TURMAS = [
   {
-    mes: "TURMA DE MAIO",
+    mes: "Próxima turma · data a confirmar",
     title: "Técnica de Aplicação Premium",
     meta: "8 horas · Manhã + tarde",
     msg: "Oi! Quero reservar vaga na turma de Técnica de Aplicação Premium.",
   },
   {
-    mes: "TURMA DE JUNHO",
+    mes: "Próxima turma · data a confirmar",
     title: "Gestão e Precificação para Pintor",
     meta: "4 horas · Manhã",
     msg: "Oi! Quero reservar vaga na turma de Gestão e Precificação.",
   },
   {
-    mes: "TURMA DE JULHO",
+    mes: "Próxima turma · data a confirmar",
     title: "Vendas e Apresentação de Projetos",
     meta: "6 horas · Dia inteiro",
     msg: "Oi! Quero reservar vaga na turma de Vendas e Apresentação de Projetos.",
   },
   {
-    mes: "TURMA DE AGOSTO",
+    mes: "Próxima turma · data a confirmar",
     title: "Efeitos Decorativos e Acabamentos",
     meta: "8 horas · Manhã + tarde",
     msg: "Oi! Quero reservar vaga na turma de Efeitos Decorativos.",
@@ -114,7 +114,7 @@ const FERRAMENTAS = [
     icon: "🧮",
     color: COLORS.blue,
     title: "Calculadora de Obra & Tinta",
-    desc: "Coloca as medidas do ambiente e a gente calcula a quantidade exata de tinta, número de galões de 3,6L ou latas de 18L. Orçamento preciso, zero desperdício.",
+    desc: "Coloca as medidas do ambiente e a gente calcula a estimativa certa de tinta pra sua obra, número de galões de 3,6L ou latas de 18L. Orçamento preciso, zero desperdício.",
     label: "Abrir calculadora",
     isCalc: true,
   },
@@ -175,7 +175,7 @@ const LOCAL_ITEMS = [
     title: "Endereço",
     lines: [
       "Rua Cônego André Pieroni, 371",
-      "Jd. Guadalajara — Sorocaba/SP",
+      "Jd. Guadalajara · Sorocaba/SP",
     ],
   },
   {
@@ -607,7 +607,7 @@ function Hero() {
             >
               A NAP criou uma formação pra quem vive de pintar em Sorocaba e
               região. Técnica, gestão, vendas e uma família inteira de apoio do
-              seu lado — na loja, na obra, no dia a dia.
+              seu lado, na loja, na obra, no dia a dia.
             </p>
           </RevealWrap>
 
@@ -879,7 +879,7 @@ function VideoSection() {
             role="button"
             tabIndex={0}
             onClick={() =>
-              alert("Vídeo institucional em produção — em breve!")
+              alert("Vídeo institucional em produção. Em breve!")
             }
           >
             <div style={{ textAlign: "center" }}>
@@ -1046,7 +1046,7 @@ function FamiliaSection() {
           </SectionTitle>
           <SectionIntro>
             Quando você entra pra Formação Colorindo com a NAP, você vira
-            parceiro. E parceiro NAP tem uma família inteira do lado — todo
+            parceiro. E parceiro NAP tem uma família inteira do lado, todo
             dia, em toda obra.
           </SectionIntro>
         </RevealWrap>
@@ -1217,7 +1217,7 @@ function TurmasSection() {
                       borderRadius: "50%",
                     }}
                   />
-                  Inscrições abertas
+                  Lista de interesse aberta
                 </div>
                 <a
                   href={WPP_BASE(t.msg)}
@@ -1281,8 +1281,7 @@ function FerramentasSection({ onOpenCalc }) {
           <SectionTag>Ferramentas da Família</SectionTag>
           <SectionTitle>Ferramentas que facilitam sua obra todo dia.</SectionTitle>
           <SectionIntro>
-            Parceiro NAP tem acesso a ferramentas exclusivas. Sem complicação,
-            sem custo.
+            Parceiro NAP tem acesso a ferramentas exclusivas. Sem custo, com combinado claro.
           </SectionIntro>
         </RevealWrap>
 
@@ -1794,6 +1793,20 @@ function DepoimentosSection() {
             </RevealWrap>
           ))}
         </div>
+
+        <p
+          style={{
+            fontSize: 12,
+            opacity: 0.55,
+            textAlign: "center",
+            marginTop: 8,
+            fontFamily: "var(--font-body)",
+            color: "#6b7280",
+          }}
+        >
+          Depoimentos ilustrativos. Em breve, as histórias reais dos nossos
+          parceiros.
+        </p>
       </div>
     </section>
   );
@@ -1991,7 +2004,7 @@ function CtaFinalSection() {
                 borderRadius: 2,
               }}
             />
-            Última chamada
+            Bora conversar?
           </span>
           <h2
             style={{
@@ -2047,7 +2060,7 @@ function CtaFinalSection() {
               opacity: 0.85,
             }}
           >
-            Ou passa lá: Rua Cônego André Pieroni, 371 — Sorocaba/SP
+            Ou passa lá: Rua Cônego André Pieroni, 371 · Sorocaba/SP
           </p>
         </RevealWrap>
       </div>
@@ -2090,7 +2103,7 @@ function FooterCcn() {
             opacity: 0.8,
           }}
         >
-          Formação profissionalizante pra pintor parceiro NAP
+          Formação prática pra pintor parceiro NAP
         </div>
         <div
           className="ccn-footer-links"
@@ -2166,7 +2179,7 @@ function FooterCcn() {
             borderTop: "1px solid rgba(255,255,255,0.1)",
           }}
         >
-          © 2026 NAP Tintas. Colorindo sonhos desde 2026. Todos os direitos
+          © 2026 NAP Tintas. Colorindo Sonhos há mais de 20 anos. Todos os direitos
           reservados.
         </div>
       </div>

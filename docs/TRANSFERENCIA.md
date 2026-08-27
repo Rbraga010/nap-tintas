@@ -37,14 +37,19 @@ o banco e o domínio continuam com o cliente.
 ### 4. Domínio próprio (ex.: naptintas.com.br)
 - Registrar no registro.br NA CONTA/CPF-CNPJ do cliente.
 - Apontar pro projeto Vercel do cliente (a Vercel mostra os registros
-  exatos em Settings → Domains: A no apex + CNAME no www).
+  exatos em Settings → Domains: A no apex + CNAME no www). O passo a
+  passo completo do registro.br está na Fase 7 da `docs/SETUP-CLIENTE.md`
+  (atenção: no registro.br o apex é o campo nome EM BRANCO, não "@").
 - Atualizar `SITE_URL` nos `layout.js` e o `metadataBase` (buscar por
   `nap-tintas.vercel.app` no código).
 
 ### 5. E-mail profissional (opcional, recomendado)
-- Zoho Mail gratuito no domínio próprio (contato@naptintas.com.br).
-- Atalho que pula a tela de planos pagos:
-  `mailadmin.zoho.com/hosting?plan=free`.
+- Zoho Mail gratuito no domínio próprio (contato@naptintas.com.br
+  como caixa principal + pedidos@ como alias — padrão da casa).
+- Atalho comprovado que destrava o plano Forever Free:
+  `https://workplace.zoho.com/signup?type=org&plan=free`
+- Passo a passo completo (verificação, MX/SPF/DKIM, teste real de envio
+  e recebimento) na Fase 8 da `docs/SETUP-CLIENTE.md`.
 
 ### 6. Claude Code / Codex do cliente
 - Instalar na máquina do cliente, abrir a pasta do projeto.

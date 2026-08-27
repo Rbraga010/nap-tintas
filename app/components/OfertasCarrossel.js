@@ -10,11 +10,11 @@
 // ============================================================
 import { useEffect, useState } from "react";
 import { OFERTAS } from "../lib/catalogo-demo";
-import { getBanners } from "../lib/db";
+import { getBanners, temBanco } from "../lib/db";
 
 export default function OfertasCarrossel({ slot = "bio", fallbackSlot = null, max = 5, inicialDemo = false }) {
   const [ofertas, setOfertas] = useState(
-    inicialDemo ? OFERTAS.slice(0, max).map((o) => ({ ...o, href: "/pedidos" })) : []
+    inicialDemo && !temBanco ? OFERTAS.slice(0, max).map((o) => ({ ...o, href: "/pedidos" })) : []
   );
   const [pos, setPos] = useState(1);
   const [noTrans, setNoTrans] = useState(false);
