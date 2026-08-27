@@ -15,7 +15,16 @@ loja online da **NAP Tintas** (Sorocaba/SP). Next.js (App Router) + Supabase.
 | `/colorindo-com-a-nap` | Landing da Formação de pintores |
 | `/centro-treinamento` | Portal do Pintor Parceiro |
 
-## Como rodar (passo a passo)
+## 🤖 Instalação com agente (recomendado)
+
+Tem **Claude Code** ou **Codex** na máquina? Abra esta pasta nele e diga:
+
+> **"Faça o setup deste projeto."**
+
+O agente lê `docs/SETUP-CLIENTE.md` e conduz tudo — repo próprio no GitHub,
+instalação, Supabase e primeiro admin — fazendo as perguntas na ordem certa.
+
+## Como rodar (passo a passo manual)
 
 ```bash
 # 1. Clone (ou baixe o ZIP e extraia)
