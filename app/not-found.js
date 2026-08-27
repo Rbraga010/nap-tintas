@@ -11,7 +11,7 @@ export default function NotFound() {
         minHeight: "100vh",
         background:
           "radial-gradient(1000px ellipse at 50% 0%, #FFF8F0 0%, #FFFFFF 60%), linear-gradient(180deg, #FFFBF2 0%, #FFFFFF 40%, #FFF8F5 100%)",
-        fontFamily: "'Nunito', sans-serif",
+        fontFamily: "var(--font-body)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -71,7 +71,7 @@ export default function NotFound() {
         {/* Número 404 colorido */}
         <div
           style={{
-            fontFamily: "'Poppins', sans-serif",
+            fontFamily: "var(--font-display)",
             fontSize: "clamp(60px, 14vw, 110px)",
             fontWeight: 900,
             lineHeight: 1,
@@ -90,8 +90,8 @@ export default function NotFound() {
         {/* Heading */}
         <h1
           style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "clamp(22px, 4vw, 30px)",
+            fontFamily: "var(--font-display)",
+            fontSize: "var(--fs-h2)",
             fontWeight: 900,
             color: "#0D1B3E",
             marginBottom: 10,
@@ -104,8 +104,8 @@ export default function NotFound() {
 
         <p
           style={{
-            fontFamily: "'Nunito', sans-serif",
-            fontSize: 16,
+            fontFamily: "var(--font-body)",
+            fontSize: "var(--fs-base)",
             color: "#6b7280",
             lineHeight: 1.6,
             marginBottom: 32,
@@ -134,8 +134,8 @@ export default function NotFound() {
               background:
                 "linear-gradient(135deg, #E91E93, #FF6D00)",
               color: "#fff",
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: 15,
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--fs-base)",
               fontWeight: 800,
               textDecoration: "none",
               letterSpacing: "0.01em",
@@ -155,8 +155,8 @@ export default function NotFound() {
               background: "#fff",
               color: "#0D1B3E",
               border: "2px solid #F3F4F6",
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: 15,
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--fs-base)",
               fontWeight: 800,
               textDecoration: "none",
               letterSpacing: "0.01em",
@@ -169,8 +169,8 @@ export default function NotFound() {
         <p
           style={{
             marginTop: 40,
-            fontFamily: "'Nunito', sans-serif",
-            fontSize: 12,
+            fontFamily: "var(--font-body)",
+            fontSize: "var(--fs-xs)",
             color: "#9CA3AF",
             fontStyle: "italic",
           }}

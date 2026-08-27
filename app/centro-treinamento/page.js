@@ -91,25 +91,25 @@ function Header({ onLogin }) {
       borderBottom: "1px solid rgba(255,255,255,0.08)",
       padding: "14px 24px",
     }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-        <a href="/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+        <a href="/bio" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
           <img src="/nap-logo.jpg" alt="NAP Tintas" style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }} />
           <div>
-            <div style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 900, fontSize: 15, color: "#fff", letterSpacing: "0.06em", lineHeight: 1 }}>COLORINDO COM A NAP</div>
-            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: COLORS.yellow, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>Portal do Pintor</div>
+            <div style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "var(--fs-base)", color: "#fff", letterSpacing: "0.06em", lineHeight: 1 }}>COLORINDO COM A NAP</div>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", color: COLORS.yellow, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>Portal do Pintor</div>
           </div>
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <a href="/" target="_blank" rel="noopener noreferrer" className="header-link" style={{
+          <a href="/bio" className="header-link" style={{
             padding: "10px 18px", borderRadius: 30, textDecoration: "none",
-            color: "rgba(255,255,255,0.7)", fontFamily: "'Nunito', sans-serif",
-            fontSize: 13, fontWeight: 700, letterSpacing: "0.02em",
+            color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-body)",
+            fontSize: "var(--fs-sm)", fontWeight: 700, letterSpacing: "0.02em",
             border: "1px solid rgba(255,255,255,0.12)",
-          }}>← Voltar ao site</a>
+          }}>← Início</a>
           <button onClick={onLogin} style={{
             padding: "10px 20px", borderRadius: 30, border: "none", cursor: "pointer",
             background: COLORS.yellow, color: COLORS.darkBlue,
-            fontFamily: "'Nunito', sans-serif", fontSize: 13, fontWeight: 800,
+            fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 800,
             letterSpacing: "0.02em", boxShadow: `0 4px 16px ${COLORS.yellow}40`,
           }}>Entrar como Membro</button>
         </div>
@@ -134,19 +134,19 @@ function Hero() {
           background: "rgba(249,168,37,0.15)", border: "1px solid rgba(249,168,37,0.3)",
           marginBottom: 18,
         }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>
             Área do Pintor Parceiro
           </span>
         </div>
         <h1 style={{
-          fontFamily: "'Poppins', sans-serif", fontSize: "clamp(28px, 4.5vw, 44px)",
+          fontFamily: "var(--font-display)", fontSize: "var(--fs-h1)",
           fontWeight: 900, color: "#fff", lineHeight: 1.15, marginBottom: 16,
           letterSpacing: "-0.02em",
         }}>
           Centro de Treinamento e Capacitação
         </h1>
         <p style={{
-          fontFamily: "'Nunito', sans-serif", fontSize: "clamp(15px, 2vw, 18px)",
+          fontFamily: "var(--font-body)", fontSize: "clamp(15px, 2vw, 18px)",
           color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto",
         }}>
           O portal completo para o pintor profissional. Cursos técnicos, de gestão e marketing, agenda de treinamentos presenciais, vitrine de trabalhos parceiros e biblioteca técnica — tudo em um só lugar.
@@ -173,13 +173,13 @@ function Tabs({ active, onChange }) {
       borderBottom: "1px solid rgba(0,0,0,0.06)",
       position: "sticky", top: 66, zIndex: 50,
     }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", gap: 4, overflowX: "auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 16px", display: "flex", gap: 4, overflowX: "auto" }}>
         {TABS.map((t) => {
           const isActive = active === t.id;
           return (
             <button key={t.id} onClick={() => onChange(t.id)} className="ct-tab" style={{
               padding: "16px 18px", border: "none", background: "none", cursor: "pointer",
-              fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 800,
+              fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 800,
               color: isActive ? COLORS.darkBlue : "#6b7280",
               borderBottom: `3px solid ${isActive ? COLORS.yellow : "transparent"}`,
               transition: "all 0.2s ease", whiteSpace: "nowrap",
@@ -201,14 +201,14 @@ function CursosTab({ onLock }) {
   const lista = filter === "Todos" ? CURSOS : CURSOS.filter((c) => c.categoria === filter);
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
+    <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
       <div style={{ marginBottom: 32 }}>
-        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.pink, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
+        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-display)", fontSize: "var(--fs-xs)", color: COLORS.pink, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
           <span style={{ width: 20, height: 3, background: COLORS.pink, borderRadius: 2 }} />
           Área Exclusiva
         </p>
-        <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Área de Membros</h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#6b7280", marginBottom: 20 }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Área de Membros</h2>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280", marginBottom: 20 }}>
           Cursos técnicos, de gestão e marketing. Alguns liberados para demo, o acervo completo é exclusivo para parceiros.
         </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -220,7 +220,7 @@ function CursosTab({ onLock }) {
                 border: `1.5px solid ${isActive ? COLORS.darkBlue : "#e5e7eb"}`,
                 background: isActive ? COLORS.darkBlue : "#fff",
                 color: isActive ? "#fff" : "#6b7280",
-                fontFamily: "'Nunito', sans-serif", fontSize: 13, fontWeight: 700,
+                fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700,
                 cursor: "pointer", transition: "all 0.2s ease",
               }}>{f}</button>
             );
@@ -255,8 +255,8 @@ function CursosTab({ onLock }) {
                 position: "absolute", top: 12, left: 12,
                 padding: "4px 10px", borderRadius: 20,
                 background: "rgba(0,0,0,0.35)", backdropFilter: "blur(8px)",
-                color: "#fff", fontFamily: "'Nunito', sans-serif",
-                fontSize: 11, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase",
+                color: "#fff", fontFamily: "var(--font-body)",
+                fontSize: "var(--fs-micro)", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase",
               }}>
                 {c.categoria}
               </div>
@@ -265,17 +265,17 @@ function CursosTab({ onLock }) {
                   position: "absolute", top: 12, right: 12,
                   padding: "4px 10px", borderRadius: 20,
                   background: COLORS.yellow,
-                  color: COLORS.darkBlue, fontFamily: "'Nunito', sans-serif",
-                  fontSize: 10, fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase",
+                  color: COLORS.darkBlue, fontFamily: "var(--font-body)",
+                  fontSize: "var(--fs-micro)", fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase",
                 }}>
                   Membro
                 </div>
               )}
             </div>
             <div style={{ padding: 20, flex: 1, display: "flex", flexDirection: "column" }}>
-              <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 16, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 8, lineHeight: 1.25 }}>{c.title}</h3>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "#6b7280", lineHeight: 1.55, marginBottom: 14, flex: 1 }}>{c.desc}</p>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#9ca3af", fontFamily: "'Nunito', sans-serif", fontSize: 13, fontWeight: 700 }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-base)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 8, lineHeight: 1.25 }}>{c.title}</h3>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.55, marginBottom: 14, flex: 1 }}>{c.desc}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#9ca3af", fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700 }}>
                 <span>⏱</span> {c.duracao}
               </div>
             </div>
@@ -290,12 +290,12 @@ function AgendaTab() {
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
       <div style={{ marginBottom: 32 }}>
-        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
+        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-display)", fontSize: "var(--fs-xs)", color: COLORS.orange, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
           <span style={{ width: 20, height: 3, background: COLORS.orange, borderRadius: 2 }} />
           Turmas Presenciais
         </p>
-        <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Agenda de Cursos Presenciais</h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#6b7280" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Agenda de Cursos Presenciais</h2>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280" }}>
           Treinamentos ao vivo na nossa loja em Sorocaba. Mão na massa, networking e certificado NAP.
         </p>
       </div>
@@ -313,8 +313,8 @@ function AgendaTab() {
               background: `linear-gradient(135deg, ${COLORS.darkBlue}, ${COLORS.blue})`,
               color: "#fff",
             }}>
-              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, fontWeight: 700, opacity: 0.75, letterSpacing: "0.08em" }}>{e.dia}</div>
-              <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: 22, fontWeight: 900, lineHeight: 1 }}>{e.data}</div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", fontWeight: 700, opacity: 0.75, letterSpacing: "0.08em" }}>{e.dia}</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-xl)", fontWeight: 900, lineHeight: 1 }}>{e.data}</div>
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
@@ -322,18 +322,18 @@ function AgendaTab() {
                   padding: "3px 10px", borderRadius: 20,
                   background: e.tema === "Técnico" ? `${COLORS.blue}15` : e.tema === "Gestão" ? `${COLORS.green}15` : `${COLORS.pink}15`,
                   color: e.tema === "Técnico" ? COLORS.blue : e.tema === "Gestão" ? COLORS.green : COLORS.pink,
-                  fontFamily: "'Nunito', sans-serif", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em",
+                  fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em",
                 }}>{e.tema}</span>
-                <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: "#9ca3af", fontWeight: 700 }}>{e.vagas} vagas</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", fontWeight: 700 }}>{e.vagas} vagas</span>
               </div>
-              <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 17, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{e.title}</h3>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "#6b7280", lineHeight: 1.5, marginBottom: 8 }}>{e.desc}</p>
-              <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: "#9ca3af", fontWeight: 600 }}>📍 {e.local}</div>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-base)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{e.title}</h3>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.5, marginBottom: 8 }}>{e.desc}</p>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", fontWeight: 600 }}>📍 {e.local}</div>
             </div>
             <a href={`${WHATSAPP_URL}%20%2D%20Quero%20reservar%20vaga%20no%20curso%20%22${encodeURIComponent(e.title)}%22`} target="_blank" rel="noopener noreferrer" className="agenda-btn" style={{
               flexShrink: 0, padding: "12px 22px", borderRadius: 30,
               background: "#25D366", color: "#fff",
-              fontFamily: "'Nunito', sans-serif", fontSize: 13, fontWeight: 800,
+              fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 800,
               textDecoration: "none", transition: "all 0.2s ease",
               boxShadow: "0 4px 14px rgba(37,211,102,0.25)",
             }}>Reservar vaga</a>
@@ -346,14 +346,14 @@ function AgendaTab() {
 
 function ParceirosTab() {
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
+    <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
       <div style={{ marginBottom: 32 }}>
-        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.green, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
+        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-display)", fontSize: "var(--fs-xs)", color: COLORS.green, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
           <span style={{ width: 20, height: 3, background: COLORS.green, borderRadius: 2 }} />
           Vitrine Parceiros
         </p>
-        <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Pintores Parceiros NAP</h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#6b7280" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Pintores Parceiros NAP</h2>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280" }}>
           Vitrine de trabalhos dos nossos parceiros. Seu próximo cliente pode estar aqui.
         </p>
       </div>
@@ -371,14 +371,14 @@ function ParceirosTab() {
                 position: "absolute", top: 10, right: 10,
                 padding: "4px 10px", borderRadius: 20,
                 background: COLORS.yellow, color: COLORS.darkBlue,
-                fontFamily: "'Nunito', sans-serif", fontSize: 10, fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase",
+                fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
               }}>⭐ Parceiro</div>
             </div>
             <div style={{ padding: 14 }}>
-              <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 14, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 3 }}>{p.nome}</h4>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 12, color: "#9ca3af", marginBottom: 8 }}>{p.cidade}</p>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "#4b5563", lineHeight: 1.4 }}>{p.servico}</p>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-sm)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 3 }}>{p.nome}</h4>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#9ca3af", marginBottom: 8 }}>{p.cidade}</p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#4b5563", lineHeight: 1.4 }}>{p.servico}</p>
             </div>
           </div>
         ))}
@@ -388,14 +388,14 @@ function ParceirosTab() {
         background: `linear-gradient(135deg, ${COLORS.darkBlue}, ${COLORS.blue})`,
         borderRadius: 20, padding: "36px 32px", textAlign: "center", color: "#fff",
       }}>
-        <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 22, fontWeight: 900, marginBottom: 10 }}>Você também quer divulgar seu trabalho?</h3>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.8)", marginBottom: 20, maxWidth: 520, margin: "0 auto 20px" }}>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-xl)", fontWeight: 900, marginBottom: 10 }}>Você também quer divulgar seu trabalho?</h3>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "rgba(255,255,255,0.8)", marginBottom: 20, maxWidth: 520, margin: "0 auto 20px" }}>
           Cadastre-se como parceiro NAP e participe da vitrine. Sua obra aparece aqui, na nossa rede e no marketing da NAP.
         </p>
         <a href={`${WHATSAPP_URL}%20%2D%20Quero%20divulgar%20meu%20trabalho%20como%20parceiro%20NAP`} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", padding: "14px 32px", borderRadius: 30,
           background: "#25D366", color: "#fff",
-          fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 800,
+          fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", fontWeight: 800,
           textDecoration: "none", boxShadow: "0 4px 20px rgba(37,211,102,0.35)",
         }}>Quero divulgar meu trabalho</a>
       </div>
@@ -407,18 +407,18 @@ function BibliotecaTab() {
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 2 }}>
       <div style={{ marginBottom: 32 }}>
-        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Poppins', sans-serif", fontSize: 12, color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
+        <p style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-display)", fontSize: "var(--fs-xs)", color: COLORS.blue, textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 800, marginBottom: 12 }}>
           <span style={{ width: 20, height: 3, background: COLORS.blue, borderRadius: 2 }} />
           Recursos Técnicos
         </p>
-        <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Biblioteca Técnica</h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 15, color: "#6b7280" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8, letterSpacing: "-0.01em" }}>Biblioteca Técnica</h2>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "#6b7280" }}>
           Fichas técnicas, tabelas de cores e manuais de aplicação. Tudo que você precisa para especificar com segurança.
         </p>
       </div>
 
       <div style={{ marginBottom: 40 }}>
-        <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 18, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>📄 Fichas Técnicas</h3>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-md)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>📄 Fichas Técnicas</h3>
         <div className="biblio-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
           {FICHAS_TECNICAS.map((f, i) => (
             <div key={i} style={{
@@ -426,8 +426,8 @@ function BibliotecaTab() {
               border: "1px solid #e5e7eb",
               borderLeft: `4px solid ${f.color}`,
             }}>
-              <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 16, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10 }}>{f.nome}</h4>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12, fontFamily: "'Nunito', sans-serif", fontSize: 13 }}>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-base)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 10 }}>{f.nome}</h4>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12, fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)" }}>
                 <div><span style={{ color: "#9ca3af" }}>Rendimento:</span> <strong style={{ color: COLORS.darkBlue }}>{f.rendimento}</strong></div>
                 <div><span style={{ color: "#9ca3af" }}>Diluição:</span> <strong style={{ color: COLORS.darkBlue }}>{f.diluicao}</strong></div>
                 <div><span style={{ color: "#9ca3af" }}>Secagem:</span> <strong style={{ color: COLORS.darkBlue }}>{f.secagem}</strong></div>
@@ -435,7 +435,7 @@ function BibliotecaTab() {
               <button onClick={(e) => { e.preventDefault(); alert("Ficha técnica em PDF — link fake para demo."); }} style={{
                 padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${f.color}`,
                 background: `${f.color}10`, color: f.color,
-                fontFamily: "'Nunito', sans-serif", fontSize: 12, fontWeight: 800, cursor: "pointer",
+                fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", fontWeight: 800, cursor: "pointer",
               }}>⬇ Baixar PDF</button>
             </div>
           ))}
@@ -443,13 +443,13 @@ function BibliotecaTab() {
       </div>
 
       <div style={{ marginBottom: 32 }}>
-        <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 18, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>🎨 Tabelas de Cores</h3>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-md)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>🎨 Tabelas de Cores</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
           {["Suvinil", "Coral", "Sherwin-Williams", "Lukscolor"].map((m, i) => (
             <a key={i} href="#" onClick={(e) => { e.preventDefault(); alert(`Tabela de cores ${m} — em breve.`); }} style={{
               padding: 16, borderRadius: 12, background: "#fff",
               border: "1px solid #e5e7eb", textDecoration: "none",
-              fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700,
+              fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700,
               color: COLORS.darkBlue, textAlign: "center", transition: "all 0.2s ease",
             }}>🎨 {m}</a>
           ))}
@@ -457,7 +457,7 @@ function BibliotecaTab() {
       </div>
 
       <div>
-        <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 18, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>📘 Manuais de Aplicação</h3>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-md)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 16 }}>📘 Manuais de Aplicação</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
           {[
             "Manual de Aplicação Epóxi em Pisos",
@@ -467,7 +467,7 @@ function BibliotecaTab() {
             <button key={i} onClick={() => alert(`${m} — PDF em demo.`)} style={{
               padding: 16, borderRadius: 12, background: "#fff",
               border: "1px solid #e5e7eb", cursor: "pointer",
-              fontFamily: "'Nunito', sans-serif", fontSize: 13, fontWeight: 700,
+              fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", fontWeight: 700,
               color: COLORS.darkBlue, textAlign: "left", transition: "all 0.2s ease",
             }}>📘 {m}</button>
           ))}
@@ -485,12 +485,12 @@ function IndicacaoTab() {
         borderRadius: 24, padding: "48px 36px", color: "#fff", marginBottom: 24,
       }}>
         <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 30, background: "rgba(249,168,37,0.2)", border: "1px solid rgba(249,168,37,0.4)", marginBottom: 18 }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: 11, color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>Programa de Indicação</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-micro)", color: COLORS.yellow, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>Programa de Indicação</span>
         </div>
-        <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(24px, 3.5vw, 34px)", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-h2)", fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
           Indique. Receba. Repita.
         </h2>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 600, marginBottom: 28 }}>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 600, marginBottom: 28 }}>
           A cada cliente que você traz pra NAP, você recebe uma comissão direta. Sem burocracia, sem letras miúdas. Pintor parceiro ganha mais trabalhando o que já faz.
         </p>
       </div>
@@ -506,8 +506,8 @@ function IndicacaoTab() {
             border: "1px solid #e5e7eb",
           }}>
             <div style={{ fontSize: 32, marginBottom: 10 }}>{b.emoji}</div>
-            <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 15, fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{b.title}</h4>
-            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "#6b7280", lineHeight: 1.55 }}>{b.desc}</p>
+            <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-base)", fontWeight: 800, color: COLORS.darkBlue, marginBottom: 6 }}>{b.title}</h4>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.55 }}>{b.desc}</p>
           </div>
         ))}
       </div>
@@ -516,7 +516,7 @@ function IndicacaoTab() {
         <a href={`${WHATSAPP_URL}%20%2D%20Quero%20participar%20do%20Programa%20de%20Indicação%20NAP`} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", padding: "16px 36px", borderRadius: 30,
           background: "#25D366", color: "#fff",
-          fontFamily: "'Nunito', sans-serif", fontSize: 16, fontWeight: 800,
+          fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", fontWeight: 800,
           textDecoration: "none", boxShadow: "0 6px 24px rgba(37,211,102,0.3)",
         }}>Quero me cadastrar no programa</a>
       </div>
@@ -540,7 +540,7 @@ function ModalMembro({ open, onClose, lockedCourse }) {
       }}>
         <button onClick={onClose} style={{
           position: "absolute", top: 16, right: 16, width: 32, height: 32, borderRadius: "50%",
-          border: "none", background: "#f3f4f6", cursor: "pointer", fontSize: 18, color: "#6b7280",
+          border: "none", background: "#f3f4f6", cursor: "pointer", fontSize: "var(--fs-md)", color: "#6b7280",
         }}>×</button>
 
         <div style={{ textAlign: "center", marginBottom: 24 }}>
@@ -552,10 +552,10 @@ function ModalMembro({ open, onClose, lockedCourse }) {
           }}>
             <IconLock size={28} />
           </div>
-          <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 22, fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8 }}>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--fs-xl)", fontWeight: 900, color: COLORS.darkBlue, marginBottom: 8 }}>
             {lockedCourse ? "Conteúdo de membro" : "Área do Membro NAP"}
           </h3>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: "#6b7280", lineHeight: 1.6 }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#6b7280", lineHeight: 1.6 }}>
             {lockedCourse
               ? <>O curso <strong style={{ color: COLORS.darkBlue }}>{lockedCourse.title}</strong> está disponível apenas para pintores parceiros cadastrados. Fale com a NAP e ative seu acesso.</>
               : "Área exclusiva para pintores parceiros cadastrados. Se você ainda não é parceiro, converse com a NAP no WhatsApp para ativar seu acesso."
@@ -564,22 +564,22 @@ function ModalMembro({ open, onClose, lockedCourse }) {
         </div>
 
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: "block", fontFamily: "'Nunito', sans-serif", fontSize: 12, color: "#6b7280", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>E-mail</label>
+          <label style={{ display: "block", fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#6b7280", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>E-mail</label>
           <input type="email" placeholder="seunome@email.com" style={{
             width: "100%", padding: "12px 14px", borderRadius: 10,
-            border: "1px solid #e5e7eb", fontFamily: "'Nunito', sans-serif", fontSize: 14, outline: "none",
+            border: "1px solid #e5e7eb", fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", outline: "none",
           }} />
         </div>
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: "block", fontFamily: "'Nunito', sans-serif", fontSize: 12, color: "#6b7280", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Senha</label>
+          <label style={{ display: "block", fontFamily: "var(--font-body)", fontSize: "var(--fs-xs)", color: "#6b7280", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Senha</label>
           <input type="password" placeholder="••••••••" style={{
             width: "100%", padding: "12px 14px", borderRadius: 10,
-            border: "1px solid #e5e7eb", fontFamily: "'Nunito', sans-serif", fontSize: 14, outline: "none",
+            border: "1px solid #e5e7eb", fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", outline: "none",
           }} />
         </div>
 
         <div style={{ padding: 14, borderRadius: 10, background: "#fef3c7", border: "1px solid #fde68a", marginBottom: 20 }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 13, color: "#92400e", lineHeight: 1.55 }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)", color: "#92400e", lineHeight: 1.55 }}>
             ⚡ <strong>Área em construção.</strong> Para acesso antecipado como parceiro, fale com a NAP pelo WhatsApp abaixo.
           </p>
         </div>
@@ -588,7 +588,7 @@ function ModalMembro({ open, onClose, lockedCourse }) {
           display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
           padding: "14px 24px", borderRadius: 30,
           background: "#25D366", color: "#fff",
-          fontFamily: "'Nunito', sans-serif", fontSize: 15, fontWeight: 800,
+          fontFamily: "var(--font-body)", fontSize: "var(--fs-base)", fontWeight: 800,
           textDecoration: "none", boxShadow: "0 4px 16px rgba(37,211,102,0.3)",
         }}>Falar com a NAP</a>
       </div>
@@ -660,9 +660,9 @@ function CentroContent() {
       {tab === "biblioteca" && <BibliotecaTab />}
       {tab === "indicacao" && <IndicacaoTab />}
 
-      <footer style={{ background: COLORS.darkBlue, padding: "36px 24px", textAlign: "center", color: "rgba(255,255,255,0.4)", fontFamily: "'Nunito', sans-serif", fontSize: 13 }}>
+      <footer style={{ background: COLORS.darkBlue, padding: "36px 24px", textAlign: "center", color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-body)", fontSize: "var(--fs-sm)" }}>
         <div style={{ marginBottom: 8 }}>© 2026 NAP Tintas — Centro de Treinamento | Sorocaba/SP</div>
-        <a href="/" target="_blank" rel="noopener noreferrer" style={{ color: COLORS.yellow, textDecoration: "none", fontWeight: 700 }}>← Voltar ao site principal</a>
+        <a href="/bio" style={{ color: COLORS.yellow, textDecoration: "none", fontWeight: 700 }}>← Início</a>
       </footer>
 
       <ModalMembro open={modalOpen} onClose={() => setModalOpen(false)} lockedCourse={lockedCourse} />
@@ -673,7 +673,7 @@ function CentroContent() {
 
 export default function CentroTreinamentoPage() {
   return (
-    <Suspense fallback={<div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", color: COLORS.darkBlue }}>Carregando portal...</div>}>
+    <Suspense fallback={<div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", color: COLORS.darkBlue }}>Carregando portal...</div>}>
       <CentroContent />
     </Suspense>
   );

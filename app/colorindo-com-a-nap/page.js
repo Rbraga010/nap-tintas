@@ -142,7 +142,6 @@ const FERRAMENTAS = [
     desc: "Fichas de cada produto da NAP: rendimento, modo de aplicação, tempo de secagem, cores disponíveis. Tudo que você precisa consultar antes da obra.",
     label: "Acessar biblioteca",
     href: "/centro-treinamento?tab=biblioteca",
-    external: true,
   },
 ];
 
@@ -226,9 +225,9 @@ function Logo() {
       <div>
         <div
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 900,
-            fontSize: "1.4rem",
+            fontSize: "var(--fs-xl)",
             color: COLORS.darkBlue,
             letterSpacing: "-0.02em",
             lineHeight: 1,
@@ -238,9 +237,9 @@ function Logo() {
         </div>
         <div
           style={{
-            fontFamily: "'Nunito', sans-serif",
+            fontFamily: "var(--font-body)",
             fontWeight: 700,
-            fontSize: "0.7rem",
+            fontSize: "var(--fs-micro)",
             color: COLORS.pink,
             letterSpacing: "0.3em",
             lineHeight: 1,
@@ -257,6 +256,7 @@ function Logo() {
 function NavBarCcn() {
   const [menuOpen, setMenuOpen] = useState(false);
   const links = [
+    { label: "← Início", href: "/bio" },
     { label: "A Formação", href: "#formacao" },
     { label: "Família NAP", href: "#familia" },
     { label: "Turmas", href: "#turmas" },
@@ -281,7 +281,7 @@ function NavBarCcn() {
       <div
         className="ccn-nav-inner"
         style={{
-          maxWidth: 1200,
+          maxWidth: "var(--container)",
           margin: "0 auto",
           padding: "1rem 2rem",
           display: "flex",
@@ -310,9 +310,9 @@ function NavBarCcn() {
                 style={{
                   textDecoration: "none",
                   color: COLORS.darkBlue,
-                  fontFamily: "'Nunito', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 700,
-                  fontSize: "0.9rem",
+                  fontSize: "var(--fs-sm)",
                   transition: "color 0.2s",
                 }}
                 className="ccn-nav-link"
@@ -334,8 +334,8 @@ function NavBarCcn() {
                 color: "#fff",
                 padding: "0.7rem 1.4rem",
                 borderRadius: 50,
-                fontSize: "0.85rem",
-                fontFamily: "'Nunito', sans-serif",
+                fontSize: "var(--fs-sm)",
+                fontFamily: "var(--font-body)",
                 fontWeight: 800,
                 textDecoration: "none",
                 boxShadow: "0 3px 15px rgba(37,211,102,0.3)",
@@ -413,9 +413,9 @@ function NavBarCcn() {
               onClick={() => setMenuOpen(false)}
               style={{
                 color: COLORS.darkBlue,
-                fontFamily: "'Nunito', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontWeight: 700,
-                fontSize: "1rem",
+                fontSize: "var(--fs-base)",
                 textDecoration: "none",
                 padding: "0.5rem 0",
               }}
@@ -437,8 +437,8 @@ function NavBarCcn() {
               color: "#fff",
               padding: "0.8rem 1.4rem",
               borderRadius: 50,
-              fontSize: "0.9rem",
-              fontFamily: "'Nunito', sans-serif",
+              fontSize: "var(--fs-sm)",
+              fontFamily: "var(--font-body)",
               fontWeight: 800,
               textDecoration: "none",
             }}
@@ -519,7 +519,7 @@ function Hero() {
       <div
         className="ccn-hero-inner"
         style={{
-          maxWidth: 1200,
+          maxWidth: "var(--container)",
           margin: "0 auto",
           padding: "3rem 2rem",
           display: "grid",
@@ -542,9 +542,9 @@ function Hero() {
                 color: COLORS.pink,
                 padding: "0.5rem 1.1rem",
                 borderRadius: 50,
-                fontFamily: "'Nunito', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontWeight: 800,
-                fontSize: "0.8rem",
+                fontSize: "var(--fs-xs)",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 marginBottom: "1.5rem",
@@ -570,8 +570,8 @@ function Hero() {
             <h1
               className="ccn-hero-h1"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
+                fontFamily: "var(--font-display)",
+                fontSize: "var(--fs-h1)",
                 fontWeight: 900,
                 lineHeight: 1.05,
                 color: COLORS.darkBlue,
@@ -596,8 +596,8 @@ function Hero() {
           <RevealWrap delay={0.2}>
             <p
               style={{
-                fontFamily: "'Nunito', sans-serif",
-                fontSize: "1.2rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "var(--fs-lg)",
                 lineHeight: 1.7,
                 color: "#4a5568",
                 marginBottom: "2rem",
@@ -628,9 +628,9 @@ function Hero() {
                   color: "#fff",
                   padding: "1.1rem 2rem",
                   borderRadius: 60,
-                  fontFamily: "'Nunito', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 800,
-                  fontSize: "1rem",
+                  fontSize: "var(--fs-base)",
                   textDecoration: "none",
                   boxShadow: "0 6px 25px rgba(37,211,102,0.35)",
                   transition: "all 0.3s",
@@ -649,9 +649,9 @@ function Hero() {
                   color: COLORS.darkBlue,
                   padding: "1.1rem 2rem",
                   borderRadius: 60,
-                  fontFamily: "'Nunito', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 700,
-                  fontSize: "1rem",
+                  fontSize: "var(--fs-base)",
                   textDecoration: "none",
                   border: "2px solid #e5e7eb",
                   transition: "all 0.3s",
@@ -685,13 +685,13 @@ function Hero() {
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.9rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-sm)",
                     fontWeight: 700,
                     color: "#4a5568",
                   }}
                 >
-                  <span style={{ fontSize: "1.2rem" }}>{f.icon}</span>
+                  <span style={{ fontSize: "var(--fs-lg)" }}>{f.icon}</span>
                   {f.label}
                 </div>
               ))}
@@ -743,8 +743,8 @@ function Hero() {
             <div style={{ textAlign: "center" }}>
               <h3
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "1.2rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "var(--fs-lg)",
                   fontWeight: 800,
                   color: COLORS.darkBlue,
                   marginBottom: 4,
@@ -754,8 +754,8 @@ function Hero() {
               </h3>
               <p
                 style={{
-                  fontFamily: "'Nunito', sans-serif",
-                  fontSize: "0.9rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "var(--fs-sm)",
                   color: "#6b7280",
                 }}
               >
@@ -777,9 +777,9 @@ function SectionTag({ children }) {
         display: "inline-flex",
         alignItems: "center",
         gap: 8,
-        fontFamily: "'Nunito', sans-serif",
+        fontFamily: "var(--font-body)",
         fontWeight: 800,
-        fontSize: "0.8rem",
+        fontSize: "var(--fs-xs)",
         textTransform: "uppercase",
         letterSpacing: "0.15em",
         color: COLORS.pink,
@@ -804,8 +804,8 @@ function SectionTitle({ children, style }) {
     <h2
       className="ccn-section-title"
       style={{
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: "clamp(2rem, 4vw, 3rem)",
+        fontFamily: "var(--font-display)",
+        fontSize: "var(--fs-h2)",
         fontWeight: 900,
         lineHeight: 1.15,
         color: COLORS.darkBlue,
@@ -824,8 +824,8 @@ function SectionIntro({ children, style }) {
     <p
       className="ccn-section-intro"
       style={{
-        fontFamily: "'Nunito', sans-serif",
-        fontSize: "1.1rem",
+        fontFamily: "var(--font-body)",
+        fontSize: "var(--fs-md)",
         lineHeight: 1.7,
         color: "#4a5568",
         maxWidth: 720,
@@ -843,12 +843,12 @@ function VideoSection() {
     <section
       className="ccn-section ccn-video-section"
       style={{
-        padding: "6rem 2rem",
+        padding: "var(--sec-py) var(--sec-px)",
         background: COLORS.offWhite,
         textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Em 1 minuto</SectionTag>
           <SectionTitle>Deixa a gente te mostrar como é.</SectionTitle>
@@ -905,8 +905,8 @@ function VideoSection() {
               <div
                 style={{
                   marginTop: "1rem",
-                  fontFamily: "'Nunito', sans-serif",
-                  fontSize: "1.2rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "var(--fs-lg)",
                   fontWeight: 700,
                 }}
               >
@@ -925,9 +925,9 @@ function FormacaoSection() {
     <section
       id="formacao"
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: "#fff" }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: "#fff" }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>A Formação</SectionTag>
           <SectionTitle>Tudo que pintor precisa saber pra crescer.</SectionTitle>
@@ -989,8 +989,8 @@ function FormacaoSection() {
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "1.4rem",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "var(--fs-xl)",
                     fontWeight: 800,
                     color: COLORS.darkBlue,
                     marginBottom: "0.4rem",
@@ -1000,8 +1000,8 @@ function FormacaoSection() {
                 </h3>
                 <div
                   style={{
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.95rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-base)",
                     fontWeight: 700,
                     color: COLORS.pink,
                     marginBottom: "1rem",
@@ -1011,8 +1011,8 @@ function FormacaoSection() {
                 </div>
                 <p
                   style={{
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.95rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-base)",
                     lineHeight: 1.65,
                     color: "#6b7280",
                   }}
@@ -1034,11 +1034,11 @@ function FamiliaSection() {
       id="familia"
       className="ccn-section"
       style={{
-        padding: "6rem 2rem",
+        padding: "var(--sec-py) var(--sec-px)",
         background: "linear-gradient(135deg, #FFFBF2 0%, #FFF0F5 100%)",
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Família NAP</SectionTag>
           <SectionTitle>
@@ -1090,8 +1090,8 @@ function FamiliaSection() {
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "1.15rem",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "var(--fs-md)",
                     fontWeight: 800,
                     color: COLORS.darkBlue,
                     marginBottom: "0.6rem",
@@ -1101,8 +1101,8 @@ function FamiliaSection() {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.92rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-sm)",
                     lineHeight: 1.65,
                     color: "#6b7280",
                   }}
@@ -1123,9 +1123,9 @@ function TurmasSection() {
     <section
       id="turmas"
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: "#fff" }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: "#fff" }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Próximas Turmas</SectionTag>
           <SectionTitle>Venha conhecer. Venha fazer parte.</SectionTitle>
@@ -1166,8 +1166,8 @@ function TurmasSection() {
                     color: "#fff",
                     padding: "0.4rem 1rem",
                     borderRadius: 50,
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.8rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-xs)",
                     fontWeight: 800,
                     marginBottom: "1rem",
                     letterSpacing: "0.05em",
@@ -1177,8 +1177,8 @@ function TurmasSection() {
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "1.15rem",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "var(--fs-md)",
                     fontWeight: 800,
                     color: COLORS.darkBlue,
                     marginBottom: "0.6rem",
@@ -1189,8 +1189,8 @@ function TurmasSection() {
                 </h3>
                 <div
                   style={{
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.85rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-sm)",
                     color: "#6b7280",
                     marginBottom: "1rem",
                   }}
@@ -1202,8 +1202,8 @@ function TurmasSection() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.8rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-xs)",
                     fontWeight: 800,
                     color: COLORS.green,
                     marginBottom: "1.5rem",
@@ -1231,8 +1231,8 @@ function TurmasSection() {
                     color: COLORS.darkBlue,
                     padding: "0.9rem",
                     borderRadius: 50,
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.9rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-sm)",
                     fontWeight: 700,
                     textDecoration: "none",
                     transition: "all 0.2s",
@@ -1253,8 +1253,8 @@ function TurmasSection() {
               padding: "1.5rem",
               background: "#f8f9fb",
               borderRadius: 16,
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-sm)",
               color: "#6b7280",
               fontStyle: "italic",
             }}
@@ -1274,9 +1274,9 @@ function FerramentasSection({ onOpenCalc }) {
   return (
     <section
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: COLORS.offWhite }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: COLORS.offWhite }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Ferramentas da Família</SectionTag>
           <SectionTitle>Ferramentas que facilitam sua obra todo dia.</SectionTitle>
@@ -1329,8 +1329,8 @@ function FerramentasSection({ onOpenCalc }) {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <h3
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "1.2rem",
+                      fontFamily: "var(--font-display)",
+                      fontSize: "var(--fs-lg)",
                       fontWeight: 800,
                       color: COLORS.darkBlue,
                       marginBottom: "0.5rem",
@@ -1340,8 +1340,8 @@ function FerramentasSection({ onOpenCalc }) {
                   </h3>
                   <p
                     style={{
-                      fontFamily: "'Nunito', sans-serif",
-                      fontSize: "0.9rem",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "var(--fs-sm)",
                       lineHeight: 1.6,
                       color: "#6b7280",
                       marginBottom: "1rem",
@@ -1361,9 +1361,9 @@ function FerramentasSection({ onOpenCalc }) {
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        fontFamily: "'Nunito', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontWeight: 800,
-                        fontSize: "0.9rem",
+                        fontSize: "var(--fs-sm)",
                         padding: 0,
                       }}
                     >
@@ -1372,7 +1372,7 @@ function FerramentasSection({ onOpenCalc }) {
                   ) : (
                     <a
                       href={f.href}
-                      target={f.external || !f.comingSoon ? "_blank" : undefined}
+                      target={(f.href || "").startsWith("http") ? "_blank" : undefined}
                       rel="noopener noreferrer"
                       onClick={(e) => {
                         if (f.comingSoon) {
@@ -1386,9 +1386,9 @@ function FerramentasSection({ onOpenCalc }) {
                         alignItems: "center",
                         gap: 6,
                         color: COLORS.pink,
-                        fontFamily: "'Nunito', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontWeight: 800,
-                        fontSize: "0.9rem",
+                        fontSize: "var(--fs-sm)",
                         textDecoration: "none",
                       }}
                     >
@@ -1443,9 +1443,9 @@ function ConversaSection() {
   return (
     <section
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: "#fff" }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: "#fff" }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Bate-papo Direto</SectionTag>
           <SectionTitle>
@@ -1503,8 +1503,8 @@ function ConversaSection() {
               />
               <h3
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: "1.4rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "var(--fs-xl)",
                   fontWeight: 900,
                   marginBottom: "0.4rem",
                   color: "#064E3B",
@@ -1517,8 +1517,8 @@ function ConversaSection() {
               </h3>
               <p
                 style={{
-                  fontFamily: "'Nunito', sans-serif",
-                  fontSize: "0.95rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "var(--fs-base)",
                   color: "#047857",
                   marginBottom: "1.25rem",
                   position: "relative",
@@ -1541,9 +1541,9 @@ function ConversaSection() {
                   color: "#fff",
                   padding: "0.95rem 2rem",
                   borderRadius: 50,
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "var(--font-display)",
                   fontWeight: 800,
-                  fontSize: "1rem",
+                  fontSize: "var(--fs-base)",
                   textDecoration: "none",
                   transition: "all 0.3s ease",
                   boxShadow: "0 8px 24px rgba(37,211,102,0.35)",
@@ -1566,8 +1566,8 @@ function ConversaSection() {
             >
               <h3
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "1.3rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "var(--fs-lg)",
                   fontWeight: 800,
                   color: COLORS.darkBlue,
                   marginBottom: "1.5rem",
@@ -1617,8 +1617,8 @@ function ConversaSection() {
                     alignItems: "flex-start",
                     gap: 8,
                     margin: "1rem 0",
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "0.85rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-sm)",
                     color: "#6b7280",
                     cursor: "pointer",
                   }}
@@ -1643,9 +1643,9 @@ function ConversaSection() {
                     padding: "1rem",
                     border: "none",
                     borderRadius: 50,
-                    fontFamily: "'Nunito', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontWeight: 800,
-                    fontSize: "1rem",
+                    fontSize: "var(--fs-base)",
                     cursor: "pointer",
                     transition: "all 0.3s",
                   }}
@@ -1667,8 +1667,8 @@ function FormField({ label, children }) {
       <label
         style={{
           display: "block",
-          fontFamily: "'Nunito', sans-serif",
-          fontSize: "0.85rem",
+          fontFamily: "var(--font-body)",
+          fontSize: "var(--fs-sm)",
           fontWeight: 700,
           color: COLORS.darkBlue,
           marginBottom: 4,
@@ -1685,9 +1685,9 @@ function DepoimentosSection() {
   return (
     <section
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: COLORS.offWhite }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: COLORS.offWhite }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Quem já é da família</SectionTag>
           <SectionTitle>
@@ -1722,7 +1722,7 @@ function DepoimentosSection() {
                     position: "absolute",
                     top: "0.5rem",
                     left: "1.5rem",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "4rem",
                     color: COLORS.pink,
                     opacity: 0.2,
@@ -1733,8 +1733,8 @@ function DepoimentosSection() {
                 </span>
                 <p
                   style={{
-                    fontFamily: "'Nunito', sans-serif",
-                    fontSize: "1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "var(--fs-base)",
                     lineHeight: 1.7,
                     color: "#2d3748",
                     marginBottom: "1.5rem",
@@ -1760,9 +1760,9 @@ function DepoimentosSection() {
                       alignItems: "center",
                       justifyContent: "center",
                       color: "#fff",
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--font-display)",
                       fontWeight: 800,
-                      fontSize: "1.1rem",
+                      fontSize: "var(--fs-md)",
                       flexShrink: 0,
                     }}
                   >
@@ -1772,8 +1772,8 @@ function DepoimentosSection() {
                     <strong
                       style={{
                         display: "block",
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "0.95rem",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "var(--fs-base)",
                         color: COLORS.darkBlue,
                       }}
                     >
@@ -1781,8 +1781,8 @@ function DepoimentosSection() {
                     </strong>
                     <span
                       style={{
-                        fontFamily: "'Nunito', sans-serif",
-                        fontSize: "0.8rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "var(--fs-xs)",
                         color: "#6b7280",
                       }}
                     >
@@ -1804,9 +1804,9 @@ function LocalSection() {
     <section
       id="local"
       className="ccn-section"
-      style={{ padding: "6rem 2rem", background: "#fff" }}
+      style={{ padding: "var(--sec-py) var(--sec-px)", background: "#fff" }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
         <RevealWrap>
           <SectionTag>Onde a gente te espera</SectionTag>
           <SectionTitle>
@@ -1856,7 +1856,7 @@ function LocalSection() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.3rem",
+                      fontSize: "var(--fs-lg)",
                       flexShrink: 0,
                       boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
                     }}
@@ -1866,8 +1866,8 @@ function LocalSection() {
                   <div>
                     <h4
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "0.95rem",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "var(--fs-base)",
                         fontWeight: 800,
                         color: COLORS.darkBlue,
                         marginBottom: 4,
@@ -1879,8 +1879,8 @@ function LocalSection() {
                       <p
                         key={j}
                         style={{
-                          fontFamily: "'Nunito', sans-serif",
-                          fontSize: "0.9rem",
+                          fontFamily: "var(--font-body)",
+                          fontSize: "var(--fs-sm)",
                           color: "#6b7280",
                           lineHeight: 1.5,
                         }}
@@ -1930,7 +1930,7 @@ function CtaFinalSection() {
         background: `linear-gradient(135deg, ${COLORS.blue} 0%, ${COLORS.pink} 50%, ${COLORS.orange} 100%)`,
         color: "#fff",
         textAlign: "center",
-        padding: "5rem 2rem",
+        padding: "var(--sec-py) var(--sec-px)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -1961,7 +1961,7 @@ function CtaFinalSection() {
       />
       <div
         style={{
-          maxWidth: 1200,
+          maxWidth: "var(--container)",
           margin: "0 auto",
           position: "relative",
           zIndex: 2,
@@ -1974,9 +1974,9 @@ function CtaFinalSection() {
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              fontFamily: "'Nunito', sans-serif",
+              fontFamily: "var(--font-body)",
               fontWeight: 800,
-              fontSize: "0.8rem",
+              fontSize: "var(--fs-xs)",
               textTransform: "uppercase",
               letterSpacing: "0.15em",
               color: "rgba(255,255,255,0.85)",
@@ -1995,8 +1995,8 @@ function CtaFinalSection() {
           </span>
           <h2
             style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--fs-h2)",
               fontWeight: 900,
               lineHeight: 1.15,
               marginBottom: "1rem",
@@ -2006,8 +2006,8 @@ function CtaFinalSection() {
           </h2>
           <p
             style={{
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "1.15rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-md)",
               maxWidth: 600,
               margin: "0 auto 2.5rem",
               opacity: 0.95,
@@ -2029,9 +2029,9 @@ function CtaFinalSection() {
               color: COLORS.pink,
               padding: "1.3rem 2.8rem",
               borderRadius: 60,
-              fontFamily: "'Nunito', sans-serif",
+              fontFamily: "var(--font-body)",
               fontWeight: 900,
-              fontSize: "1.1rem",
+              fontSize: "var(--fs-md)",
               textDecoration: "none",
               boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
               transition: "all 0.3s",
@@ -2042,8 +2042,8 @@ function CtaFinalSection() {
           <p
             style={{
               marginTop: "2rem",
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.95rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-base)",
               opacity: 0.85,
             }}
           >
@@ -2066,16 +2066,16 @@ function FooterCcn() {
     >
       <div
         style={{
-          maxWidth: 1200,
+          maxWidth: "var(--container)",
           margin: "0 auto",
           textAlign: "center",
         }}
       >
         <div
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 900,
-            fontSize: "1.5rem",
+            fontSize: "var(--fs-xl)",
             color: "#fff",
             marginBottom: "0.5rem",
           }}
@@ -2084,8 +2084,8 @@ function FooterCcn() {
         </div>
         <div
           style={{
-            fontFamily: "'Nunito', sans-serif",
-            fontSize: "0.9rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "var(--fs-sm)",
             marginBottom: "1.5rem",
             opacity: 0.8,
           }}
@@ -2104,13 +2104,13 @@ function FooterCcn() {
         >
           <a
             href="/"
-            target="_blank"
-            rel="noopener noreferrer"
+           
+           
             style={{
               color: "rgba(255,255,255,0.7)",
               textDecoration: "none",
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-sm)",
             }}
             className="ccn-footer-link"
           >
@@ -2123,8 +2123,8 @@ function FooterCcn() {
             style={{
               color: "rgba(255,255,255,0.7)",
               textDecoration: "none",
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-sm)",
             }}
             className="ccn-footer-link"
           >
@@ -2137,8 +2137,8 @@ function FooterCcn() {
             style={{
               color: "rgba(255,255,255,0.7)",
               textDecoration: "none",
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-sm)",
             }}
             className="ccn-footer-link"
           >
@@ -2149,8 +2149,8 @@ function FooterCcn() {
             style={{
               color: "rgba(255,255,255,0.7)",
               textDecoration: "none",
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--fs-sm)",
             }}
             className="ccn-footer-link"
           >
@@ -2159,8 +2159,8 @@ function FooterCcn() {
         </div>
         <div
           style={{
-            fontFamily: "'Nunito', sans-serif",
-            fontSize: "0.8rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "var(--fs-xs)",
             opacity: 0.5,
             paddingTop: "1.5rem",
             borderTop: "1px solid rgba(255,255,255,0.1)",
@@ -2228,7 +2228,7 @@ function CalcModal({ open, onClose }) {
             borderRadius: "50%",
             background: "#fff",
             border: "none",
-            fontSize: "1.3rem",
+            fontSize: "var(--fs-lg)",
             cursor: "pointer",
             color: COLORS.darkBlue,
             fontWeight: 700,

@@ -95,7 +95,7 @@ function PedidosNav({ cartCount, onOpenCart }) {
   return (
     <nav className="ped-nav">
       <div className="ped-nav-inner">
-        <a href="/" target="_blank" rel="noopener noreferrer" className="ped-logo">
+        <a href="/bio" className="ped-logo">
           <img src="/nap-logo.jpg" alt="NAP" className="ped-logo-img" />
           <div>
             <div className="ped-logo-nap">NAP TINTAS</div>
@@ -103,9 +103,10 @@ function PedidosNav({ cartCount, onOpenCart }) {
           </div>
         </a>
         <div className="ped-nav-links">
-          <a href="/" target="_blank" rel="noopener noreferrer" className="ped-nav-link">Institucional</a>
-          <a href="/colorindo-com-a-nap" target="_blank" rel="noopener noreferrer" className="ped-nav-link">Parceiro</a>
-          <a href="/centro-treinamento" target="_blank" rel="noopener noreferrer" className="ped-nav-link">Espaço Pintor</a>
+          <a href="/bio" className="ped-nav-link">← Início</a>
+          <a href="/" className="ped-nav-link">Institucional</a>
+          <a href="/colorindo-com-a-nap" className="ped-nav-link">Parceiro</a>
+          <a href="/centro-treinamento" className="ped-nav-link">Espaço Pintor</a>
           <button onClick={onOpenCart} className="ped-cart-btn" aria-label="Carrinho">
             <IconCart width="20" height="20" />
             {cartCount > 0 && <span className="ped-cart-badge">{cartCount}</span>}
@@ -330,10 +331,10 @@ function PedidosFooter() {
           </div>
           <div>
             <div className="ped-footer-col-title">Navegar</div>
-            <a href="/" target="_blank" rel="noopener noreferrer" className="ped-footer-link">Site institucional</a>
-            <a href="/colorindo-com-a-nap" target="_blank" rel="noopener noreferrer" className="ped-footer-link">Formação pra pintor</a>
-            <a href="/centro-treinamento" target="_blank" rel="noopener noreferrer" className="ped-footer-link">Espaço do Pintor</a>
-            <a href="/bio" target="_blank" rel="noopener noreferrer" className="ped-footer-link">Link na bio</a>
+            <a href="/" className="ped-footer-link">Site institucional</a>
+            <a href="/colorindo-com-a-nap" className="ped-footer-link">Formação pra pintor</a>
+            <a href="/centro-treinamento" className="ped-footer-link">Espaço do Pintor</a>
+            <a href="/bio" className="ped-footer-link">Link na bio</a>
           </div>
           <div>
             <div className="ped-footer-col-title">Atendimento</div>

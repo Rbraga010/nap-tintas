@@ -97,13 +97,11 @@ function BioCard({
   href,
   highlight = false,
 }) {
-  // Bio é porta de entrada — TODOS os cards abrem em nova guia
-  // pra manter a bio sempre visível atrás
+  // Navegacao fluida: rotas internas abrem na MESMA aba (decisao 27/08);
+  // toda pagina tem o botao "Inicio" de volta pra bio
   return (
     <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
       className={`bio-card ${highlight ? "bio-card-hl" : ""}`}
       style={{
         "--card-color": iconColor,
@@ -140,6 +138,98 @@ function BioCard({
   );
 }
 
+// ---- CARROSSEL DE OFERTAS (banner de destaque da bio) ----
+// As artes vivem em /public/ofertas. Hoje sao simuladas; quando o Super Admin
+// da loja entrar (fase backend), esta lista passa a vir do banco.
+const OFERTAS = [
+  { src: "/ofertas/oferta-1.webp", alt: "Oferta: Tinta Acrílica Premium 18L por R$ 289,90" },
+  { src: "/ofertas/oferta-2.webp", alt: "Oferta: Esmalte Sintético 3,6L por R$ 94,90" },
+  { src: "/ofertas/oferta-3.webp", alt: "Oferta: Kit Pintura Completo por R$ 59,90" },
+  { src: "/ofertas/oferta-4.webp", alt: "Oferta: Textura Rústica 25kg por R$ 149,90" },
+];
+
+function OfertasCarrossel() {
+  const N = OFERTAS.length;
+  // track com clones nas pontas p/ loop infinito: [ultimo, ...todas, primeira]
+  const track = [OFERTAS[N - 1], ...OFERTAS, OFERTAS[0]];
+  const [pos, setPos] = useState(1);        // 1..N = slides reais
+  const [noTrans, setNoTrans] = useState(false);
+  const [pausado, setPausado] = useState(false);
+
+  // incremento blindado: se o snap do clone nao rodou (aba oculta nao dispara
+  // transitionend), normaliza aqui mesmo pro indice nunca sair do track
+  const ir = (delta) => setPos((p) => {
+    let n = p + delta;
+    if (n > N + 1) n -= N;
+    if (n < 0) n += N;
+    return n;
+  });
+
+  useEffect(() => {
+    if (pausado) return;
+    const t = setInterval(() => {
+      if (document.hidden) return; // aba oculta: nao anima nem acumula
+      ir(1);
+    }, 4200);
+    return () => clearInterval(t);
+  }, [pausado]);
+
+  // ao terminar a transicao num clone, salta sem animacao pro slide real
+  const onEnd = () => {
+    if (pos === N + 1) { setNoTrans(true); setPos(1); }
+    else if (pos === 0) { setNoTrans(true); setPos(N); }
+  };
+  useEffect(() => {
+    if (!noTrans) return;
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setNoTrans(false)));
+    return () => cancelAnimationFrame(id);
+  }, [noTrans]);
+
+  const ativo = ((pos - 1) % N + N) % N;
+
+  return (
+    <div className="bio-ofertas-wrap">
+      <div
+        className="bio-ofertas-frame"
+        onMouseEnter={() => setPausado(true)}
+        onMouseLeave={() => setPausado(false)}
+        onTouchStart={() => setPausado(true)}
+        onTouchEnd={() => setPausado(false)}
+      >
+        <div
+          className="bio-ofertas-track"
+          onTransitionEnd={onEnd}
+          style={{
+            left: `calc(${7 - pos * 86}% - ${pos * 12}px)`,
+            transition: noTrans ? "none" : undefined,
+          }}
+        >
+          {track.map((o, i) => (
+            <a
+              key={i}
+              href="/pedidos"
+              className={`bio-oferta-slide ${i === pos ? "ativa" : ""}`}
+              aria-label={o.alt}
+              tabIndex={i === pos ? 0 : -1}
+            >
+              <img src={o.src} alt={o.alt} loading={i <= 2 ? "eager" : "lazy"} />
+            </a>
+          ))}
+        </div>
+      </div>
+      <div className="bio-ofertas-nav">
+        <button type="button" aria-label="Oferta anterior" onClick={() => ir(-1)}>‹</button>
+        <div className="bio-ofertas-dots" aria-hidden>
+          {OFERTAS.map((_, i) => (
+            <span key={i} className={i === ativo ? "on" : ""} />
+          ))}
+        </div>
+        <button type="button" aria-label="Próxima oferta" onClick={() => ir(1)}>›</button>
+      </div>
+    </div>
+  );
+}
+
 // ---- MAIN ----
 
 export default function BioPage() {
@@ -148,23 +238,13 @@ export default function BioPage() {
 
   const cards = [
     {
-      icon: <IconParceiro width="22" height="22" />,
-      iconColor: COLORS.pink,
-      badge: "DESTAQUE",
-      title: "Seja um Pintor Parceiro",
-      subtitle: "Aqui, pintor é da família.",
-      desc: "Formação em técnica, gestão e vendas. Apoio em obra, empréstimo de equipamento, indicação de cliente e uma família inteira do seu lado.",
-      href: "/colorindo-com-a-nap",
-      highlight: true,
-    },
-    {
-      icon: <IconFormacao width="22" height="22" />,
-      iconColor: COLORS.orange,
-      badge: "ESPAÇO DO PINTOR",
-      title: "Centro de Formação",
-      subtitle: "Colorindo com a NAP",
-      desc: "Portal do parceiro com cursos técnicos, biblioteca de produtos, agenda de treinamentos e comunidade de pintores.",
-      href: "/centro-treinamento",
+      icon: <IconPedido width="20" height="20" />,
+      iconColor: COLORS.green,
+      badge: "LOJA ONLINE",
+      title: "Faça seu pedido",
+      subtitle: "Tintas, acessórios e texturas",
+      desc: "Vitrine completa de produtos. Escolha, monte seu pedido e finalize direto no WhatsApp com consultoria incluída.",
+      href: "/pedidos",
     },
     {
       icon: <IconCasa width="22" height="22" />,
@@ -176,13 +256,13 @@ export default function BioPage() {
       href: "/",
     },
     {
-      icon: <IconPedido width="20" height="20" />,
-      iconColor: COLORS.green,
-      badge: "LOJA ONLINE",
-      title: "Faça seu pedido",
-      subtitle: "Tintas, acessórios e texturas",
-      desc: "Vitrine completa de produtos. Escolha, monte seu pedido e finalize direto no WhatsApp com consultoria incluída.",
-      href: "/pedidos",
+      icon: <IconFormacao width="22" height="22" />,
+      iconColor: COLORS.orange,
+      badge: "ESPAÇO DO PINTOR",
+      title: "Centro de Formação",
+      subtitle: "Colorindo com a NAP",
+      desc: "Portal do parceiro com cursos técnicos, biblioteca de produtos, agenda de treinamentos e comunidade de pintores.",
+      href: "/centro-treinamento",
     },
   ];
 
@@ -242,6 +322,11 @@ export default function BioPage() {
           </div>
         </header>
 
+        {/* Banner de destaque no topo: ofertas em carrossel coverflow */}
+        <section className="bio-ofertas" aria-label="Ofertas da semana">
+          <OfertasCarrossel />
+        </section>
+
         {/* Cards */}
         <div className="bio-cards-v2">
           {cards.map((c, i) => (
@@ -256,7 +341,8 @@ export default function BioPage() {
         </div>
 
         {/* Secao com mascote menino + CTA pra pintor */}
-        <section className="bio-pintor-cta">
+        <section className="bio-pintor-cta bio-pintor-destaque">
+          <span className="bio-destaque-fita">★ DESTAQUE · VAGAS LIMITADAS</span>
           <div className="bio-pintor-img-wrap">
             <img
               src="/mascote-menino.jpg"

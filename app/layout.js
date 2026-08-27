@@ -1,5 +1,22 @@
 import "./globals.css";
 import CookieBanner from "./components/CookieBanner";
+import { Poppins, Nunito } from "next/font/google";
+
+// Fontes self-hosted pelo next/font: zero request externo, zero layout shift.
+// Poppins = display (titulos/UI) · Nunito = corpo. Montserrat foi aposentada
+// na unificacao tipografica do banho de UI (27/08).
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-nunito",
+  display: "swap",
+});
 
 const SITE_URL = "https://nap-tintas.vercel.app";
 const OG_IMAGE = `${SITE_URL}/mascote-roda.jpg`;
@@ -83,14 +100,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
-      <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-          crossOrigin="anonymous"
-        />
-      </head>
+    <html lang="pt-BR" className={`${poppins.variable} ${nunito.variable}`}>
       <body>
         {children}
         <CookieBanner />
