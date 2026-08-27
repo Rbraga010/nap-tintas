@@ -261,7 +261,7 @@ export default function BioPage() {
     {
       icon: <IconFormacao width="22" height="22" />,
       iconColor: COLORS.orange,
-      badge: "ESPAÇO DO PINTOR",
+      badge: "PORTAL",
       title: "Centro de Formação",
       subtitle: "Colorindo com a NAP",
       desc: "Portal do parceiro com cursos técnicos, biblioteca de produtos, agenda de treinamentos e comunidade de pintores.",

@@ -2750,13 +2750,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .bio-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
   margin-bottom: 3px;
 }
+/* tag colada no canto direito do CARD (aproveita a coluna da seta),
+   liberando a largura toda pro titulo ficar em UMA linha */
 .bio-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 14px;
   display: inline-block;
   padding: 2px 8px;
   border-radius: 20px;
@@ -2768,7 +2769,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .bio-card-title {
@@ -2778,6 +2778,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   line-height: 1.2;
   letter-spacing: -0.01em;
   min-width: 0;
+  white-space: nowrap;      /* titulo sempre em UMA linha */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bio-card-subtitle {
@@ -3030,7 +3033,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .bio-card-subtitle { font-size: var(--fs-xs); }
   .bio-card-desc { font-size: var(--fs-xs); }
   .bio-card-arrow { width: 34px; height: 34px; }
-  .bio-card-badge { font-size: 8px; padding: 2px 7px; }
+  .bio-card-badge { font-size: 8px; padding: 2px 6px; letter-spacing: 0.04em; top: 10px; right: 10px; }
+  .bio-card-title { font-size: 15px; }
   .bio-card-ribbon { font-size: var(--fs-micro); right: -38px; padding: 3px 42px; }
 
   .bio-pintor-cta { padding: 18px 16px 18px 14px; gap: 14px; }
