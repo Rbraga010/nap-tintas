@@ -2,49 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { COLORS, WHATSAPP_NUMBER, RevealWrap } from "../page";
+import { CATEGORIAS, getProdutos } from "../lib/db";
+import { PRODUTOS as PRODUTOS_DEMO } from "../lib/catalogo-demo";
 import ScrollTop from "../components/ScrollTop";
 
-// ============ PRODUTOS MOCKADOS ============
+// Catalogo agora vem da camada de dados (lib/db): demo hoje, Supabase
+// quando o cliente plugar o .env — mesma interface (Bloco 4).
 
-const CATEGORIAS = [
-  { id: "todos", label: "Todos", emoji: "🎨" },
-  { id: "tintas", label: "Tintas", emoji: "🪣" },
-  { id: "texturas", label: "Texturas", emoji: "✨" },
-  { id: "massas", label: "Massas & Fundos", emoji: "🧱" },
-  { id: "acessorios", label: "Acessórios", emoji: "🖌️" },
-];
-
-const PRODUTOS = [
-  // TINTAS
-  { id: 1, cat: "tintas", marca: "Suvinil", nome: "Látex Premium Branco Neve", rendimento: "350 m²/galão", embalagem: "Galão 3,6L", preco: 189.90, cor: COLORS.blue, swatch: "#FAFAFA", destaque: true },
-  { id: 2, cat: "tintas", marca: "Coral", nome: "Acrílica Fachada Anti-Mofo", rendimento: "280 m²/galão", embalagem: "Galão 3,6L", preco: 239.90, cor: COLORS.green, swatch: "#E8F5E9" },
-  { id: 3, cat: "tintas", marca: "Sherwin-Williams", nome: "Esmalte Sintético Brilho", rendimento: "200 m²/galão", embalagem: "Galão 3,6L", preco: 159.90, cor: COLORS.red, swatch: "#D32F2F" },
-  { id: 4, cat: "tintas", marca: "Lukscolor", nome: "Tinta Epóxi Piso Industrial", rendimento: "160 m²/galão", embalagem: "Galão 3,6L", preco: 329.90, cor: COLORS.darkBlue, swatch: "#37474F", destaque: true },
-  { id: 5, cat: "tintas", marca: "Suvinil", nome: "Ultrabranco Fosco para Teto", rendimento: "420 m²/galão", embalagem: "Lata 18L", preco: 589.90, cor: COLORS.blue, swatch: "#FFFFFF" },
-  { id: 6, cat: "tintas", marca: "Eucatex", nome: "Látex Rosa Chá Econômica", rendimento: "300 m²/galão", embalagem: "Galão 3,6L", preco: 129.90, cor: COLORS.pink, swatch: "#FCE4EC" },
-  { id: 7, cat: "tintas", marca: "Coral", nome: "Acrílica Amarelo Manteiga", rendimento: "280 m²/galão", embalagem: "Galão 3,6L", preco: 219.90, cor: COLORS.yellow, swatch: "#FFF59D" },
-  { id: 8, cat: "tintas", marca: "Iquine", nome: "Látex Azul Anil Profundo", rendimento: "290 m²/galão", embalagem: "Galão 3,6L", preco: 199.90, cor: COLORS.blue, swatch: "#1B3A8C" },
-
-  // TEXTURAS
-  { id: 20, cat: "texturas", marca: "Quartzolit", nome: "Grafiato Riscado Branco", rendimento: "20 m²/lata", embalagem: "Lata 25kg", preco: 189.00, cor: COLORS.yellow, swatch: "#F5F5DC", destaque: true },
-  { id: 21, cat: "texturas", marca: "Suvinil", nome: "Textura Rústica Projetada", rendimento: "15 m²/lata", embalagem: "Lata 18L", preco: 349.90, cor: COLORS.orange, swatch: "#D7CCC8" },
-  { id: 22, cat: "texturas", marca: "Coral", nome: "Efeito Cimento Queimado", rendimento: "25 m²/kit", embalagem: "Kit 5kg", preco: 279.00, cor: COLORS.darkBlue, swatch: "#9E9E9E" },
-  { id: 23, cat: "texturas", marca: "Suvinil", nome: "Marmorato Decorativo", rendimento: "18 m²/kit", embalagem: "Kit 5kg", preco: 399.00, cor: COLORS.pink, swatch: "#EFEBE9" },
-
-  // MASSAS & FUNDOS
-  { id: 30, cat: "massas", marca: "Quartzolit", nome: "Massa Corrida PVA", rendimento: "35 m²/galão", embalagem: "Balde 25kg", preco: 69.90, cor: COLORS.green, swatch: "#FAFAFA" },
-  { id: 31, cat: "massas", marca: "Suvinil", nome: "Massa Acrílica Externa", rendimento: "30 m²/galão", embalagem: "Balde 25kg", preco: 119.90, cor: COLORS.blue, swatch: "#F5F5F5" },
-  { id: 32, cat: "massas", marca: "Coral", nome: "Selador Acrílico Universal", rendimento: "180 m²/galão", embalagem: "Galão 3,6L", preco: 89.90, cor: COLORS.yellow, swatch: "#FFFDE7" },
-  { id: 33, cat: "massas", marca: "Lukscolor", nome: "Fundo Preparador Parede", rendimento: "220 m²/galão", embalagem: "Galão 3,6L", preco: 99.90, cor: COLORS.orange, swatch: "#FFF3E0" },
-
-  // ACESSÓRIOS
-  { id: 40, cat: "acessorios", marca: "Atlas", nome: "Rolo de Lã 23cm + Cabo", rendimento: "—", embalagem: "Unidade", preco: 29.90, cor: COLORS.red, swatch: "#FFF8E1" },
-  { id: 41, cat: "acessorios", marca: "Tigre", nome: "Trincha Profissional 2\"", rendimento: "—", embalagem: "Unidade", preco: 19.90, cor: COLORS.orange, swatch: "#FFF3E0" },
-  { id: 42, cat: "acessorios", marca: "Condor", nome: "Kit Bandeja + Rolo + Cabo", rendimento: "—", embalagem: "Kit completo", preco: 49.90, cor: COLORS.green, swatch: "#E8F5E9", destaque: true },
-  { id: 43, cat: "acessorios", marca: "Tigre", nome: "Fita Crepe 18mm × 50m", rendimento: "—", embalagem: "Rolo", preco: 12.90, cor: COLORS.yellow, swatch: "#FFF8E1" },
-  { id: 44, cat: "acessorios", marca: "3M", nome: "Lixa d'Água Grão 220 (10un)", rendimento: "—", embalagem: "Pacote 10 folhas", preco: 24.90, cor: COLORS.darkBlue, swatch: "#ECEFF1" },
-  { id: 45, cat: "acessorios", marca: "Atlas", nome: "Desempenadeira Aço Inox", rendimento: "—", embalagem: "Unidade", preco: 34.90, cor: COLORS.pink, swatch: "#FCE4EC" },
-];
 
 const STORAGE_KEY = "nap_carrinho_v1";
 const fmt = (v) => `R$ ${v.toFixed(2).replace(".", ",")}`;
@@ -356,6 +320,10 @@ function PedidosFooter() {
 // ============ MAIN ============
 
 export default function PedidosPage() {
+  // produtos: demo como valor inicial (sem flash), banco assume se existir
+  const [PRODUTOS, setProdutos] = useState(PRODUTOS_DEMO);
+  useEffect(() => { getProdutos().then(setProdutos); }, []);
+
   const [cat, setCat] = useState("todos");
   const [busca, setBusca] = useState("");
   const [carrinho, setCarrinho] = useState([]);

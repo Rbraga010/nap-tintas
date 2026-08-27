@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { OFERTAS as OFERTAS_LIB } from "../lib/catalogo-demo";
+import { getBanners } from "../lib/db";
 import { COLORS, WHATSAPP_NUMBER } from "../page";
 
 const WPP_PEDIDO = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -144,14 +146,13 @@ function BioCard({
 // ---- CARROSSEL DE OFERTAS (banner de destaque da bio) ----
 // As artes vivem em /public/ofertas. Hoje sao simuladas; quando o Super Admin
 // da loja entrar (fase backend), esta lista passa a vir do banco.
-const OFERTAS = [
-  { src: "/ofertas/oferta-1.webp", alt: "Oferta: Tinta Acrílica Premium 18L por R$ 289,90" },
-  { src: "/ofertas/oferta-2.webp", alt: "Oferta: Esmalte Sintético 3,6L por R$ 94,90" },
-  { src: "/ofertas/oferta-3.webp", alt: "Oferta: Kit Pintura Completo por R$ 59,90" },
-  { src: "/ofertas/oferta-4.webp", alt: "Oferta: Textura Rústica 25kg por R$ 149,90" },
-];
+const OFERTAS_DEMO = OFERTAS_LIB;
+
 
 function OfertasCarrossel() {
+  // banners: demo como inicial; Super Admin (via banco) assume quando existir
+  const [OFERTAS, setOfertas] = useState(OFERTAS_DEMO);
+  useEffect(() => { getBanners("bio").then(setOfertas); }, []);
   const N = OFERTAS.length;
   // track com clones nas pontas p/ loop infinito: [ultimo, ...todas, primeira]
   const track = [OFERTAS[N - 1], ...OFERTAS, OFERTAS[0]];

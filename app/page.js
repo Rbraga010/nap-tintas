@@ -4,21 +4,10 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import ScrollTop from "./components/ScrollTop";
 import SchemaLocalBusiness from "./components/SchemaLocalBusiness";
 
-export const WHATSAPP_NUMBER = "5515999999999";
-export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!`;
-
-export const COLORS = {
-  blue: "#1B3A8C",
-  green: "#4CAF50",
-  yellow: "#F9A825",
-  orange: "#FF6D00",
-  red: "#D32F2F",
-  pink: "#E91E93",
-  darkBlue: "#0D1B3E",
-  white: "#FFFFFF",
-  offWhite: "#F8F8F8",
-  darkBg: "#0A0E1A",
-};
+// Fonte unica das constantes: app/lib/constants.js (Bloco 4).
+// Re-exportadas aqui por compatibilidade com paginas que importam de "../page".
+import { COLORS, WHATSAPP_NUMBER, WHATSAPP_URL } from "./lib/constants";
+export { COLORS, WHATSAPP_NUMBER, WHATSAPP_URL };
 
 const VALORES = [
   { name: "Amor", emoji: "❤️", color: COLORS.red, desc: "Paixão pelo que fazemos e por quem servimos." },

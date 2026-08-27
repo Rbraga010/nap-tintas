@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NAP Tintas — site + loja online
 
-## Getting Started
+Site institucional, link bio, formação de pintores, portal do parceiro e
+loja online da **NAP Tintas** (Sorocaba/SP). Next.js (App Router) + Supabase.
 
-First, run the development server:
+**Produção:** https://nap-tintas.vercel.app · **Hub:** [/bio](https://nap-tintas.vercel.app/bio)
+
+## Rotas
+
+| Rota | O que é |
+|---|---|
+| `/bio` | Link da bio do Instagram — hub de navegação + carrossel de ofertas |
+| `/` | Site institucional |
+| `/pedidos` | Loja online (carrinho finaliza no WhatsApp) |
+| `/colorindo-com-a-nap` | Landing da Formação de pintores |
+| `/centro-treinamento` | Portal do Pintor Parceiro |
+
+## Como rodar (passo a passo)
 
 ```bash
+# 1. Clone (ou baixe o ZIP e extraia)
+git clone https://github.com/Rbraga010/nap-tintas.git
+cd nap-tintas
+
+# 2. Instale as dependências (Node 20+)
+npm install
+
+# 3. Rode em desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# abre em http://localhost:3000 — funciona já, em MODO DEMO
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Modo demo:** sem configuração extra, a loja usa o catálogo de exemplo
+(`app/lib/catalogo-demo.js`). Perfeito pra avaliar o site.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Ligando o banco de dados (Supabase)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Crie uma conta gratuita em [supabase.com](https://supabase.com) e um novo projeto.
+2. No painel do projeto: **SQL Editor → New query** → cole o conteúdo de
+   [`supabase/schema.sql`](supabase/schema.sql) → **Run**.
+3. Repita com [`supabase/seed.sql`](supabase/seed.sql) (carrega o catálogo inicial).
+4. Em **Storage**, crie um bucket público chamado `midia` (fotos de produtos/banners).
+5. Copie `.env.example` para `.env.local` e preencha com os valores de
+   **Settings → API** (URL e anon key).
+6. Reinicie o `npm run dev`. Pronto: a loja passa a ler produtos e banners do banco.
 
-## Learn More
+### Criando o primeiro admin
+1. **Authentication → Users → Add user** (e-mail + senha do dono da loja).
+2. **SQL Editor**: `insert into admins (user_id, nome) values ('<id do usuário>', 'Nome');`
+   (o id aparece na lista de usuários). O painel Super Admin usa esse acesso.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy (Vercel)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Projeto conectado ao GitHub: push na `master` = deploy automático.
+Configure as mesmas variáveis do `.env.local` em
+**Vercel → Settings → Environment Variables** quando ativar o Supabase.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Arquitetura de dados
 
-## Deploy on Vercel
+- `app/lib/constants.js` — cores da marca e WhatsApp (fonte única)
+- `app/lib/supabase.js` — cliente (null em modo demo)
+- `app/lib/db.js` — camada de dados: `getProdutos()`, `getBanners(slot)`,
+  `cadastrarCliente()` — mesmas funções nos dois modos
+- `app/lib/catalogo-demo.js` — catálogo de demonstração (espelho do schema)
+- `supabase/schema.sql` — tabelas produtos, banners, clientes, pedidos,
+  admins + RLS (leitura pública da vitrine, escrita só admin)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Pendências conhecidas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- WhatsApp é placeholder (`5515999999999`) — trocar em `app/lib/constants.js`
+- Painel Super Admin (produtos + banners) em desenvolvimento

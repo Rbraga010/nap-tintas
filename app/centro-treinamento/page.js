@@ -3,20 +3,10 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const WHATSAPP_NUMBER = "5515999999999";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim do Portal do Pintor da NAP e gostaria de saber mais!`;
+import { COLORS, WHATSAPP_NUMBER } from "../lib/constants";
 
-const COLORS = {
-  blue: "#1B3A8C",
-  green: "#4CAF50",
-  yellow: "#F9A825",
-  orange: "#FF6D00",
-  red: "#D32F2F",
-  pink: "#E91E93",
-  darkBlue: "#0D1B3E",
-  darkBg: "#0A0E1A",
-  offWhite: "#F8F8F8",
-};
+// mensagem propria do Portal (diferente da institucional)
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá! Vim do Portal do Pintor da NAP e gostaria de saber mais!`;
 
 // ---- DATA ----
 
