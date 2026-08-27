@@ -17,8 +17,8 @@ export const COLORS = {
   darkBg: "#0A0E1A",
 };
 
-// numero oficial (ainda placeholder — trocar quando o cliente passar)
-const WHATSAPP_NUMBER = "5515999999999";
+// numero oficial da NAP (confirmado pelo Rodrigo em 28/08)
+const WHATSAPP_NUMBER = "5515998137222";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   "Olá! Vim pelo site da NAP Tintas e gostaria de saber mais!"
 )}`;

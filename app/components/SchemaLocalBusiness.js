@@ -10,7 +10,7 @@ export default function SchemaLocalBusiness() {
     url: "https://nap-tintas.vercel.app",
     logo: "https://nap-tintas.vercel.app/nap-logo.jpg",
     image: "https://nap-tintas.vercel.app/mascote-roda.jpg",
-    telephone: "+551599999-9999",
+    telephone: "+5515998137222",
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
@@ -36,7 +36,7 @@ export default function SchemaLocalBusiness() {
     ],
     sameAs: [
       "https://instagram.com/nap_tintas",
-      "https://wa.me/5515999999999",
+      "https://wa.me/5515998137222",
     ],
     areaServed: [
       { "@type": "City", name: "Sorocaba" },

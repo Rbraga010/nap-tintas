@@ -1204,7 +1204,7 @@ function OndeEstamos() {
           {[
             { icon: "📍", title: "Endereço", lines: ["Rua Cônego André Pieroni, 371", "Jd. Guadalajara — Sorocaba/SP"] },
             { icon: "🕐", title: "Horário", lines: ["Seg a Sex: 8h às 18h", "Sábado: 8h às 13h"] },
-            { icon: "📱", title: "Contato", lines: ["(15) 99999-9999", "@nap_tintas"] },
+            { icon: "📱", title: "Contato", lines: ["(15) 99813-7222", "@nap_tintas"] },
           ].map((item, i) => (
             <RevealWrap key={i} delay={i * 0.1}>
               <div className="glass-card" style={{

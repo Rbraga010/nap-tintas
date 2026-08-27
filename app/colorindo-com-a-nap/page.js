@@ -186,7 +186,7 @@ const LOCAL_ITEMS = [
   {
     icon: "📱",
     title: "Contato direto",
-    lines: ["(15) 99999-9999", "@nap_tintas"],
+    lines: ["(15) 99813-7222", "@nap_tintas"],
   },
 ];
 
@@ -1590,7 +1590,7 @@ function ConversaSection() {
                     name="wpp"
                     type="tel"
                     required
-                    placeholder="(15) 99999-9999"
+                    placeholder="(15) 9XXXX-XXXX"
                     className="ccn-input"
                   />
                 </FormField>
