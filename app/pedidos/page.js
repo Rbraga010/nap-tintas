@@ -566,7 +566,7 @@ export default function PedidosPage() {
         marcas={marcas} marca={marca} setMarca={setMarca} ordem={ordem} setOrdem={setOrdem} />
 
       <section className="ped-ofertas" id="destaques" aria-label="Destaques">
-        <OfertasCarrossel slot="loja" fallbackSlot="bio" max={5} />
+        <OfertasCarrossel slot="bio" max={5} />
       </section>
 
       <PedidosCategorias categorias={categorias} ativa={cat} onChange={setCat} />

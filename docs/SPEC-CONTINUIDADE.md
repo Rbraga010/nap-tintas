@@ -16,10 +16,12 @@ automático: push na `master` do GitHub → Vercel).
   **/centro-treinamento** — portal do parceiro (área de membros fake
   aguardando fase própria) · **/pedidos** — LOJA v3 · **/admin** — Super Admin
 - **Loja v3**: estantes por categoria deslizando pro lado, pills-âncora,
-  busca, banner coverflow (máx 5, fallback pros da bio), card com
+  busca, banner coverflow (máx 5, o MESMO conjunto da bio), card com
   foto/marca/nome(bold)/descrição/unidade/preço com De-Para
 - **Super Admin**: produtos (CRUD completo + Preço De), estantes
-  (categorias dinâmicas), banners bio/loja, clientes e pedidos (leitura).
+  (categorias dinâmicas), banners (conjunto ÚNICO bio+loja, slot "bio"), clientes (mini-CRM: CRUD,
+  observações internas, WhatsApp clicável, histórico/total por cliente)
+  e pedidos (leitura, com nome do cliente).
   Sem banco = modo demo (localStorage versionado `DEMO_V`); com Supabase
   = login real + RLS
 - **Design system**: tokens no `:root` do `globals.css` (tipografia de

@@ -4,9 +4,9 @@
 // CARROSSEL DE OFERTAS (coverflow) — compartilhado bio + loja (Bloco 5)
 // Slide central + vizinhos espiando nas laterais, setas abaixo, autoplay
 // com pausa em hover/toque e loop infinito blindado contra aba oculta.
-// Os banners vem da camada de dados (Super Admin gerencia por slot);
-// se o slot pedido estiver vazio, cai no fallbackSlot ("podem ser os
-// mesmos da bio" — decisao do Rodrigo, 28/08). Maximo 5 por regra.
+// Os banners vem da camada de dados. Bio e Loja usam o MESMO conjunto
+// (slot "bio", aba unica "Banners" no admin — decisao do Rodrigo, 28/08).
+// Maximo 5 por regra.
 // ============================================================
 import { useEffect, useState } from "react";
 import { OFERTAS } from "../lib/catalogo-demo";

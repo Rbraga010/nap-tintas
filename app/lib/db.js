@@ -269,6 +269,37 @@ export async function adminListClientes() {
   return error ? [] : data;
 }
 
+// CRM: o admin tambem inclui/edita clientes (obs = anotacao interna)
+export async function upsertCliente(c) {
+  const registro = {
+    nome: c.nome, whatsapp: c.whatsapp,
+    email: c.email || null, obs: c.obs || null,
+  };
+  if (!temBanco) {
+    const lista = lsGet(LS.clientes, []);
+    if (c.id) {
+      lsSet(LS.clientes, lista.map((x) => (x.id === c.id ? { ...x, ...registro } : x)));
+    } else {
+      lsSet(LS.clientes, [{ id: Date.now(), ...registro, criado_em: new Date().toISOString() }, ...lista]);
+    }
+    return { ok: true, demo: true };
+  }
+  const q = c.id
+    ? supabase.from("clientes").update(registro).eq("id", c.id)
+    : supabase.from("clientes").insert(registro);
+  const { error } = await q;
+  return { ok: !error, error: error?.message };
+}
+
+export async function deleteCliente(id) {
+  if (!temBanco) {
+    lsSet(LS.clientes, lsGet(LS.clientes, []).filter((c) => c.id !== id));
+    return { ok: true, demo: true };
+  }
+  const { error } = await supabase.from("clientes").delete().eq("id", id);
+  return { ok: !error, error: error?.message };
+}
+
 export async function adminListPedidos() {
   if (!temBanco) return lsGet(LS.pedidos, []);
   const { data, error } = await supabase

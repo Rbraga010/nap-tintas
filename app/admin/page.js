@@ -8,13 +8,13 @@
 //   admins; o RLS garante a seguranca real das escritas.
 // ============================================================
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { COLORS } from "../lib/constants";
 import { temBanco, adminLogin, adminLogout, adminSessao,
   getCategorias, upsertCategoria, deleteCategoria,
   adminListProdutos, upsertProduto, deleteProduto,
   adminListBanners, upsertBanner, deleteBanner, uploadImagem,
-  adminListClientes, adminListPedidos } from "../lib/db";
+  adminListClientes, upsertCliente, deleteCliente, adminListPedidos } from "../lib/db";
 
 const fmt = (v) => Number(v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const CORES_MARCA = [
@@ -277,7 +277,7 @@ function FormBanner({ slot, inicial, onSalvar, onFechar }) {
     <div className="adm-modal-fundo" onClick={onFechar}>
       <form className="adm-modal" onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => { e.preventDefault(); onSalvar(b); }}>
-        <h2>{b.id ? "Editar banner" : `Novo banner (${slot})`}</h2>
+        <h2>{b.id ? "Editar banner" : "Novo banner"}</h2>
         <label>Título
           <input value={b.titulo || ""} onChange={(e) => set("titulo", e.target.value)} />
         </label>
@@ -331,9 +331,8 @@ function AbaBanners({ slot }) {
     <div>
       <div className="adm-barra">
         <p className="adm-dica">
-          {slot === "bio"
-            ? "Este carrossel aparece no topo do Link Bio."
-            : "Este banner aparece no topo da Loja."} A ordem aqui é a ordem de exibição.
+          Este carrossel aparece no topo do Link Bio E da Loja (é o mesmo).
+          A ordem aqui é a ordem de exibição.
         </p>
         <button className="adm-btn-primario" onClick={() => setEditando({})}>+ Novo banner</button>
       </div>
@@ -427,48 +426,182 @@ function AbaEstantes() {
   );
 }
 
-// ---------------- CLIENTES + PEDIDOS ----------------
+// ---------------- CLIENTES (mini-CRM) + PEDIDOS ----------------
+const soDigitos = (w) => String(w || "").replace(/\D/g, "");
+const linkWpp = (w) => {
+  const d = soDigitos(w);
+  return d ? `https://wa.me/${d.length <= 11 ? "55" + d : d}` : null;
+};
+
+function FormCliente({ inicial, onSalvar, onFechar }) {
+  const [c, setC] = useState(inicial || { nome: "", whatsapp: "", email: "", obs: "" });
+  const set = (k, v) => setC((x) => ({ ...x, [k]: v }));
+  return (
+    <div className="adm-modal-fundo" onClick={onFechar}>
+      <form className="adm-modal" onClick={(e) => e.stopPropagation()}
+        onSubmit={(e) => { e.preventDefault(); onSalvar(c); }}>
+        <h2>{c.id ? "Editar cliente" : "Novo cliente"}</h2>
+        <label>Nome
+          <input value={c.nome || ""} onChange={(e) => set("nome", e.target.value)} required />
+        </label>
+        <label>WhatsApp
+          <input value={c.whatsapp || ""} onChange={(e) => set("whatsapp", e.target.value)}
+            placeholder="(15) 99999-9999" required />
+        </label>
+        <label>E-mail (opcional)
+          <input type="email" value={c.email || ""} onChange={(e) => set("email", e.target.value)} />
+        </label>
+        <label>Observações (só o admin vê)
+          <textarea rows={3} value={c.obs || ""} onChange={(e) => set("obs", e.target.value)}
+            placeholder="Ex.: pintor parceiro, prefere entrega à tarde, negociou desconto…" />
+        </label>
+        <div className="adm-modal-acoes">
+          <button type="button" className="adm-btn-fantasma" onClick={onFechar}>Cancelar</button>
+          <button type="submit" className="adm-btn-primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
 function AbaClientes() {
   const [lista, setLista] = useState([]);
-  useEffect(() => { adminListClientes().then(setLista); }, []);
+  const [pedidos, setPedidos] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [editando, setEditando] = useState(null); // null | {} | cliente
+  const [abertoId, setAbertoId] = useState(null);
+  const carregar = () => {
+    adminListClientes().then(setLista);
+    adminListPedidos().then(setPedidos);
+  };
+  useEffect(() => { carregar(); }, []);
+
+  const pedidosDe = (id) => pedidos.filter((p) => p.cliente_id === id);
+  const filtrada = useMemo(() => {
+    const q = busca.trim().toLowerCase();
+    if (!q) return lista;
+    return lista.filter((c) =>
+      [c.nome, c.whatsapp, c.email, c.obs].join(" ").toLowerCase().includes(q));
+  }, [lista, busca]);
+
+  const salvar = async (c) => {
+    const r = await upsertCliente(c);
+    if (!r.ok) return alert(r.error);
+    setEditando(null); carregar();
+  };
+  const excluir = async (c) => {
+    const n = pedidosDe(c.id).length;
+    if (!confirm(`Excluir o cliente "${c.nome}"?${n ? ` Os ${n} pedido(s) dele continuam no histórico, sem vínculo.` : ""}`)) return;
+    const r = await deleteCliente(c.id);
+    r.ok ? carregar() : alert(r.error);
+  };
+
   return (
-    <div className="adm-tabela-wrap">
-      <table className="adm-tabela">
-        <thead><tr><th>Nome</th><th>WhatsApp</th><th>E-mail</th><th>Cadastro</th></tr></thead>
-        <tbody>
-          {lista.map((c) => (
-            <tr key={c.id}>
-              <td><strong>{c.nome}</strong></td>
-              <td>{c.whatsapp}</td>
-              <td>{c.email || "—"}</td>
-              <td>{new Date(c.criado_em).toLocaleDateString("pt-BR")}</td>
-            </tr>
-          ))}
-          {!lista.length && <tr><td colSpan={4} className="adm-vazio">Nenhum cliente cadastrado ainda.</td></tr>}
-        </tbody>
-      </table>
+    <div>
+      <div className="adm-barra">
+        <input className="adm-busca" placeholder="Buscar por nome, WhatsApp, e-mail ou observação…"
+          value={busca} onChange={(e) => setBusca(e.target.value)} />
+        <button className="adm-btn-primario" onClick={() => setEditando({})}>+ Novo cliente</button>
+      </div>
+      <div className="adm-tabela-wrap">
+        <table className="adm-tabela">
+          <thead>
+            <tr><th>Cliente</th><th>WhatsApp</th><th>Pedidos</th><th>Total comprado</th><th>Cadastro</th><th></th></tr>
+          </thead>
+          <tbody>
+            {filtrada.map((c) => {
+              const peds = pedidosDe(c.id);
+              const total = peds.reduce((s, p) => s + Number(p.total || 0), 0);
+              const aberto = abertoId === c.id;
+              return (
+                <Fragment key={c.id}>
+                  <tr className={`adm-cli-linha ${aberto ? "on" : ""}`}
+                    onClick={() => setAbertoId(aberto ? null : c.id)}
+                    title="Clique para ver a ficha">
+                    <td>
+                      <strong>{c.nome}</strong>
+                      <span className="adm-sub">{c.email || "sem e-mail"}{c.obs ? " · 📝 tem observação" : ""}</span>
+                    </td>
+                    <td>
+                      {linkWpp(c.whatsapp) ? (
+                        <a className="adm-cli-wpp" href={linkWpp(c.whatsapp)} target="_blank"
+                          rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                          💬 {c.whatsapp}
+                        </a>
+                      ) : "—"}
+                    </td>
+                    <td>{peds.length}</td>
+                    <td className="adm-preco">{fmt(total)}</td>
+                    <td>{new Date(c.criado_em).toLocaleDateString("pt-BR")}</td>
+                    <td className="adm-acoes">
+                      <button onClick={(e) => { e.stopPropagation(); setEditando(c); }}>✏️</button>
+                      <button onClick={(e) => { e.stopPropagation(); excluir(c); }}>🗑️</button>
+                    </td>
+                  </tr>
+                  {aberto && (
+                    <tr className="adm-cli-detalhe">
+                      <td colSpan={6}>
+                        {c.obs && <p className="adm-cli-obs">📝 {c.obs}</p>}
+                        {peds.length ? (
+                          <ul className="adm-cli-pedidos">
+                            {peds.map((p) => (
+                              <li key={p.id}>
+                                <span>{new Date(p.criado_em).toLocaleDateString("pt-BR")}</span>
+                                <span>{(p.itens || []).map((i) => `${i.qtd}× ${i.nome}`).join(", ")}</span>
+                                <strong>{fmt(p.total)}</strong>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="adm-dica">Nenhum pedido deste cliente ainda.</p>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+            {!filtrada.length && (
+              <tr><td colSpan={6} className="adm-vazio">
+                Nenhum cliente por aqui. Cadastre no botão acima — ou eles entram
+                sozinhos pelo 👤 da loja.
+              </td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {editando !== null && (
+        <FormCliente inicial={editando.id ? editando : null}
+          onSalvar={salvar} onFechar={() => setEditando(null)} />
+      )}
     </div>
   );
 }
 
 function AbaPedidos() {
   const [lista, setLista] = useState([]);
-  useEffect(() => { adminListPedidos().then(setLista); }, []);
+  const [clientes, setClientes] = useState([]);
+  useEffect(() => {
+    adminListPedidos().then(setLista);
+    adminListClientes().then(setClientes);
+  }, []);
+  const nomeCliente = (id) => clientes.find((c) => c.id === id)?.nome || "—";
   return (
     <div className="adm-tabela-wrap">
       <table className="adm-tabela">
-        <thead><tr><th>#</th><th>Itens</th><th>Total</th><th>Status</th><th>Data</th></tr></thead>
+        <thead><tr><th>#</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Status</th><th>Data</th></tr></thead>
         <tbody>
           {lista.map((p) => (
             <tr key={p.id}>
               <td>{p.id}</td>
+              <td><strong>{nomeCliente(p.cliente_id)}</strong></td>
               <td>{(p.itens || []).map((i) => `${i.qtd}× ${i.nome}`).join(", ")}</td>
               <td className="adm-preco">{fmt(p.total)}</td>
               <td><span className="adm-tag adm-tag-on">{p.status}</span></td>
               <td>{new Date(p.criado_em).toLocaleString("pt-BR")}</td>
             </tr>
           ))}
-          {!lista.length && <tr><td colSpan={5} className="adm-vazio">Nenhum pedido registrado ainda.</td></tr>}
+          {!lista.length && <tr><td colSpan={6} className="adm-vazio">Nenhum pedido registrado ainda.</td></tr>}
         </tbody>
       </table>
     </div>
@@ -479,8 +612,7 @@ function AbaPedidos() {
 const ABAS = [
   ["produtos", "📦 Produtos"],
   ["estantes", "🗂️ Estantes"],
-  ["banner-bio", "🎯 Banner Bio"],
-  ["banner-loja", "🏪 Banner Loja"],
+  ["banners", "🎯 Banners"],
   ["clientes", "👥 Clientes"],
   ["pedidos", "🧾 Pedidos"],
 ];
@@ -534,8 +666,7 @@ export default function AdminPage() {
       <main className="adm-conteudo">
         {aba === "produtos" && <AbaProdutos />}
         {aba === "estantes" && <AbaEstantes />}
-        {aba === "banner-bio" && <AbaBanners slot="bio" />}
-        {aba === "banner-loja" && <AbaBanners slot="loja" />}
+        {aba === "banners" && <AbaBanners slot="bio" />}
         {aba === "clientes" && <AbaClientes />}
         {aba === "pedidos" && <AbaPedidos />}
       </main>

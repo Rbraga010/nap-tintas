@@ -3404,6 +3404,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .adm-busca { flex: 1; min-width: 220px; }
 .adm-dica { color: #9AA6C8; font-size: var(--fs-xs); margin: 0; max-width: 560px; }
 
+/* mini-CRM (aba Clientes) */
+.adm-cli-linha { cursor: pointer; }
+.adm-cli-linha.on td { background: rgba(255,255,255,.04); }
+.adm-cli-wpp { color: #7EE2A0; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.adm-cli-wpp:hover { text-decoration: underline; }
+.adm-cli-detalhe td { background: rgba(255,255,255,.03); padding: 14px 18px 18px; }
+.adm-cli-obs { margin: 0 0 10px; color: #FFD76E; font-size: var(--fs-sm); }
+.adm-cli-pedidos { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.adm-cli-pedidos li { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px;
+  align-items: baseline; font-size: var(--fs-sm); color: rgba(255,255,255,.85); }
+.adm-cli-pedidos li span:first-child { color: rgba(255,255,255,.5); }
+
 .adm-tabela-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,.08);
   border-radius: 14px; }
 .adm-tabela { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
