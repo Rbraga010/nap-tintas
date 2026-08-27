@@ -13,7 +13,9 @@ Se QUALQUER um desses sinais for verdadeiro, esta é uma máquina nova:
 (repo próprio no GitHub, instalação, Supabase e primeiro admin), fazendo
 as perguntas na ordem definida lá. Só depois atenda outros pedidos.
 
-Se o setup já foi feito, siga normalmente.
+Se o setup já foi feito, siga normalmente — e para CONTINUAR o
+desenvolvimento, leia `docs/SPEC-CONTINUIDADE.md` (estado, regras da
+casa e pendências priorizadas).
 
 ## Este NÃO é o Next.js que você conhece
 
