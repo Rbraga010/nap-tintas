@@ -46,7 +46,9 @@ export default function CookieBanner() {
         bottom: 16,
         left: 16,
         right: 16,
-        zIndex: 950,
+        // abaixo dos overlays/modais (900/910): o aviso nao pode cobrir
+        // o botao de um modal aberto
+        zIndex: 880,
         maxWidth: 460,
         marginLeft: "auto",
         marginRight: "auto",

@@ -363,7 +363,7 @@ function PedidosFooter() {
           </div>
           <div>
             <div className="ped-footer-col-title">Navegar</div>
-            <a href="/" className="ped-footer-link">Site institucional</a>
+            <a href="/institucional" className="ped-footer-link">Site institucional</a>
             <a href="/colorindo-com-a-nap" className="ped-footer-link">Formação pra pintor</a>
             <a href="/centro-treinamento" className="ped-footer-link">Espaço do Pintor</a>
             <a href="/bio" className="ped-footer-link">Link na bio</a>

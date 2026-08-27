@@ -3608,8 +3608,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 /* ===== modal "Meu cadastro" da loja (28/08) ===== */
 .ped-modal {
+  /* acima do .ped-drawer-overlay (900), senao o modal abre ATRAS do veu:
+     fica borrado e nao aceita clique (bug do botao 👤, 27/08) */
   position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  z-index: 210; width: min(420px, calc(100vw - 32px));
+  z-index: 910; width: min(420px, calc(100vw - 32px));
   background: #fff; border-radius: 20px; padding: 26px;
   box-shadow: var(--shadow-lg);
 }

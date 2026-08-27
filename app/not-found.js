@@ -124,7 +124,7 @@ export default function NotFound() {
           }}
         >
           <Link
-            href="/"
+            href="/bio"
             style={{
               display: "inline-flex",
               alignItems: "center",

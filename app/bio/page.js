@@ -163,7 +163,7 @@ export default function BioPage() {
       title: "Conheça a NAP",
       subtitle: "Colorindo Sonhos há mais de 20 anos",
       desc: "Mais de 20 anos pintando histórias em Sorocaba. Nossa família, nossos valores, nossa forma de atender.",
-      href: "/",
+      href: "/institucional",
     },
     {
       icon: <IconFormacao width="22" height="22" />,

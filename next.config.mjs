@@ -6,6 +6,11 @@ const nextConfig = {
   turbopack: {
     root: import.meta.dirname,
   },
+  async redirects() {
+    // a porta de entrada do dominio e a BIO (o trafego vem do Instagram);
+    // o institucional continua vivo em /institucional
+    return [{ source: "/", destination: "/bio", permanent: false }];
+  },
   async headers() {
     return [{
       source: "/(.*)",
