@@ -3581,3 +3581,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .ped-prod-foto-area { height: 112px; }
   .ped-estante { scroll-margin-top: 104px; }
 }
+
+/* busca + filtros lado a lado (spec 28/08) */
+.ped-busca-linha {
+  display: flex; gap: 10px; align-items: center; justify-content: center;
+  flex-wrap: wrap; max-width: 760px; margin: 0 auto;
+}
+.ped-busca-linha .ped-hero-search { flex: 1; min-width: 260px; margin: 0; }
+.ped-ofertas, .ped-ajuda-sec { scroll-margin-top: 90px; }
+.ped-estantes { scroll-margin-top: 90px; }
+@media (max-width: 600px) {
+  .ped-busca-linha .ped-filtro { flex: 1; max-width: none; }
+}

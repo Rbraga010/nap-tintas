@@ -57,7 +57,7 @@ const IconArrow = (p) => (
 
 // ============ NAVBAR ============
 
-function PedidosNav({ cartCount, onOpenCart, marcas, marca, setMarca, ordem, setOrdem }) {
+function PedidosNav({ cartCount, onOpenCart }) {
   return (
     <nav className="ped-nav">
       <div className="ped-nav-inner">
@@ -70,17 +70,10 @@ function PedidosNav({ cartCount, onOpenCart, marcas, marca, setMarca, ordem, set
         </a>
         <div className="ped-nav-links">
           <a href="/bio" className="ped-nav-link">← Início</a>
-          {/* filtros DA LOJA (links do site vivem no footer) */}
-          <select className="ped-filtro" value={marca} onChange={(e) => setMarca(e.target.value)} aria-label="Filtrar por marca">
-            <option value="">Todas as marcas</option>
-            {marcas.map((m) => <option key={m} value={m}>{m}</option>)}
-          </select>
-          <select className="ped-filtro" value={ordem} onChange={(e) => setOrdem(e.target.value)} aria-label="Ordenar">
-            <option value="relevancia">Mais relevantes</option>
-            <option value="menor">Menor preço</option>
-            <option value="maior">Maior preço</option>
-            <option value="az">Nome A–Z</option>
-          </select>
+          {/* guias da loja (spec Rodrigo 28/08); filtros moraram pra busca */}
+          <a href="#destaques" className="ped-nav-link">Destaques</a>
+          <a href="#produtos" className="ped-nav-link">Produtos</a>
+          <a href="#fale-conosco" className="ped-nav-link">Fale com a gente</a>
           <button onClick={onOpenCart} className="ped-cart-btn" aria-label="Carrinho">
             <IconCart width="20" height="20" />
             {cartCount > 0 && <span className="ped-cart-badge">{cartCount}</span>}
@@ -93,7 +86,7 @@ function PedidosNav({ cartCount, onOpenCart, marcas, marca, setMarca, ordem, set
 
 // ============ HERO ============
 
-function PedidosHero({ busca, setBusca }) {
+function PedidosHero({ busca, setBusca, marcas, marca, setMarca, ordem, setOrdem }) {
   return (
     <section className="ped-hero">
       <div className="ped-hero-splash ped-splash-1" style={{ background: COLORS.yellow }} />
@@ -112,15 +105,27 @@ function PedidosHero({ busca, setBusca }) {
         <p className="ped-hero-sub">
           Monte seu pedido, finalize no WhatsApp e receba em Sorocaba. Sem cadastro, sem complicação. <strong>A NAP cuida contigo.</strong>
         </p>
-        <div className="ped-hero-search">
-          <span className="ped-search-icon">🔎</span>
-          <input
-            type="text"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            placeholder="O que você precisa? Ex: látex branco, massa corrida, rolo de lã…"
-            className="ped-search-input"
-          />
+        <div className="ped-busca-linha">
+          <div className="ped-hero-search">
+            <span className="ped-search-icon">🔎</span>
+            <input
+              type="text"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              placeholder="O que você precisa? Ex: látex branco, massa corrida…"
+              className="ped-search-input"
+            />
+          </div>
+          <select className="ped-filtro" value={marca} onChange={(e) => setMarca(e.target.value)} aria-label="Filtrar por marca">
+            <option value="">Todas as marcas</option>
+            {marcas.map((m) => <option key={m} value={m}>{m}</option>)}
+          </select>
+          <select className="ped-filtro" value={ordem} onChange={(e) => setOrdem(e.target.value)} aria-label="Ordenar">
+            <option value="relevancia">Mais relevantes</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="az">Nome A–Z</option>
+          </select>
         </div>
       </div>
     </section>
@@ -496,12 +501,12 @@ export default function PedidosPage() {
 
   return (
     <div className="ped-page">
-      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)}
+      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)} />
+
+      <PedidosHero busca={busca} setBusca={setBusca}
         marcas={marcas} marca={marca} setMarca={setMarca} ordem={ordem} setOrdem={setOrdem} />
 
-      <PedidosHero busca={busca} setBusca={setBusca} />
-
-      <section className="ped-ofertas" aria-label="Destaques">
+      <section className="ped-ofertas" id="destaques" aria-label="Destaques">
         <OfertasCarrossel slot="loja" fallbackSlot="bio" max={5} />
       </section>
 
@@ -539,7 +544,7 @@ export default function PedidosPage() {
           </div>
         </section>
       ) : (
-        <div className="ped-estantes">
+        <div className="ped-estantes" id="produtos">
           {categorias.map((c, idx) => {
             const itens = filtrados.filter((p) => p.cat === c.id);
             if (!itens.length) return null;
@@ -553,7 +558,7 @@ export default function PedidosPage() {
       )}
 
       {/* Ajuda */}
-      <section className="ped-ajuda-sec">
+      <section className="ped-ajuda-sec" id="fale-conosco">
         <div className="ped-section-inner">
           <div className="ped-ajuda-card">
             <div className="ped-ajuda-emoji">💬</div>
