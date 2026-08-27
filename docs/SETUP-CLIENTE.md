@@ -39,6 +39,54 @@ inexistente despeja erro verboso.)
 
 Apresente ao usuário um resumo do estado e o plano das fases restantes.
 
+## Fase 0.5 — INVENTÁRIO: o cliente já tem coisa no ar? (OBRIGATÓRIO)
+
+⚠️ **A armadilha mais cara deste setup**: presumir que o cliente parte do
+zero. Na prática o dono do negócio quase sempre JÁ tem algum pedaço no ar
+(um site antigo publicado por outra pessoa, um domínio registrado, um
+e-mail profissional funcionando). Criar tudo do zero por cima disso gera
+projeto duplicado, site velho voltando sozinho e, no pior caso, e-mail
+derrubado. **Levante o que existe antes de criar qualquer coisa.**
+
+Pergunte ao dono, uma a uma, e ANOTE:
+
+1. "Você já tem um site no ar hoje? Em que endereço?" (mesmo que velho ou
+   feio — é o que o Google e os clientes conhecem)
+2. "Já tem domínio próprio registrado? Em que empresa (registro.br,
+   GoDaddy, HostGator…) e em nome de quem?"
+3. "Usa e-mail no domínio (contato@seudominio)? Por qual serviço?"
+   → **se a resposta for sim, o e-mail é INTOCÁVEL**: qualquer mexida em
+   DNS precisa preservar MX/SPF/DKIM (veja a Fase 7)
+4. "Já tem conta na Vercel? E no GitHub? Quem publicou o site atual?"
+
+Depois confirme por fora, sem depender da memória dele:
+
+```bash
+# quem responde pelo domínio hoje e o que existe de e-mail
+nslookup -type=NS  <dominio>
+nslookup -type=MX  <dominio>
+nslookup -type=TXT <dominio>           # SPF
+# o site atual (title revela se é loja de verdade ou página de estacionamento)
+curl -sI https://<dominio> | head -20
+```
+
+**Regra de ouro do brownfield: ATUALIZE o que existe, não duplique.**
+Se já há projeto na Vercel servindo o domínio, publique NELE (a Fase 6
+vira "atualizar projeto existente"). Se já há repo, aponte o deploy para
+o repo novo em vez de deixar dois publicando no mesmo lugar.
+
+⚠️ **Vínculo git órfão** — o erro silencioso mais comum: você publica por
+CLI, fica lindo, e semanas depois o site VELHO reaparece sozinho porque o
+projeto Vercel continuava ligado a um repositório antigo com deploy
+automático. Cheque e resolva antes de encerrar:
+
+```bash
+npx vercel project ls        # ou o painel: Settings → Git
+```
+Se houver repo antigo ligado: suba o código para o repo NOVO do cliente e
+religue o projeto nele (Settings → Git → Disconnect, depois Connect), ou
+desconecte o git de vez. Nunca deixe dois repos publicando no mesmo projeto.
+
 ## Fase 1 — Perguntas de abertura (faça TODAS antes de agir)
 
 1. "Qual conta do GitHub vamos usar — você já está logado no `gh` desta
@@ -46,7 +94,8 @@ Apresente ao usuário um resumo do estado e o plano das fases restantes.
    autoriza no navegador; se ele nem TIVER conta, guie a criação em
    https://github.com/signup antes)
 2. "Que nome quer para o repositório? (sugestão: `nap-tintas`) Privado ou
-   público?"
+   público?" — se a Fase 0.5 achou um repo antigo publicando o site,
+   diga isso a ele: o certo é UM repo, o novo, ligado ao deploy
 3. "Você já tem conta/projeto no Supabase, ou criamos agora?"
 4. "Quer carregar o catálogo de exemplo no banco (22 produtos + 4
    banners), ou começar vazio?" (recomende: carregar — o admin edita depois)
@@ -161,27 +210,96 @@ concluída (o domínio aponta pro projeto Vercel do cliente).
    registros DNS exatos (um `A` para a raiz e um `CNAME` para o `www`).
    **Use os valores que a tela mostrar** — eles mudam com o tempo, não use
    valores decorados de outros tutoriais.
-3. **No registro.br** (dono logado; login é dele): página do domínio →
-   **"Configurar zona DNS"** → modo avançado:
+3. **No registro.br** (dono logado; login é dele). Dois caminhos, e a
+   escolha muda o resto:
+
+   **(a) O domínio usa DNS de terceiro (Cloudflare, HostGator, GoDaddy…)?**
+   O mais seguro é adicionar os registros LÁ MESMO, no painel de quem já
+   hospeda a zona: o e-mail continua intocado e não há janela de
+   indisponibilidade. Só migre para o DNS do registro.br se o dono quiser
+   centralizar de fato.
+
+   **(b) Migrando para o DNS do registro.br** (botão "Utilizar DNS do
+   Registro.br") — ⚠️ **avise o dono ANTES**, porque isto acontece:
+   - a zona antiga é **descartada na hora**: site E e-mail param até você
+     recadastrar tudo (por isso capture MX/SPF/DKIM ANTES, veja abaixo);
+   - a publicação **não é imediata**: o registro.br entra numa janela de
+     transição de ~2h e, enquanto ela durar, o painel aceita e guarda a
+     zona ("Zona DNS atualizada com sucesso!") mas os servidores
+     autoritativos continuam respondendo a zona de domínio estacionado
+     (`MX 0 (root)`, `v=spf1 -all`). **Salvar de novo NÃO adianta** —
+     confirmado em teste: o serial do SOA não muda. Só o tempo resolve;
+   - nessa janela também **não dá para voltar** para o DNS de terceiro,
+     nem para o modo básico (bloqueio de ~2h). Não há botão de desfazer.
+   - **Faça essa migração fora do horário comercial**, com o dono ciente
+     de que site e e-mail ficam fora do ar por até ~2h. Mensagens
+     recebidas nesse período costumam ser reentregues (servidores sérios
+     tentam por ~48h), mas não conte com isso para e-mail crítico.
+
+   **Antes de migrar, CAPTURE a zona antiga inteira** (é a sua rede de
+   segurança — sem isso, o e-mail do cliente morre):
+   ```bash
+   nslookup -type=MX  <dominio> 8.8.8.8
+   nslookup -type=TXT <dominio> 8.8.8.8                      # SPF
+   nslookup -type=TXT <selector>._domainkey.<dominio> 8.8.8.8  # DKIM
+   ```
+   Descubra os selectors DKIM pelo serviço de e-mail em uso (Titan usa
+   `titan1`, Zoho usa `zoho`/`zmail`, Google usa `google`); teste também
+   `default._domainkey`, comum em migrações antigas. Chaves DKIM são
+   longas e truncam no `nslookup` — no Windows use
+   `Resolve-DnsName -Type TXT <nome> -Server 8.8.8.8` e junte as partes
+   (`$_.Strings -join ""`) para copiar o valor COMPLETO.
+
+   Depois, em **"Configurar zona DNS"** → modo avançado:
    - registro `A`: campo nome **em branco** (é a raiz; o registro.br NÃO
-     aceita `@`), valor = o IP que a Vercel mostrou
+     aceita `@`), valor = o IP que a Vercel mostrou (pode haver mais de
+     um; cadastre todos)
    - registro `CNAME`: nome `www`, valor = o host que a Vercel mostrou
-   - salvar/publicar. A publicação costuma sair em menos de 1 minuto;
-     a propagação completa pode levar algumas horas.
+   - **se você migrou do caminho (b), recadastre TAMBÉM todo o e-mail
+     capturado**: cada MX com sua prioridade (ex.: `10 mx1.titan.email`,
+     `20 mx2.titan.email`), o TXT do SPF na raiz, e um TXT por chave
+     DKIM (nome = `<selector>._domainkey`). Confira valor por valor
+     contra a captura antes de salvar.
    - ⚠️ se a zona já tiver registros (MX/TXT de e-mail), **não apague
-     nada** — apenas adicione os dois acima.
+     nada** — apenas adicione os do site.
+   - salvar. No caminho (a) publica em ~1 minuto; no caminho (b) só
+     depois da janela de transição terminar.
 4. **No código**: busque `nap-tintas.vercel.app` no repositório
    (`metadataBase`/URLs nos `layout.js`) e troque pelo domínio novo;
    commit e push (a Vercel redeploya sozinha).
 
-✅ Validação: `curl -sI https://<dominio>` responde `200` (ou `308` pro
-`www`) e a Vercel mostra o cadeado "Valid Configuration" nos dois hosts
-(o certificado HTTPS é emitido por ela sozinha em alguns minutos).
+✅ Validação — **só declare pronto com o servidor autoritativo
+respondendo**, nunca com base na mensagem de sucesso do painel:
+```bash
+# 1. a zona publicou mesmo? (pergunte a quem responde pelo domínio)
+nslookup -type=NS <dominio> a.dns.br            # descobre os autoritativos
+nslookup -type=A  <dominio> <autoritativo>      # tem que devolver o IP da Vercel
+nslookup -type=MX <dominio> <autoritativo>      # tem que devolver o e-mail do cliente
+# 2. o site responde no domínio?
+curl -sI https://<dominio> | head -3            # 200 ou 308 pro www
+curl -sI https://www.<dominio> | head -3        # 200
+```
+E a Vercel mostra "Valid Configuration" nos dois hosts (o certificado
+HTTPS sai sozinho em alguns minutos). **Se o e-mail foi migrado, o teste
+final é humano**: peça ao dono para mandar uma mensagem de fora para
+`contato@<dominio>`, confirmar o recebimento e RESPONDER. Sem esse
+ida-e-volta, não afirme que o e-mail está funcionando.
 
 ## Fase 8 — (Opcional) E-mail profissional @dominio (Zoho Mail grátis)
 
-Somente com a Fase 7 concluída. Padrão da casa NAP: caixa principal
-**`contato@`** e alias **`pedidos@`** (confirme com o dono se quer outros).
+Somente com a Fase 7 concluída. **Antes de criar qualquer coisa**: se a
+Fase 0.5 mostrou que o domínio JÁ tem e-mail funcionando (Titan, Google
+Workspace, Zoho, cPanel…), **não crie nada** — o trabalho aqui é só ter
+preservado MX/SPF/DKIM na Fase 7. Criar um segundo provedor de e-mail no
+mesmo domínio quebra a entrega das mensagens.
+
+⚠️ Se o e-mail existente vier embutido numa hospedagem que o cliente vai
+cancelar (Titan/HostGator, e-mail de cPanel), avise: **cancelar a
+hospedagem derruba o e-mail**. Nesse caso migre para o Zoho ANTES do
+cancelamento, seguindo os passos abaixo.
+
+Padrão da casa NAP: caixa principal **`contato@`** e alias **`pedidos@`**
+(confirme com o dono se quer outros).
 
 1. **Conta Zoho** no plano Forever Free (até 5 caixas):
    `https://workplace.zoho.com/signup?type=org&plan=free`
