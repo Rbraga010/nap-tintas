@@ -20,6 +20,13 @@
 
 ## Fase 0 — Diagnóstico (execute, não pergunte)
 
+**Pré-requisitos da máquina** — se você está lendo isto, o Claude
+Code/Codex já está instalado; garanta o resto ANTES da Fase 1, guiando a
+instalação do que faltar (nunca prossiga com ferramenta faltando):
+- Node.js 20+ (https://nodejs.org, versão LTS)
+- git (https://git-scm.com)
+- gh CLI (https://cli.github.com)
+
 ```bash
 node -v          # precisa ser >= 20; se não houver, guie a instalação em nodejs.org
 git --version    # se não houver git, use o caminho ZIP na Fase 1

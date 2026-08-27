@@ -57,12 +57,15 @@ automático: push na `master` do GitHub → Vercel).
 
 1. ~~WhatsApp real~~ FEITO — (15) 99813-7222 em `app/lib/constants.js`.
    ~~Assets premium~~ FEITO — capa `hero-cans.jpg` + vídeo `hero-video.mp4`.
-2. **Revisão de copy/dados factuais ANTES de divulgar** (auditoria
-   27/08/2026): pintores parceiros fictícios com foto de banco de imagem
-   (centro-treinamento), turmas/agenda com datas passadas e vagas
-   inventadas, rendimentos de tinta irreais e descrições trocadas no
-   catálogo, "desde 2026" vs "+20 anos", depoimentos a confirmar com o
-   dono. Nada disso é código: é decisão do dono — colher os dados reais.
+2. **Material real do dono para tirar os rótulos "ilustrativo"**: os
+   números e promessas do site (+20 anos, +2.000 cores, consultoria,
+   entrega) foram VALIDADOS pelo dono em 28/08/2026 — fato confirmado.
+   Falta apenas o que não se valida, se substitui: depoimentos reais
+   autorizados (LP da formação), pintores parceiros reais com foto
+   própria (vitrine do portal — hoje são exemplos com foto de banco de
+   imagem, rotulados), datas reais das turmas quando houver agenda, e o
+   embed real do Google Maps (ficha do Google Business). Ao receber cada
+   material, trocar o conteúdo E remover o rótulo correspondente.
 3. **Ativar Supabase real do cliente** — roteiro pronto em
    `docs/SETUP-CLIENTE.md`; criar primeiro admin (README).
 4. **Fotos reais dos produtos** — o card v3 e o admin já suportam
