@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { OFERTAS as OFERTAS_LIB } from "../lib/catalogo-demo";
-import { getBanners } from "../lib/db";
+import OfertasCarrossel from "../components/OfertasCarrossel";
 import { COLORS, WHATSAPP_NUMBER } from "../page";
 
 const WPP_PEDIDO = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -143,97 +142,6 @@ function BioCard({
   );
 }
 
-// ---- CARROSSEL DE OFERTAS (banner de destaque da bio) ----
-// As artes vivem em /public/ofertas. Hoje sao simuladas; quando o Super Admin
-// da loja entrar (fase backend), esta lista passa a vir do banco.
-const OFERTAS_DEMO = OFERTAS_LIB;
-
-
-function OfertasCarrossel() {
-  // banners: demo como inicial; Super Admin (via banco) assume quando existir
-  const [OFERTAS, setOfertas] = useState(OFERTAS_DEMO);
-  useEffect(() => { getBanners("bio").then(setOfertas); }, []);
-  const N = OFERTAS.length;
-  // track com clones nas pontas p/ loop infinito: [ultimo, ...todas, primeira]
-  const track = [OFERTAS[N - 1], ...OFERTAS, OFERTAS[0]];
-  const [pos, setPos] = useState(1);        // 1..N = slides reais
-  const [noTrans, setNoTrans] = useState(false);
-  const [pausado, setPausado] = useState(false);
-
-  // incremento blindado: se o snap do clone nao rodou (aba oculta nao dispara
-  // transitionend), normaliza aqui mesmo pro indice nunca sair do track
-  const ir = (delta) => setPos((p) => {
-    let n = p + delta;
-    if (n > N + 1) n -= N;
-    if (n < 0) n += N;
-    return n;
-  });
-
-  useEffect(() => {
-    if (pausado) return;
-    const t = setInterval(() => {
-      if (document.hidden) return; // aba oculta: nao anima nem acumula
-      ir(1);
-    }, 4200);
-    return () => clearInterval(t);
-  }, [pausado]);
-
-  // ao terminar a transicao num clone, salta sem animacao pro slide real
-  const onEnd = () => {
-    if (pos === N + 1) { setNoTrans(true); setPos(1); }
-    else if (pos === 0) { setNoTrans(true); setPos(N); }
-  };
-  useEffect(() => {
-    if (!noTrans) return;
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setNoTrans(false)));
-    return () => cancelAnimationFrame(id);
-  }, [noTrans]);
-
-  const ativo = ((pos - 1) % N + N) % N;
-
-  return (
-    <div className="bio-ofertas-wrap">
-      <div
-        className="bio-ofertas-frame"
-        onMouseEnter={() => setPausado(true)}
-        onMouseLeave={() => setPausado(false)}
-        onTouchStart={() => setPausado(true)}
-        onTouchEnd={() => setPausado(false)}
-      >
-        <div
-          className="bio-ofertas-track"
-          onTransitionEnd={onEnd}
-          style={{
-            left: `calc(${7 - pos * 86}% - ${pos * 12}px)`,
-            transition: noTrans ? "none" : undefined,
-          }}
-        >
-          {track.map((o, i) => (
-            <a
-              key={i}
-              href="/pedidos"
-              className={`bio-oferta-slide ${i === pos ? "ativa" : ""}`}
-              aria-label={o.alt}
-              tabIndex={i === pos ? 0 : -1}
-            >
-              <img src={o.src} alt={o.alt} loading={i <= 2 ? "eager" : "lazy"} />
-            </a>
-          ))}
-        </div>
-      </div>
-      <div className="bio-ofertas-nav">
-        <button type="button" aria-label="Oferta anterior" onClick={() => ir(-1)}>‹</button>
-        <div className="bio-ofertas-dots" aria-hidden>
-          {OFERTAS.map((_, i) => (
-            <span key={i} className={i === ativo ? "on" : ""} />
-          ))}
-        </div>
-        <button type="button" aria-label="Próxima oferta" onClick={() => ir(1)}>›</button>
-      </div>
-    </div>
-  );
-}
-
 // ---- MAIN ----
 
 export default function BioPage() {
@@ -328,7 +236,7 @@ export default function BioPage() {
 
         {/* Banner de destaque no topo: ofertas em carrossel coverflow */}
         <section className="bio-ofertas" aria-label="Ofertas da semana">
-          <OfertasCarrossel />
+          <OfertasCarrossel slot="bio" inicialDemo />
         </section>
 
         {/* Cards */}

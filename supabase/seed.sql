@@ -3,6 +3,12 @@
 -- Rode APOS o schema.sql. Ajuste precos/produtos a vontade no admin.
 -- ============================================================
 
+insert into categorias (id, label, emoji, ordem) values
+  ('tintas', 'Tintas', '🪣', 1),
+  ('texturas', 'Texturas', '✨', 2),
+  ('massas', 'Massas & Fundos', '🧱', 3),
+  ('acessorios', 'Acessórios', '🖌️', 4);
+
 insert into produtos (cat, marca, nome, rendimento, embalagem, preco, cor, swatch, destaque, ordem) values
   ('tintas', 'Suvinil', 'Látex Premium Branco Neve', '350 m²/galão', 'Galão 3,6L', 189.90, '#1B3A8C', '#FAFAFA', true, 1),
   ('tintas', 'Coral', 'Acrílica Fachada Anti-Mofo', '280 m²/galão', 'Galão 3,6L', 239.90, '#4CAF50', '#E8F5E9', false, 2),

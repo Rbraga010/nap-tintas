@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { COLORS, WHATSAPP_NUMBER, RevealWrap } from "../page";
-import { CATEGORIAS, getProdutos } from "../lib/db";
+import { getProdutos, getCategorias, cadastrarCliente, registrarPedido } from "../lib/db";
+import { CATEGORIAS as CATEGORIAS_DEMO } from "../lib/catalogo-demo";
+import OfertasCarrossel from "../components/OfertasCarrossel";
 import { PRODUTOS as PRODUTOS_DEMO } from "../lib/catalogo-demo";
 import ScrollTop from "../components/ScrollTop";
 
@@ -55,7 +57,7 @@ const IconArrow = (p) => (
 
 // ============ NAVBAR ============
 
-function PedidosNav({ cartCount, onOpenCart }) {
+function PedidosNav({ cartCount, onOpenCart, marcas, marca, setMarca, ordem, setOrdem }) {
   return (
     <nav className="ped-nav">
       <div className="ped-nav-inner">
@@ -68,9 +70,17 @@ function PedidosNav({ cartCount, onOpenCart }) {
         </a>
         <div className="ped-nav-links">
           <a href="/bio" className="ped-nav-link">← Início</a>
-          <a href="/" className="ped-nav-link">Institucional</a>
-          <a href="/colorindo-com-a-nap" className="ped-nav-link">Parceiro</a>
-          <a href="/centro-treinamento" className="ped-nav-link">Espaço Pintor</a>
+          {/* filtros DA LOJA (links do site vivem no footer) */}
+          <select className="ped-filtro" value={marca} onChange={(e) => setMarca(e.target.value)} aria-label="Filtrar por marca">
+            <option value="">Todas as marcas</option>
+            {marcas.map((m) => <option key={m} value={m}>{m}</option>)}
+          </select>
+          <select className="ped-filtro" value={ordem} onChange={(e) => setOrdem(e.target.value)} aria-label="Ordenar">
+            <option value="relevancia">Mais relevantes</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="az">Nome A–Z</option>
+          </select>
           <button onClick={onOpenCart} className="ped-cart-btn" aria-label="Carrinho">
             <IconCart width="20" height="20" />
             {cartCount > 0 && <span className="ped-cart-badge">{cartCount}</span>}
@@ -119,14 +129,26 @@ function PedidosHero({ busca, setBusca }) {
 
 // ============ CATEGORIAS ============
 
-function PedidosCategorias({ ativa, onChange }) {
+function PedidosCategorias({ categorias, ativa, onChange }) {
+  // pills = navegacao entre estantes: clique rola ate a estante da categoria
+  const irPara = (id) => {
+    onChange(id);
+    if (id !== "todos") {
+      requestAnimationFrame(() => {
+        document.getElementById(`estante-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+  const lista = [{ id: "todos", label: "Todos", emoji: "🎨" }, ...categorias];
   return (
     <div className="ped-cats">
       <div className="ped-cats-inner">
-        {CATEGORIAS.map((c) => (
+        {lista.map((c) => (
           <button
             key={c.id}
-            onClick={() => onChange(c.id)}
+            onClick={() => irPara(c.id)}
             className={`ped-cat-btn ${ativa === c.id ? "ped-cat-active" : ""}`}
           >
             <span className="ped-cat-emoji">{c.emoji}</span>
@@ -141,37 +163,46 @@ function PedidosCategorias({ ativa, onChange }) {
 // ============ PRODUTO CARD ============
 
 function ProdutoCard({ produto, onAdd, qty }) {
+  // Card v3 (spec Rodrigo 28/08): foto em destaque, marca discreta,
+  // NOME em negrito (unico bold), descricao, unidade micro e preco
+  // com de/para quando for oferta. Leve: cores e tamanhos hierarquizam.
+  const emOferta = produto.preco_de && Number(produto.preco_de) > Number(produto.preco);
   return (
     <div className="ped-prod-card">
-      {produto.destaque && <span className="ped-prod-destaque">Destaque</span>}
+      {emOferta ? (
+        <span className="ped-prod-oferta">OFERTA</span>
+      ) : produto.destaque ? (
+        <span className="ped-prod-destaque">Destaque</span>
+      ) : null}
 
-      <div className="ped-prod-swatch" style={{ background: produto.swatch }}>
-        {/* Simulação de lata de tinta SVG */}
-        <svg viewBox="0 0 120 120" width="88" height="88" aria-hidden>
-          <ellipse cx="60" cy="105" rx="42" ry="7" fill="rgba(0,0,0,0.1)" />
-          <path d="M22 32 Q22 20 60 20 Q98 20 98 32 V95 Q98 107 60 107 Q22 107 22 95 Z" fill={produto.cor} stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
-          <ellipse cx="60" cy="32" rx="38" ry="8" fill={produto.cor} stroke="rgba(0,0,0,0.18)" strokeWidth="1" />
-          <ellipse cx="60" cy="32" rx="32" ry="5" fill={produto.swatch} stroke="rgba(0,0,0,0.1)" strokeWidth="0.5" />
-          <path d="M58 14 Q60 9 62 14 Q64 20 60 26 Q56 20 58 14 Z" fill={produto.cor} opacity="0.8" />
-          <rect x="30" y="55" width="60" height="22" rx="2" fill="white" opacity="0.95" />
-          <text x="60" y="69" textAnchor="middle" fill={produto.cor} fontSize="9" fontWeight="900" fontFamily="Poppins, sans-serif">NAP</text>
-        </svg>
+      <div className="ped-prod-foto-area" style={{ "--sw": produto.swatch || "#F4F5F9" }}>
+        {produto.imagem_url ? (
+          <img src={produto.imagem_url} alt="" className="ped-prod-foto" loading="lazy" />
+        ) : (
+          <svg viewBox="0 0 120 120" width="84" height="84" aria-hidden>
+            <ellipse cx="60" cy="105" rx="42" ry="7" fill="rgba(0,0,0,0.08)" />
+            <path d="M22 32 Q22 20 60 20 Q98 20 98 32 V95 Q98 107 60 107 Q22 107 22 95 Z" fill={produto.cor} stroke="rgba(0,0,0,0.12)" strokeWidth="1" />
+            <ellipse cx="60" cy="32" rx="38" ry="8" fill={produto.cor} stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
+            <ellipse cx="60" cy="32" rx="32" ry="5" fill={produto.swatch} stroke="rgba(0,0,0,0.08)" strokeWidth="0.5" />
+            <rect x="30" y="55" width="60" height="22" rx="2" fill="white" opacity="0.95" />
+            <text x="60" y="69" textAnchor="middle" fill={produto.cor} fontSize="9" fontWeight="900" fontFamily="var(--font-display)">NAP</text>
+          </svg>
+        )}
       </div>
 
       <div className="ped-prod-body">
         <div className="ped-prod-marca">{produto.marca}</div>
         <h3 className="ped-prod-nome">{produto.nome}</h3>
+        {produto.descricao && <p className="ped-prod-desc">{produto.descricao}</p>}
         <div className="ped-prod-meta">
-          <span>{produto.embalagem}</span>
-          {produto.rendimento !== "—" && (
-            <>
-              <span className="ped-prod-sep">·</span>
-              <span>{produto.rendimento}</span>
-            </>
-          )}
+          {produto.embalagem}
+          {produto.rendimento && produto.rendimento !== "—" ? ` · ${produto.rendimento}` : ""}
         </div>
         <div className="ped-prod-footer">
-          <div className="ped-prod-preco">{fmt(produto.preco)}</div>
+          <div className="ped-prod-precos">
+            {emOferta && <span className="ped-prod-de">{fmt(produto.preco_de)}</span>}
+            <div className={`ped-prod-preco ${emOferta ? "oferta" : ""}`}>{fmt(produto.preco)}</div>
+          </div>
           {qty > 0 ? (
             <div className="ped-prod-qty">
               <button onClick={() => onAdd(produto, -1)} className="ped-qty-btn" aria-label="Remover"><IconMinus width="14" height="14" /></button>
@@ -179,8 +210,8 @@ function ProdutoCard({ produto, onAdd, qty }) {
               <button onClick={() => onAdd(produto, 1)} className="ped-qty-btn" aria-label="Adicionar"><IconPlus width="14" height="14" /></button>
             </div>
           ) : (
-            <button onClick={() => onAdd(produto, 1)} className="ped-add-btn">
-              <IconPlus width="14" height="14" /> Adicionar
+            <button onClick={() => onAdd(produto, 1)} className="ped-add-btn" aria-label={`Adicionar ${produto.nome}`}>
+              <IconPlus width="14" height="14" />
             </button>
           )}
         </div>
@@ -192,6 +223,15 @@ function ProdutoCard({ produto, onAdd, qty }) {
 // ============ CARRINHO DRAWER ============
 
 function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
+  // dados do cliente (lembrados neste navegador; cadastro leve no checkout)
+  const [nome, setNome] = useState("");
+  const [zap, setZap] = useState("");
+  useEffect(() => {
+    try {
+      const c = JSON.parse(localStorage.getItem("nap.cliente") || "null");
+      if (c) { setNome(c.nome || ""); setZap(c.zap || ""); }
+    } catch {}
+  }, []);
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -199,7 +239,20 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
     }
   }, [open]);
 
-  const finalizarWpp = () => {
+  const finalizarWpp = async () => {
+    try {
+      let cliente_id = null;
+      if (nome.trim() && zap.trim()) {
+        try { localStorage.setItem("nap.cliente", JSON.stringify({ nome, zap })); } catch {}
+        const r = await cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim() });
+        cliente_id = r?.cliente?.id ?? null;
+      }
+      await registrarPedido({
+        cliente_id,
+        itens: carrinho.map((i) => ({ produto_id: i.id, nome: i.nome, qtd: i.qty, preco: i.preco })),
+        total,
+      });
+    } catch {}
     const itens = carrinho.map((i) =>
       `• ${i.qty}× ${i.nome} (${i.marca}) — ${fmt(i.preco * i.qty)}`
     ).join("\n");
@@ -267,6 +320,12 @@ function CarrinhoDrawer({ open, onClose, carrinho, onUpdate, onClear, total }) {
             <p className="ped-drawer-note">
               Frete e condições de pagamento são confirmados pelo WhatsApp.
             </p>
+            <div className="ped-cliente">
+              <input className="ped-cliente-campo" placeholder="Seu nome"
+                value={nome} onChange={(e) => setNome(e.target.value)} autoComplete="name" />
+              <input className="ped-cliente-campo" placeholder="Seu WhatsApp (15 9…)"
+                value={zap} onChange={(e) => setZap(e.target.value)} inputMode="tel" autoComplete="tel" />
+            </div>
             <button onClick={finalizarWpp} className="ped-drawer-finalize">
               <IconWhats width="18" height="18" />
               Finalizar no WhatsApp
@@ -319,10 +378,45 @@ function PedidosFooter() {
 
 // ============ MAIN ============
 
+// ---- ESTANTE: fileira horizontal de uma categoria, deslizando pro lado ----
+function Estante({ id, categoria, cor, itens, onAdd, qtyOf }) {
+  const rolar = (delta) => {
+    const el = document.getElementById(`trilho-${id}`);
+    if (el) el.scrollBy({ left: delta * el.clientWidth * 0.8, behavior: "smooth" });
+  };
+  return (
+    <section className="ped-estante" id={`estante-${id}`}>
+      <div className="ped-section-inner">
+        <div className="ped-estante-head">
+          <span className="ped-section-tag" style={{ color: cor }}>
+            <span style={{ background: cor }} /> {categoria.emoji} {categoria.label}
+          </span>
+          <div className="ped-estante-setas">
+            <button aria-label="Anterior" onClick={() => rolar(-1)}>‹</button>
+            <button aria-label="Próximo" onClick={() => rolar(1)}>›</button>
+          </div>
+        </div>
+        <div className="ped-trilho" id={`trilho-${id}`}>
+          {itens.map((p) => (
+            <ProdutoCard key={p.id} produto={p} onAdd={onAdd} qty={qtyOf(p.id)} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function PedidosPage() {
   // produtos: demo como valor inicial (sem flash), banco assume se existir
   const [PRODUTOS, setProdutos] = useState(PRODUTOS_DEMO);
   useEffect(() => { getProdutos().then(setProdutos); }, []);
+
+  // filtros da loja (nav) + banner de destaque do slot "loja"
+  const [marca, setMarca] = useState("");
+  const [ordem, setOrdem] = useState("relevancia");
+  const [categorias, setCategorias] = useState(CATEGORIAS_DEMO.filter((c) => c.id !== "todos"));
+  useEffect(() => { getCategorias().then(setCategorias); }, []);
+  const marcas = [...new Set(PRODUTOS.map((p) => p.marca))].sort();
 
   const [cat, setCat] = useState("todos");
   const [busca, setBusca] = useState("");
@@ -384,78 +478,79 @@ export default function PedidosPage() {
   const q = busca.trim().toLowerCase();
   const filtrados = PRODUTOS.filter((p) => {
     if (cat !== "todos" && p.cat !== cat) return false;
+    if (marca && p.marca !== marca) return false;
     if (!q) return true;
     return (
       p.nome.toLowerCase().includes(q) ||
       p.marca.toLowerCase().includes(q) ||
       p.cat.toLowerCase().includes(q)
     );
+  }).sort((a, b) => {
+    if (ordem === "menor") return a.preco - b.preco;
+    if (ordem === "maior") return b.preco - a.preco;
+    if (ordem === "az") return a.nome.localeCompare(b.nome, "pt-BR");
+    return (a.ordem ?? a.id) - (b.ordem ?? b.id);
   });
 
   const destaques = PRODUTOS.filter((p) => p.destaque);
 
   return (
     <div className="ped-page">
-      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)} />
+      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)}
+        marcas={marcas} marca={marca} setMarca={setMarca} ordem={ordem} setOrdem={setOrdem} />
 
       <PedidosHero busca={busca} setBusca={setBusca} />
 
-      <PedidosCategorias ativa={cat} onChange={setCat} />
+      <section className="ped-ofertas" aria-label="Destaques">
+        <OfertasCarrossel slot="loja" fallbackSlot="bio" max={5} />
+      </section>
 
-      {/* Destaques — só quando nao ha busca nem filtro */}
-      {cat === "todos" && !q && (
-        <section className="ped-destaques-sec">
+      <PedidosCategorias categorias={categorias} ativa={cat} onChange={setCat} />
+
+      {/* ============ ESTANTES ============
+          Sem busca: uma estante por categoria, deslizando pro lado.
+          Com busca: grid unico de resultados. */}
+      {q ? (
+        <section className="ped-catalogo-sec">
           <div className="ped-section-inner">
-            <RevealWrap>
-              <div className="ped-section-head">
-                <div>
-                  <span className="ped-section-tag" style={{ color: COLORS.pink }}>
-                    <span style={{ background: COLORS.pink }} /> Em destaque
-                  </span>
-                  <h2 className="ped-section-title">Queridinhos da família NAP</h2>
-                </div>
+            <div className="ped-section-head">
+              <div>
+                <span className="ped-section-tag" style={{ color: COLORS.orange }}>
+                  <span style={{ background: COLORS.orange }} /> Busca
+                </span>
+                <h2 className="ped-section-title">
+                  {`${filtrados.length} resultado${filtrados.length !== 1 ? "s" : ""} para "${busca}"`}
+                </h2>
               </div>
-            </RevealWrap>
-            <div className="ped-grid">
-              {destaques.map((p) => (
-                <ProdutoCard key={p.id} produto={p} onAdd={addToCart} qty={qtyOf(p.id)} />
-              ))}
             </div>
+            {filtrados.length === 0 ? (
+              <div className="ped-empty-search">
+                <div className="ped-empty-emoji">🎨</div>
+                <p>Nenhum produto encontrado.</p>
+                <span>Tente outra busca ou escolha outra estante.</span>
+              </div>
+            ) : (
+              <div className="ped-grid">
+                {filtrados.map((p) => (
+                  <ProdutoCard key={p.id} produto={p} onAdd={addToCart} qty={qtyOf(p.id)} />
+                ))}
+              </div>
+            )}
           </div>
         </section>
-      )}
-
-      {/* Catalogo geral */}
-      <section className="ped-catalogo-sec">
-        <div className="ped-section-inner">
-          <div className="ped-section-head">
-            <div>
-              <span className="ped-section-tag" style={{ color: COLORS.orange }}>
-                <span style={{ background: COLORS.orange }} />
-                {cat === "todos" ? "Todo o catálogo" : CATEGORIAS.find((c) => c.id === cat)?.label}
-              </span>
-              <h2 className="ped-section-title">
-                {q
-                  ? `${filtrados.length} resultado${filtrados.length !== 1 ? "s" : ""} para "${busca}"`
-                  : "Escolha, adicione e feche o pedido."}
-              </h2>
-            </div>
-          </div>
-          {filtrados.length === 0 ? (
-            <div className="ped-empty-search">
-              <div className="ped-empty-emoji">🎨</div>
-              <p>Nenhum produto encontrado.</p>
-              <span>Tente outra busca ou escolha outra categoria.</span>
-            </div>
-          ) : (
-            <div className="ped-grid">
-              {filtrados.map((p) => (
-                <ProdutoCard key={p.id} produto={p} onAdd={addToCart} qty={qtyOf(p.id)} />
-              ))}
-            </div>
-          )}
+      ) : (
+        <div className="ped-estantes">
+          {categorias.map((c, idx) => {
+            const itens = filtrados.filter((p) => p.cat === c.id);
+            if (!itens.length) return null;
+            const cor = [COLORS.blue, COLORS.pink, COLORS.orange, COLORS.green, COLORS.yellow, COLORS.red][idx % 6];
+            return (
+              <Estante key={c.id} id={c.id} categoria={c} cor={cor}
+                itens={itens} onAdd={addToCart} qtyOf={qtyOf} />
+            );
+          })}
         </div>
-      </section>
+      )}
 
       {/* Ajuda */}
       <section className="ped-ajuda-sec">
