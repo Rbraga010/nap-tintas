@@ -114,16 +114,19 @@ function BioCard({
       </div>
 
       <div className="bio-card-body">
-        {badge && (
-          <span
-            className="bio-card-badge"
-            style={{ color: iconColor, borderColor: `${iconColor}40` }}
-          >
-            {badge}
-          </span>
-        )}
-        <div className="bio-card-title" style={{ color: COLORS.darkBlue }}>
-          {title}
+        {/* headline a esquerda, tag a direita (feedback 28/08) */}
+        <div className="bio-card-head">
+          <div className="bio-card-title" style={{ color: COLORS.darkBlue }}>
+            {title}
+          </div>
+          {badge && (
+            <span
+              className="bio-card-badge"
+              style={{ color: iconColor, borderColor: `${iconColor}40` }}
+            >
+              {badge}
+            </span>
+          )}
         </div>
         <div className="bio-card-subtitle" style={{ color: iconColor }}>
           {subtitle}

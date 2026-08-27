@@ -2623,21 +2623,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .bio-stat-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 5px;
+  padding: 4px 10px;
   border-radius: 40px;
   background: #fff;
   border: 1.5px solid var(--c, #E91E93);
   color: var(--c, #E91E93);
   font-family: var(--font-body);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-micro);
   font-weight: 700;
   letter-spacing: 0.02em;
   box-shadow: 0 4px 14px rgba(0,0,0,0.04);
 }
 .bio-stat-pill strong {
   font-weight: 900;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
 }
 .bio-stat-dot {
   width: 8px;
@@ -2749,18 +2749,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
   min-width: 0;
 }
 
+.bio-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 3px;
+}
 .bio-card-badge {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 2px 8px;
   border-radius: 20px;
   border: 1.5px solid;
   background: #fff;
   font-family: var(--font-body);
-  font-size: var(--fs-micro);
+  font-size: 9px; /* 20% menor que o antigo 11px */
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .bio-card-title {
@@ -2768,8 +2776,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-size: var(--fs-base);
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 3px;
   letter-spacing: -0.01em;
+  min-width: 0;
 }
 
 .bio-card-subtitle {
@@ -2785,6 +2793,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-size: var(--fs-sm);
   line-height: 1.55;
   color: #6b7280;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* subheadline em no maximo 2 linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .bio-card-arrow {
@@ -3004,7 +3016,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .bio-name-v2 { gap: 8px; }
   .bio-tagline-v2 { font-size: var(--fs-md); }
   .bio-sub-v2 { font-size: var(--fs-sm); }
-  .bio-stat-pill { padding: 6px 12px; font-size: var(--fs-micro); }
+  .bio-stat-pill { padding: 3px 8px; font-size: 10px; gap: 4px; }
+  .bio-stat-pill strong { font-size: var(--fs-micro); }
+  .bio-stat-dot { width: 6px; height: 6px; }
 
   .bio-card {
     padding: 16px;
@@ -3016,7 +3030,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .bio-card-subtitle { font-size: var(--fs-xs); }
   .bio-card-desc { font-size: var(--fs-xs); }
   .bio-card-arrow { width: 34px; height: 34px; }
-  .bio-card-badge { font-size: var(--fs-micro); }
+  .bio-card-badge { font-size: 8px; padding: 2px 7px; }
   .bio-card-ribbon { font-size: var(--fs-micro); right: -38px; padding: 3px 42px; }
 
   .bio-pintor-cta { padding: 18px 16px 18px 14px; gap: 14px; }
