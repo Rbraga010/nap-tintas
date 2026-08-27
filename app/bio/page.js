@@ -283,7 +283,7 @@ export default function BioPage() {
         <section className="bio-video-section">
           <div className="bio-video-head">
             <span className="bio-video-label">
-              <span className="bio-video-dot-v2" /> NAP em 1 minuto
+              <span className="bio-video-dot-v2" /> A NAP em movimento
             </span>
           </div>
           <div className="bio-video-frame">

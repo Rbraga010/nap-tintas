@@ -3593,3 +3593,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 600px) {
   .ped-busca-linha .ped-filtro { flex: 1; max-width: none; }
 }
+
+/* ===== modal "Meu cadastro" da loja (28/08) ===== */
+.ped-modal {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 210; width: min(420px, calc(100vw - 32px));
+  background: #fff; border-radius: 20px; padding: 26px;
+  box-shadow: var(--shadow-lg);
+}
+.ped-modal h3 { font-family: var(--font-display); font-weight: 800;
+  font-size: var(--fs-lg); color: #0D1B3E; margin: 0 0 4px; }
+.ped-modal-sub { font-size: var(--fs-sm); color: #6b7280; margin: 0 0 14px; }
+.ped-modal form { display: flex; flex-direction: column; gap: 10px; }
+.ped-modal-ok { text-align: center; display: flex; flex-direction: column; gap: 10px; }
+.ped-modal-ok p { font-size: var(--fs-sm); color: #6b7280; margin: 0; }
+.ped-user-btn {
+  background: #F4F5F9; border: 1.5px solid #E3E6EF; border-radius: 50%;
+  width: 40px; height: 40px; cursor: pointer; font-size: 17px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all .25s var(--ease);
+}
+.ped-user-btn:hover { border-color: #1B3A8C; transform: translateY(-2px); }

@@ -57,7 +57,7 @@ const IconArrow = (p) => (
 
 // ============ NAVBAR ============
 
-function PedidosNav({ cartCount, onOpenCart }) {
+function PedidosNav({ cartCount, onOpenCart, onOpenCadastro }) {
   return (
     <nav className="ped-nav">
       <div className="ped-nav-inner">
@@ -74,6 +74,9 @@ function PedidosNav({ cartCount, onOpenCart }) {
           <a href="#destaques" className="ped-nav-link">Destaques</a>
           <a href="#produtos" className="ped-nav-link">Produtos</a>
           <a href="#fale-conosco" className="ped-nav-link">Fale com a gente</a>
+          <button onClick={onOpenCadastro} className="ped-user-btn" aria-label="Meu cadastro" title="Meu cadastro">
+            👤
+          </button>
           <button onClick={onOpenCart} className="ped-cart-btn" aria-label="Carrinho">
             <IconCart width="20" height="20" />
             {cartCount > 0 && <span className="ped-cart-badge">{cartCount}</span>}
@@ -366,6 +369,7 @@ function PedidosFooter() {
           </div>
           <div>
             <div className="ped-footer-col-title">Atendimento</div>
+            <a href="/admin" className="ped-footer-link">Área do lojista (admin)</a>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="ped-footer-link">WhatsApp direto</a>
             <a href="https://instagram.com/nap_tintas" target="_blank" rel="noopener noreferrer" className="ped-footer-link">@nap_tintas</a>
             <p className="ped-footer-info">Seg a Sex · 8h às 18h</p>
@@ -411,6 +415,59 @@ function Estante({ id, categoria, cor, itens, onAdd, qtyOf }) {
   );
 }
 
+// ---- CADASTRO DO CLIENTE (nav 👤): mesmo registro usado no checkout ----
+function ModalCadastro({ open, onClose }) {
+  const [nome, setNome] = useState("");
+  const [zap, setZap] = useState("");
+  const [email, setEmail] = useState("");
+  const [feito, setFeito] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    setFeito(false);
+    try {
+      const c = JSON.parse(localStorage.getItem("nap.cliente") || "null");
+      if (c) { setNome(c.nome || ""); setZap(c.zap || ""); setEmail(c.email || ""); }
+    } catch {}
+  }, [open]);
+  if (!open) return null;
+  const salvar = async (e) => {
+    e.preventDefault();
+    try { localStorage.setItem("nap.cliente", JSON.stringify({ nome, zap, email })); } catch {}
+    await cadastrarCliente({ nome: nome.trim(), whatsapp: zap.trim(), email: email.trim() || null });
+    setFeito(true);
+  };
+  return (
+    <>
+      <div className="ped-drawer-overlay" onClick={onClose} />
+      <div className="ped-modal" role="dialog" aria-label="Meu cadastro">
+        {feito ? (
+          <div className="ped-modal-ok">
+            <div style={{ fontSize: 42 }}>🎉</div>
+            <h3>Cadastro salvo, {nome.split(" ")[0]}!</h3>
+            <p>Seus dados já preenchem o carrinho sozinhos na hora de finalizar o pedido.</p>
+            <button className="ped-drawer-finalize" onClick={onClose}>Voltar às compras</button>
+          </div>
+        ) : (
+          <form onSubmit={salvar}>
+            <h3>Meu cadastro</h3>
+            <p className="ped-modal-sub">
+              Deixe seus dados e agilize seus pedidos — a NAP te atende pelo nome.
+            </p>
+            <input className="ped-cliente-campo" placeholder="Nome completo" required
+              value={nome} onChange={(e) => setNome(e.target.value)} autoComplete="name" />
+            <input className="ped-cliente-campo" placeholder="WhatsApp (15 9…)" required
+              value={zap} onChange={(e) => setZap(e.target.value)} inputMode="tel" autoComplete="tel" />
+            <input className="ped-cliente-campo" placeholder="E-mail (opcional)" type="email"
+              value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
+            <button type="submit" className="ped-drawer-finalize">Salvar cadastro</button>
+            <button type="button" className="ped-drawer-clear" onClick={onClose}>Agora não</button>
+          </form>
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function PedidosPage() {
   // produtos: demo como valor inicial (sem flash), banco assume se existir
   const [PRODUTOS, setProdutos] = useState(PRODUTOS_DEMO);
@@ -418,6 +475,7 @@ export default function PedidosPage() {
 
   // filtros da loja (nav) + banner de destaque do slot "loja"
   const [marca, setMarca] = useState("");
+  const [cadastroOpen, setCadastroOpen] = useState(false);
   const [ordem, setOrdem] = useState("relevancia");
   const [categorias, setCategorias] = useState(CATEGORIAS_DEMO.filter((c) => c.id !== "todos"));
   useEffect(() => { getCategorias().then(setCategorias); }, []);
@@ -501,7 +559,8 @@ export default function PedidosPage() {
 
   return (
     <div className="ped-page">
-      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)} />
+      <PedidosNav cartCount={cartCount} onOpenCart={() => setDrawerOpen(true)}
+        onOpenCadastro={() => setCadastroOpen(true)} />
 
       <PedidosHero busca={busca} setBusca={setBusca}
         marcas={marcas} marca={marca} setMarca={setMarca} ordem={ordem} setOrdem={setOrdem} />
@@ -602,6 +661,8 @@ export default function PedidosPage() {
         onClear={clearCart}
         total={total}
       />
+
+      <ModalCadastro open={cadastroOpen} onClose={() => setCadastroOpen(false)} />
 
       <ScrollTop />
 
