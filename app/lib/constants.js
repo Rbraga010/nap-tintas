@@ -26,6 +26,11 @@ export const wppLink = (msg) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 export { WHATSAPP_NUMBER };
 
-// URL publica do site — trocar SO AQUI quando entrar o dominio proprio
-// (Fase 7 da docs/SETUP-CLIENTE.md)
-export const SITE_URL = "https://nap-tintas.vercel.app";
+// URL publica do site — usada em canonical, og:url, sitemap e robots.
+// Default = o dominio REAL da loja (producao do cliente). Ambientes que
+// nao sao a producao dele (nosso preview/dev) declaram a propria URL na
+// env NEXT_PUBLIC_SITE_URL, senao anunciariam o dominio do cliente como
+// canonico — e o inverso era pior: com o dev fixo aqui, o site do
+// cliente mandava o Google indexar o NOSSO endereco (achado 28/08).
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.naptintas.com.br";
